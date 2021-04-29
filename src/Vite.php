@@ -90,6 +90,13 @@ class Vite extends Plugin
         parent::init();
         self::$plugin = $this;
 
+        // Configure our connector service with the settings
+        $settings = $this->getSettings();
+        if ($settings) {
+            $settingsAttrs = $settings->getAttributes();
+            $connectorAttrs = $this->connector->getAttributes();
+            Craft::configure($this->connector, array_intersect_key($settingsAttrs, $connectorAttrs));
+        }
         // Register our Twig extension
         Craft::$app->view->registerTwigExtension(new ViteTwigExtension());
         // Register our variable
