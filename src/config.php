@@ -24,7 +24,39 @@
 
 return [
 
-    // This controls blah blah blah
-    "someAttribute" => true,
+   /**
+    * Should the dev server be used for?
+    *
+    * @var bool
+    */
+    'useDevServer' => true,
 
+    /**
+     * File system path (or URL) to the Vite-built manifest.json
+     *
+     * @var string
+     */
+    'manifestPath' => '@webroot/dist/manifest.json',
+
+    /**
+     * The public URL to the dev server (what appears in `<script src="">` tags
+     *
+     * @var string
+     */
+    'devServerPublic' => 'http://localhost:3000/',
+
+    /**
+     * The internal URL to the dev server, when accessed from the environment in which PHP is executing
+     * This can be the same as `$devServerPublic`, but may be different in containerized or VM setups
+     *
+     * @var string
+     */
+    'devServerInternal' => 'http://craft-vite-buildchain:3000/',
+
+    /**
+     * The public URL to use when not using the dev server
+     *
+     * @var string
+     */
+    'serverPublic' => 'http://localhost:8000/dist/',
 ];
