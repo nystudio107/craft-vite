@@ -1,17 +1,43 @@
 {
-  "name": "buildchain",
-  "version": "0.0.0",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "serve": "vite preview"
+  "author": {
+    "email": "andrew@nystudio107.com",
+    "name": "Andrew Welch",
+    "url": "https://nystudio107.com"
+  },
+  "browser": "./src/Vite.php",
+  "bugs": {
+    "email": "andrew@nystudio107.com",
+    "url": "https://nystudio107.com"
   },
   "dependencies": {
     "vue": "^3.0.5"
   },
+  "description": "Allows the use of the Vite.js next generation frontend tooling with Craft CMS",
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.2.2",
     "@vue/compiler-sfc": "^3.0.5",
     "vite": "^2.2.3"
-  }
+  },
+  "homepage": "https://nystudio107.com",
+  "keywords": [
+    "vite",
+    "craftcms",
+    "craft",
+    "cms",
+    "plugin"
+  ],
+  "license": "SEE LICENSE IN LICENSE.md",
+  "name": "vite",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nystudio107/craft-vite.git"
+  },
+  "scripts": {
+    "dev": "vite",
+    "docs": "cd ../docs && rm -f package-lock.json && npm install && npm update && npm run docs:build",
+    "build": "vite build",
+    "serve": "vite preview",
+  },
+  "version": "1.0.0"
 }
