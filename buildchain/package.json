@@ -37,7 +37,7 @@
     "dev": "vite",
     "docs": "cd ../docs && rm -f package-lock.json && npm install && npm update && npm run docs:build",
     "build": "vite build",
-    "serve": "vite preview",
+    "serve": "vite preview"
   },
   "version": "1.0.0"
 }
