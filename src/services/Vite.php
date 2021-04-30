@@ -46,40 +46,35 @@ class Vite extends Component
     // =========================================================================
 
     /**
-     * Should the dev server be used for?
-     *
-     * @var bool
+     * @var bool Should the dev server be used for?
      */
-    public $useDevServer ;
+    public $useDevServer;
 
     /**
-     * File system path (or URL) to the Vite-built manifest.json
-     *
-     * @var string
+     * @var string File system path (or URL) to the Vite-built manifest.json
      */
     public $manifestPath;
 
     /**
-     * The public URL to the dev server (what appears in `<script src="">` tags
-     *
-     * @var string
+     * @var string The public URL to the dev server (what appears in `<script src="">` tags
      */
     public $devServerPublic;
 
     /**
-     * The internal URL to the dev server, when accessed from the environment in which PHP is executing
-     * This can be the same as `$devServerPublic`, but may be different in containerized or VM setups
-     *
-     * @var string
+     * @var string The internal URL to the dev server, when accessed from the environment in which PHP is executing
+     *              This can be the same as `$devServerPublic`, but may be different in containerized or VM setups
      */
     public $devServerInternal;
 
     /**
-     * The public URL to use when not using the dev server
-     *
-     * @var string
+     * @var string The public URL to use when not using the dev server
      */
     public $serverPublic;
+
+    /**
+     * @var string String to be appended to the cache key
+     */
+    public $cacheKeySuffix = '';
 
     // Public Methods
     // =========================================================================
@@ -257,9 +252,8 @@ class Vite extends Component
             : null;
         // Get the result from the cache, or parse the file
         $cache = Craft::$app->getCache();
-        $cacheKeySuffix = $settings->cacheKeySuffix ?? '';
         $file = $cache->getOrSet(
-            self::CACHE_KEY . $cacheKeySuffix . $pathOrUrl,
+            self::CACHE_KEY . $this->cacheKeySuffix . $pathOrUrl,
             function () use ($pathOrUrl, $callback) {
                 $contents = null;
                 $result = null;
@@ -302,6 +296,16 @@ class Vite extends Component
         );
 
         return $file;
+    }
+
+    /**
+     * Invalidate all of the Vite caches
+     */
+    public static function invalidateCaches()
+    {
+        $cache = Craft::$app->getCache();
+        TagDependency::invalidate($cache, self::CACHE_TAG);
+        Craft::info('All Vite caches cleared', __METHOD__);
     }
 
     // Protected Methods
