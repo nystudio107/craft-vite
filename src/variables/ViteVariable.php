@@ -10,9 +10,11 @@
 
 namespace nystudio107\vite\variables;
 
+use craft\helpers\Template;
 use nystudio107\vite\Vite;
 
 use Craft;
+use Twig\Markup;
 
 /**
  * @author    nystudio107
@@ -25,15 +27,20 @@ class ViteVariable
     // =========================================================================
 
     /**
-     * @param null $optional
-     * @return string
+     * Return the appropriate tags to load the Vite script, either via the dev server or
+     * extracting it from the manifest.json file
+     *
+     * @param string $path
+     * @param bool $asyncCss
+     * @param array $scriptTagAttrs
+     * @param array $cssTagAttrs
+     *
+     * @return Markup
      */
-    public function exampleVariable($optional = null)
+    public function script(string $path, bool $asyncCss = true, array $scriptTagAttrs = [], array $cssTagAttrs = []): Markup
     {
-        $result = "And away we go to the Twig template...";
-        if ($optional) {
-            $result = "I'm feeling optional today...";
-        }
-        return $result;
+        return Template::raw(
+            Vite::$plugin->vite->script($path, $asyncCss, $scriptTagAttrs, $cssTagAttrs)
+        );
     }
 }
