@@ -10,17 +10,14 @@
 
 namespace nystudio107\vite;
 
-use craft\events\RegisterCacheOptionsEvent;
-use craft\utilities\ClearCaches;
-use nystudio107\vite\services\Connector as ConnectorService;
+use nystudio107\vite\services\Vite as ViteService;
 use nystudio107\vite\variables\ViteVariable;
-use nystudio107\vite\twigextensions\ViteTwigExtension;
 use nystudio107\vite\models\Settings;
 
 use Craft;
 use craft\base\Plugin;
-use craft\services\Plugins;
-use craft\events\PluginEvent;
+use craft\events\RegisterCacheOptionsEvent;
+use craft\utilities\ClearCaches;
 use craft\web\twig\variables\CraftVariable;
 
 use yii\base\Event;
@@ -32,7 +29,7 @@ use yii\base\Event;
  * @package   Vite
  * @since     1.0.0
  *
- * @property  ConnectorService $connector
+ * @property  ViteService $vite
  */
 class Vite extends Plugin
 {
@@ -53,8 +50,8 @@ class Vite extends Plugin
     public function __construct($id, $parent = null, array $config = [])
     {
         $config['components'] = [
-            'connector' => [
-                'class' => ConnectorService::class,
+            'vite' => [
+                'class' => ViteService::class,
             ]
         ];
 
@@ -90,18 +87,16 @@ class Vite extends Plugin
         parent::init();
         self::$plugin = $this;
 
-        // Configure our connector service with the settings
+        // Configure our Vite service with the settings
         $settings = $this->getSettings();
         if ($settings) {
             $settingsAttrs = $settings->getAttributes();
-            $connectorAttrs = $this->connector->getAttributes();
-            Craft::configure($this->connector, array_intersect_key(
+            $viteAttrs = $this->vite->getAttributes();
+            Craft::configure($this->vite, array_intersect_key(
                 $settingsAttrs,
-                $connectorAttrs
+                $viteAttrs
             ));
         }
-        // Register our Twig extension
-        Craft::$app->view->registerTwigExtension(new ViteTwigExtension());
         // Register our variable
         Event::on(
             CraftVariable::class,
@@ -128,8 +123,6 @@ class Vite extends Plugin
                 );
             }
         );
-
-        $this->connector->devServerRunning();
         Craft::info(
             Craft::t(
                 'vite',
@@ -146,7 +139,7 @@ class Vite extends Plugin
     public function clearAllCaches()
     {
         // Clear all of Vite's caches
-        self::$plugin->connector->invalidateCaches();
+        self::$plugin->vite->invalidateCaches();
     }
 
     // Protected Methods
@@ -162,7 +155,7 @@ class Vite extends Plugin
         return [
             // Manifest cache
             [
-                'key' => 'twigpack-manifest-cache',
+                'key' => 'vite-file-cache',
                 'label' => Craft::t('vite', 'Vite Cache'),
                 'action' => [$this, 'clearAllCaches'],
             ],

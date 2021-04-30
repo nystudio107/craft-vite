@@ -10,8 +10,6 @@
 
 namespace nystudio107\vite\services;
 
-use nystudio107\vite\Vite;
-
 use Craft;
 use craft\base\Component;
 use craft\helpers\Html as HtmlHelper;
@@ -30,7 +28,7 @@ use GuzzleHttp\RequestOptions;
  * @package   Vite
  * @since     1.0.0
  */
-class Connector extends Component
+class Vite extends Component
 {
     // Constants
     // =========================================================================
@@ -97,13 +95,13 @@ class Connector extends Component
      *
      * @return string
      */
-    public function viteScript(string $path, $asyncCss = true, array $scriptTagAttrs = [], array $cssTagAttrs = []): string
+    public function script(string $path, $asyncCss = true, array $scriptTagAttrs = [], array $cssTagAttrs = []): string
     {
         if ($this->devServerRunning()) {
-            return $this->viteDevServerScript($path, $scriptTagAttrs);
+            return $this->devServerScript($path, $scriptTagAttrs);
         }
 
-        return $this->viteManifestScript($path, $asyncCss, $scriptTagAttrs, $cssTagAttrs);
+        return $this->manifestScript($path, $asyncCss, $scriptTagAttrs, $cssTagAttrs);
     }
 
     /**
@@ -114,7 +112,7 @@ class Connector extends Component
      *
      * @return string
      */
-    public function viteDevServerScript(string $path, array $scriptTagAttrs = []): string
+    public function devServerScript(string $path, array $scriptTagAttrs = []): string
     {
         $lines = [];
         // Include the entry script
@@ -136,7 +134,7 @@ class Connector extends Component
      *
      * @return string
      */
-    public function viteManifestScript(string $path, bool $asyncCss = true, array $scriptTagAttrs = [], array $cssTagAttrs = []): string
+    public function manifestScript(string $path, bool $asyncCss = true, array $scriptTagAttrs = [], array $cssTagAttrs = []): string
     {
         $lines = [];
         // Grab the manifest
@@ -259,7 +257,6 @@ class Connector extends Component
             : null;
         // Get the result from the cache, or parse the file
         $cache = Craft::$app->getCache();
-        $settings = Vite::$plugin->getSettings();
         $cacheKeySuffix = $settings->cacheKeySuffix ?? '';
         $file = $cache->getOrSet(
             self::CACHE_KEY . $cacheKeySuffix . $pathOrUrl,
