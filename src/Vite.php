@@ -18,7 +18,9 @@ use Craft;
 use craft\base\Plugin;
 use craft\events\RegisterCacheOptionsEvent;
 use craft\utilities\ClearCaches;
+use craft\web\Application;
 use craft\web\twig\variables\CraftVariable;
+use craft\web\View;
 
 use yii\base\Event;
 
@@ -123,6 +125,14 @@ class Vite extends Plugin
                 );
             }
         );
+        // delay attaching event handler to the view component after it is fully configured
+        $app = Craft::$app;
+        if ($app->getConfig()->getGeneral()->devMode) {
+            $app->on(Application::EVENT_BEFORE_REQUEST, function () use ($app) {
+                $app->getView()->on(View::EVENT_END_BODY, [$this, 'injectErrorEntry']);
+            });
+        }
+        // Log that the plugin has loaded
         Craft::info(
             Craft::t(
                 'vite',
@@ -139,11 +149,40 @@ class Vite extends Plugin
     public function clearAllCaches()
     {
         // Clear all of Vite's caches
-        self::$plugin->vite->invalidateCaches();
+        $this->vite::invalidateCaches();
     }
 
     // Protected Methods
     // =========================================================================
+
+    /**
+     * Inject the error entry point JavaScript for auto-reloading of Twig error
+     * pages
+     */
+    protected function injectErrorEntry()
+    {
+        $response = Craft::$app->getResponse();
+        if ($response->isServerError || $response->isClientError) {
+            $settings = $this->getSettings();
+            /** @var Settings $settings */
+            if (!empty($settings->errorEntry) && $settings->useDevServer) {
+                try {
+                    $errorEntry = $settings->errorEntry;
+                    if (is_string($errorEntry)) {
+                        $errorEntry = [$errorEntry];
+                    }
+                    foreach ($errorEntry as $entry) {
+                        $tag = $this->vite->script($entry);
+                        if ($tag !== null) {
+                            echo $tag;
+                        }
+                    }
+                } catch (\Throwable $e) {
+                    // That's okay, Vite will have already logged the error
+                }
+            }
+        }
+    }
 
     /**
      * Returns the custom Control Panel cache options.
