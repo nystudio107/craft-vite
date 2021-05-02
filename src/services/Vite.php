@@ -139,9 +139,8 @@ class Vite extends Component
                     case 'file':
                         $lines[] = HtmlHelper::jsFile($tag['url'], $tag['options']);
                         break;
-                    case 'imports':
                     case 'css':
-                    $lines[] = HtmlHelper::cssFile($tag['url'], $tag['options']);
+                        $lines[] = HtmlHelper::cssFile($tag['url'], $tag['options']);
                         break;
                     default:
                         break;
@@ -150,6 +149,80 @@ class Vite extends Component
         }
 
         return implode("\r\n", $lines);
+    }
+
+    /**
+     * Register the appropriate tags to the Craft View to load the Vite script, either via the dev server or
+     * extracting it from the manifest.json file
+     *
+     * @param string $path
+     * @param bool $asyncCss
+     * @param array $scriptTagAttrs
+     * @param array $cssTagAttrs
+     *
+     * @return void
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function register(string $path, bool $asyncCss = true, array $scriptTagAttrs = [], array $cssTagAttrs = [])
+    {
+        if ($this->devServerRunning()) {
+            $this->devServerRegister($path, $scriptTagAttrs);
+
+            return;
+        }
+
+        $this->manifestRegister($path, $asyncCss, $scriptTagAttrs, $cssTagAttrs);
+    }
+
+    /**
+     * Register the script tag to the Craft View to load the script from the Vite dev server
+     *
+     * @param string $path
+     * @param array $scriptTagAttrs
+     *
+     * @return void
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function devServerRegister(string $path, array $scriptTagAttrs = [])
+    {
+        $view = Craft::$app->getView();
+        // Include the entry script
+        $url = $this->createUrl($this->devServerPublic, $path);
+        $view->registerScript('', $view::POS_HEAD, array_merge([
+            'type' => 'module',
+            'src' => $url,
+            ], $scriptTagAttrs));
+    }
+
+    /**
+     * Register the script, module link, and CSS link tags to the Craft View for the script from the manifest.json file
+     *
+     * @param string $path
+     * @param bool $asyncCss
+     * @param array $scriptTagAttrs
+     * @param array $cssTagAttrs
+     *
+     * @return void
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function manifestRegister(string $path, bool $asyncCss = true, array $scriptTagAttrs = [], array $cssTagAttrs = [])
+    {
+        $view = Craft::$app->getView();
+        $tags = $this->extractManifestTags($path, $asyncCss, $scriptTagAttrs, $cssTagAttrs);
+        foreach($tags as $tag) {
+            if (!empty($tag)) {
+                switch ($tag['type']) {
+                    case 'file':
+                        $view->registerScript('', $view::POS_HEAD, array_merge(['src' => $tag['url']],$tag['options']));
+                        break;
+                    case 'css':
+                        $view->registerCssFile($tag['url'], $tag['options']);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
     }
 
     /**
@@ -229,7 +302,7 @@ class Vite extends Component
                             'crossorigin' => true,
                         ], $scriptTagAttrs)
                     ];
-                    // If there are any imports, include them
+                    // @TODO Imports are actually just a list of dynamic imports, so we probably don't need to be including them
                     if (isset($entry['imports'])) {
                         foreach ($entry['imports'] as $import) {
                             if (isset($manifest[$import]['file'])) {

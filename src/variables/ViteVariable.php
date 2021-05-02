@@ -43,4 +43,23 @@ class ViteVariable
             Vite::$plugin->vite->script($path, $asyncCss, $scriptTagAttrs, $cssTagAttrs)
         );
     }
+
+    /**
+     * Register the appropriate tags to the Craft View to load the Vite script, either via the dev server or
+     * extracting it from the manifest.json file
+     *
+     * @param string $path
+     * @param bool $asyncCss
+     * @param array $scriptTagAttrs
+     * @param array $cssTagAttrs
+     *
+     * @return string
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function register(string $path, bool $asyncCss = true, array $scriptTagAttrs = [], array $cssTagAttrs = []): string
+    {
+        Vite::$plugin->vite->register($path, $asyncCss, $scriptTagAttrs, $cssTagAttrs);
+
+        return Template::raw('');
+    }
 }
