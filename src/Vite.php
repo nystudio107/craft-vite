@@ -10,9 +10,10 @@
 
 namespace nystudio107\vite;
 
-use nystudio107\vite\services\Vite as ViteService;
-use nystudio107\vite\variables\ViteVariable;
 use nystudio107\vite\models\Settings;
+
+use nystudio107\pluginvite\services\ViteService;
+use nystudio107\pluginvite\variables\ViteVariable;
 
 use Craft;
 use craft\base\Plugin;
