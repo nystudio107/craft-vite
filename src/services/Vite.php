@@ -90,7 +90,7 @@ class Vite extends Component
      *
      * @return string
      */
-    public function script(string $path, $asyncCss = true, array $scriptTagAttrs = [], array $cssTagAttrs = []): string
+    public function script(string $path, bool $asyncCss = true, array $scriptTagAttrs = [], array $cssTagAttrs = []): string
     {
         if ($this->devServerRunning()) {
             return $this->devServerScript($path, $scriptTagAttrs);
@@ -132,53 +132,19 @@ class Vite extends Component
     public function manifestScript(string $path, bool $asyncCss = true, array $scriptTagAttrs = [], array $cssTagAttrs = []): string
     {
         $lines = [];
-        // Grab the manifest
-        $pathOrUrl = (string)Craft::parseEnv($this->manifestPath);
-        $manifest = $this->fetchFile($pathOrUrl, [JsonHelper::class, 'decodeIfJson']);
-        // If no manifest file is found, bail
-        if ($manifest === null) {
-            Craft::error('Manifest not found at ' . $this->manifestPath, __METHOD__);
-
-            return '';
-        }
-        // Set the async CSS args
-        $asyncArgs = [];
-        if ($asyncCss) {
-            $asyncArgs = [
-                'media' => 'print',
-                'onload' => "this.media='all'",
-            ];
-        }
-        // Iterate through the manifest
-        foreach ($manifest as $manifestFile => $entry) {
-            if (isset($entry['isEntry']) && $entry['isEntry']) {
-                // Include the entry script
-                if (isset($entry['file']) && strpos($path, $manifestFile) !== false) {
-                    $url = $this->createUrl($this->serverPublic, $entry['file']);
-                    $lines[] = HtmlHelper::jsFile($url, array_merge([
-                        'type' => 'module',
-                        'crossorigin' => true,
-                    ], $scriptTagAttrs));
-                    // If there are any imports, include them
-                    if (isset($entry['imports'])) {
-                        foreach ($entry['imports'] as $import) {
-                            if (isset($manifest[$import]['file'])) {
-                                $url = $this->createUrl($this->serverPublic, $manifest[$import]['file']);
-                                $lines[] = HtmlHelper::cssFile($url, array_merge([
-                                    'rel' => 'modulepreload',
-                                ], $cssTagAttrs));
-                            }
-                        }
-                    }
-                    // If there are any CSS files, include them
-                    if (isset($entry['css'])) {
-                        foreach ($entry['css'] as $css) {
-                            $url = $this->createUrl($this->serverPublic, $css);
-                            $lines[] = HtmlHelper::cssFile($url, array_merge([
-                                'rel' => 'stylesheet',
-                            ], $asyncArgs, $cssTagAttrs));
-                        }
-                    }
+        $tags = $this->extractManifestTags($path, $asyncCss, $scriptTagAttrs, $cssTagAttrs);
+        foreach($tags as $tag) {
+            if (!empty($tag)) {
+                switch ($tag['type']) {
+                    case 'file':
+                        $lines[] = HtmlHelper::jsFile($tag['url'], $tag['options']);
+                        break;
+                    case 'imports':
+                    case 'css':
+                    $lines[] = HtmlHelper::cssFile($tag['url'], $tag['options']);
+                        break;
+                    default:
+                        break;
                 }
             }
         }
@@ -203,6 +169,101 @@ class Vite extends Component
         }
 
         return true;
+    }
+
+    /**
+     * Invalidate all of the Vite caches
+     */
+    public static function invalidateCaches()
+    {
+        $cache = Craft::$app->getCache();
+        TagDependency::invalidate($cache, self::CACHE_TAG);
+        Craft::info('All Vite caches cleared', __METHOD__);
+    }
+
+    // Protected Methods
+    // =========================================================================
+
+    /**
+     * Return an array of data describing the  script, module link, and CSS link tags for the
+     * script from the manifest.json file
+     *
+     * @param string $path
+     * @param bool $asyncCss
+     * @param array $scriptTagAttrs
+     * @param array $cssTagAttrs
+     *
+     * @return array
+     */
+    public function extractManifestTags(string $path, bool $asyncCss = true, array $scriptTagAttrs = [], array $cssTagAttrs = []): array
+    {
+        $tags = [];
+        // Grab the manifest
+        $pathOrUrl = (string)Craft::parseEnv($this->manifestPath);
+        $manifest = $this->fetchFile($pathOrUrl, [JsonHelper::class, 'decodeIfJson']);
+        // If no manifest file is found, bail
+        if ($manifest === null) {
+            Craft::error('Manifest not found at ' . $this->manifestPath, __METHOD__);
+
+            return [];
+        }
+        // Set the async CSS args
+        $asyncArgs = [];
+        if ($asyncCss) {
+            $asyncArgs = [
+                'media' => 'print',
+                'onload' => "this.media='all'",
+            ];
+        }
+        // Iterate through the manifest
+        foreach ($manifest as $manifestFile => $entry) {
+            if (isset($entry['isEntry']) && $entry['isEntry']) {
+                // Include the entry script
+                if (isset($entry['file']) && strpos($path, $manifestFile) !== false) {
+                    $url = $this->createUrl($this->serverPublic, $entry['file']);
+                    $tags[] = [
+                        'type' => 'file',
+                        'url' => $url,
+                        'options' => array_merge([
+                            'type' => 'module',
+                            'crossorigin' => true,
+                        ], $scriptTagAttrs)
+                    ];
+                    // If there are any imports, include them
+                    if (isset($entry['imports'])) {
+                        foreach ($entry['imports'] as $import) {
+                            if (isset($manifest[$import]['file'])) {
+                                $url = $this->createUrl($this->serverPublic, $manifest[$import]['file']);
+                                $tags[] = [
+                                    'type' => 'imports',
+                                    'url' => $url,
+                                    'options' => array_merge([
+                                        'rel' => 'modulepreload',
+                                        'as' => 'script',
+                                        'crossorigin' => true,
+                                    ], $scriptTagAttrs)
+                                ];
+                            }
+                        }
+                    }
+                    // If there are any CSS files, include them
+                    if (isset($entry['css'])) {
+                        foreach ($entry['css'] as $css) {
+                            $url = $this->createUrl($this->serverPublic, $css);
+                            $tags[] = [
+                                'type' => 'css',
+                                'url' => $url,
+                                'options' => array_merge([
+                                    'rel' => 'stylesheet',
+                                ], $asyncArgs, $cssTagAttrs)
+                            ];
+                        }
+                    }
+                }
+            }
+        }
+
+        return $tags;
     }
 
     /**
@@ -297,17 +358,4 @@ class Vite extends Component
 
         return $file;
     }
-
-    /**
-     * Invalidate all of the Vite caches
-     */
-    public static function invalidateCaches()
-    {
-        $cache = Craft::$app->getCache();
-        TagDependency::invalidate($cache, self::CACHE_TAG);
-        Craft::info('All Vite caches cleared', __METHOD__);
-    }
-
-    // Protected Methods
-    // =========================================================================
 }
