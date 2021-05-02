@@ -106,7 +106,10 @@ class Vite extends Plugin
             function (Event $event) {
                 /** @var CraftVariable $variable */
                 $variable = $event->sender;
-                $variable->set('vite', ViteVariable::class);
+                $variable->set('vite', [
+                    'class' => ViteVariable::class,
+                    'viteService' => $this->vite,
+                ]);
             }
         );
         // Handler: ClearCaches::EVENT_REGISTER_CACHE_OPTIONS

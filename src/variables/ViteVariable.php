@@ -10,10 +10,12 @@
 
 namespace nystudio107\vite\variables;
 
-use craft\helpers\Template;
 use nystudio107\vite\Vite;
+use nystudio107\vite\services\Vite as ViteService;
 
 use Craft;
+use craft\helpers\Template;
+
 use Twig\Markup;
 
 /**
@@ -23,6 +25,14 @@ use Twig\Markup;
  */
 class ViteVariable
 {
+    // Public Properties
+    // =========================================================================
+
+    /**
+     * @var ViteService the Vite service
+     */
+    public $viteService;
+
     // Public Methods
     // =========================================================================
 
@@ -40,7 +50,7 @@ class ViteVariable
     public function script(string $path, bool $asyncCss = true, array $scriptTagAttrs = [], array $cssTagAttrs = []): Markup
     {
         return Template::raw(
-            Vite::$plugin->vite->script($path, $asyncCss, $scriptTagAttrs, $cssTagAttrs)
+            $this->viteService->script($path, $asyncCss, $scriptTagAttrs, $cssTagAttrs)
         );
     }
 
@@ -58,7 +68,7 @@ class ViteVariable
      */
     public function register(string $path, bool $asyncCss = true, array $scriptTagAttrs = [], array $cssTagAttrs = []): string
     {
-        Vite::$plugin->vite->register($path, $asyncCss, $scriptTagAttrs, $cssTagAttrs);
+        $this->viteService->register($path, $asyncCss, $scriptTagAttrs, $cssTagAttrs);
 
         return Template::raw('');
     }
