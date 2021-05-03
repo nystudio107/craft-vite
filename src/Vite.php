@@ -153,7 +153,7 @@ class Vite extends Plugin
     public function clearAllCaches()
     {
         // Clear all of Vite's caches
-        $this->vite::invalidateCaches();
+        $this->vite->invalidateCaches();
     }
 
     // Protected Methods
