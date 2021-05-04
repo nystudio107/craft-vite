@@ -272,7 +272,7 @@ So that includes:
 
 ### The `.register()` function
 
-In addition to the `{{ craft.vite.script() }}` function, the Vite plugin also provides a `.register()` function:
+In addition to the `craft.vite.script()` function, the Vite plugin also provides a `.register()` function:
 
 ```twig
     {{ craft.vite.register("/src/js/app.ts") }}
