@@ -1,0 +1,36 @@
+{
+  "author": {
+    "email": "andrew@nystudio107.com",
+    "name": "Andrew Welch",
+    "url": "https://nystudio107.com"
+  },
+  "browser": "./src/Vite.php",
+  "bugs": {
+    "email": "andrew@nystudio107.com",
+    "url": "https://nystudio107.com"
+  },
+  "dependencies": {
+  },
+  "description": "Allows the use of the Vite.js next generation frontend tooling with Craft CMS",
+  "devDependencies": {
+ },
+  "homepage": "https://nystudio107.com",
+  "keywords": [
+    "vite",
+    "craftcms",
+    "craft",
+    "cms",
+    "plugin"
+  ],
+  "license": "SEE LICENSE IN LICENSE.md",
+  "name": "vite",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nystudio107/craft-vite.git"
+  },
+  "scripts": {
+    "docs": "cd ../docs && rm -f package-lock.json && npm install && npm update && npm run docs:build"
+  },
+  "version": "1.0.0"
+}
