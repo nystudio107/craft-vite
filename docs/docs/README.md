@@ -202,7 +202,7 @@ In production or otherwise where the Vite dev server is not running, the output 
 
 ```html
 <script type="module" src="https://example.com/dist/assets/app.56c9ea9d.js" crossorigin></script>
-<link href="https://example.com/dist/assets/app.c30f6458.css" rel="stylesheet" media="print" onload="this.media=&#039;all&#039;">
+<link href="https://example.com/dist/assets/app.c30f6458.css" rel="stylesheet" media="print" onload="this.media='all'">
 ```
 
 ### CSS
@@ -257,7 +257,7 @@ In production or otherwise where the Vite dev server is not running, the output 
 </script>
 <script type="nomodule" src="https://example.com/dist/assets/polyfills-legacy.8fce4e35.js"></script>
 <script type="module" src="https://example.com/dist/assets/app.56c9ea9d.js" crossorigin></script>
-<link href="https://example.com/dist/assets/app.c30f6458.css" rel="stylesheet" media="print" onload="this.media=&#039;all&#039;">
+<link href="https://example.com/dist/assets/app.c30f6458.css" rel="stylesheet" media="print" onload="this.media='all'">
 <script type="nomodule" src="https://example.com/dist/assets/app-legacy.0c84e934.js"></script>
 ```
 
