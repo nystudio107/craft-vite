@@ -13,7 +13,7 @@ This plugin requires Craft CMS 3.0.0 or later.
 **Installation**
 
 1. Install with Composer via `composer require nystudio107/craft-vite` from your project directory
-2. Install the plugin via `./craft install/plugin vite` via the CLI -or- in the Craft Control Panel under Settings > Plugins
+2. Install the plugin via `php craft install/plugin vite` via the CLI -or- in the Craft Control Panel under Settings > Plugins
 
 You can also install Vite via the **Plugin Store** in the Craft Control Panel.
 
