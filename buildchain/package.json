@@ -10,14 +10,10 @@
     "url": "https://nystudio107.com"
   },
   "dependencies": {
-    "vue": "^3.0.5"
   },
   "description": "Allows the use of the Vite.js next generation frontend tooling with Craft CMS",
   "devDependencies": {
-    "@vitejs/plugin-vue": "^1.2.2",
-    "@vue/compiler-sfc": "^3.0.5",
-    "vite": "^2.2.3"
-  },
+ },
   "homepage": "https://nystudio107.com",
   "keywords": [
     "vite",
@@ -34,10 +30,7 @@
     "url": "git+https://github.com/nystudio107/craft-vite.git"
   },
   "scripts": {
-    "dev": "vite",
-    "docs": "cd ../docs && rm -f package-lock.json && npm install && npm update && npm run docs:build",
-    "build": "vite build",
-    "serve": "vite preview"
+    "docs": "cd ../docs && rm -f package-lock.json && npm install && npm update && npm run docs:build"
   },
   "version": "1.0.0"
 }
