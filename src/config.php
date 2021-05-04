@@ -8,6 +8,8 @@
  * @copyright Copyright (c) 2021 nystudio107
  */
 
+use craft\helpers\App;
+
 /**
  * Vite config.php
  *
@@ -27,7 +29,7 @@ return [
    /**
     * @var bool Should the dev server be used for?
     */
-    'useDevServer' => true,
+    'useDevServer' => App::env('DEV_MODE'),
 
     /**
      * @var string File system path (or URL) to the Vite-built manifest.json
@@ -43,7 +45,7 @@ return [
      * @var string The internal URL to the dev server, when accessed from the environment in which PHP is executing
      *              This can be the same as `$devServerPublic`, but may be different in containerized or VM setups
      */
-    'devServerInternal' => 'http://craft-vite-buildchain:3000/',
+    'devServerInternal' => 'http://vite:3000/',
 
     /**
      * @var string The public URL to use when not using the dev server
