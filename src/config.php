@@ -27,7 +27,7 @@ use craft\helpers\App;
 return [
 
    /**
-    * @var bool Should the dev server be used for?
+    * @var bool Should the dev server be used?
     */
     'useDevServer' => App::env('DEV_MODE'),
 
@@ -50,7 +50,7 @@ return [
     /**
      * @var string The public URL to use when not using the dev server
      */
-    'serverPublic' => 'http://localhost:8000/dist/',
+    'serverPublic' => App::env('SITE_URL') . '/dist/',
 
     /**
      * @var string The JavaScript entry from the manifest.json to inject on Twig error pages
