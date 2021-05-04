@@ -24,15 +24,15 @@ To install the plugin, follow these instructions.
 
 ## Vite Overview
 
-Vite is a bridge between Craft CMS/Twig and the next generation frontend build tool Vite.js
+Vite is a bridge between Craft CMS/Twig and the next generation frontend build tool [Vite.js](https://vitejs.dev/)
 
-Vite allows for Hot Module Replacement (HMR) of JavaScript, CSS, and Twig during development, and optimized production builds.
+Vite allows for Hot Module Replacement (HMR) of JavaScript, CSS, and Twig (even through errors) during development, as well as optimized production builds.
 
 Vite supports both modern and legacy bundle builds, as per the [Deploying ES2015+ Code in Production Today](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/) article.
 
 Vite also handles generating the necessary `<script>` and `<link>` tags to support both synchronous and asynchronous loading of JavaScript and CSS.
 
-Additionally, Twigpack has a caching layer to ensure optimal performance.
+Additionally, Vite has a caching layer to ensure optimal performance.
 
 ## Configuring Vite
 
