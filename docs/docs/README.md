@@ -165,7 +165,7 @@ The Vite plugin has support for enabling live refresh even through Twig error pa
 
 Vite uses [esbuild](https://github.com/evanw/esbuild) so it is very fast, and has built-in support for TypeScript and JSX.
 
-Vite also comes with support for has a number of [plugins](https://vitejs.dev/plugins/) that allow you to use:
+Vite also comes with support for a number of [plugins](https://vitejs.dev/plugins/) that allow you to use:
 * **[Vue.js 3.x](https://github.com/vitejs/vite/tree/main/packages/plugin-vue)**
 * **[Vue.js 2.x](https://github.com/underfin/vite-plugin-vue2)**
 * **[React fast refresh](https://github.com/vitejs/vite/tree/main/packages/plugin-react-refresh)**
