@@ -1,11 +1,11 @@
 module.exports = {
-    title: 'Rich Variables Documentation',
-    description: 'Documentation for the Rich Variables plugin',
-    base: '/docs/rich-variables/',
+    title: 'Vite Documentation',
+    description: 'Documentation for the Vite plugin',
+    base: '/docs/vite/',
     themeConfig: {
         displayAllHeaders: true,
         sidebar: [
-            ['/', 'Rich Variables plugin for Craft CMS 3.x'],
+            ['/', 'Vite plugin for Craft CMS 3.x'],
         ]
     }
 };
