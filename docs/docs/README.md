@@ -68,7 +68,7 @@ return [
 * **`errorEntry`** - is a string, or array of strings, that should be the JavaScript entry point(s) (e.g.: `app.js`) in your `manifest.json` that should be injected into Twig error templates, to allow hot module replacement to work through Twig error pages. `devMode` must be `true` and **useDevServer** must also be `true` for this to have any effect.
 * **`cacheKeySuffix`** - String to be appended to the cache key
 
-Note also that the **manifestPath** defaults to a Yii2 alias `@webroot/` (adjust as necessary to point to your `manifest.json` on the file system); this allows Vite to load the manifest from the file system, rather than via http request, and is the preferred method. However, it works fine as a full URL as well if you have your `manifest.json` hosted on a CDN or such.
+Note also that the **manifestPath** defaults to a Yii2 alias `@webroot/dist/manifest.json` (adjust as necessary to point to your `manifest.json` on the file system); this allows Vite to load the manifest from the file system, rather than via http request, and is the preferred method. However, it works fine as a full URL as well if you have your `manifest.json` hosted on a CDN or such.
 
 ### Configuring Vite.js
 
