@@ -60,13 +60,13 @@ return [
 ];
 ```
 
-* **useDevServer** - is a `boolean` that sets whether you will be using [Vite dev server](https://vitejs.dev/guide/features.html#hot-module-replacement) for hot module replacement (HMR)
-* **manifestPath** - the public server path to your manifest files; it can be a full URL or a partial path, or a Yii2 alias.  This is usually the same as whatever you set your webpack `build.outDir` to in `vite.config.js`
-* **devServerPublic** - the URL to the Vite dev server, which is used for the hot module replacement (HMR); it can be a full URL or a partial path, or a Yii2 alias. Usually this is `http://localhost:3000`, since Vite defaults to that. This will appear in `<script>` tags on the frontend when the dev server is running
-* **devServerInternal** - the internal URL to the Vite dev server, which may be the same as **devServerPublic** or it may be different if you're using Docker or a VM. This is used by PHP to ping the dev server to ensure it is running; it can be a full URL or a partial path, or a Yii2 alias.
-* **serverPublic** - the public server URL to your asset files; it can be a full URL or a partial path, or a Yii2 alias. This will appear in `<script>` tags on the frontend for production builds. `App::env('SITE_URL') . '/dist/'` is a typical setting
-* **errorEntry** - is a string, or array of strings, that should be the JavaScript entry point(s) (e.g.: `app.js`) in your `manifest.json` that should be injected into Twig error templates, to allow hot module replacement to work through Twig error pages. `devMode` must be `true` and **useDevServer** must also be `true` for this to have any effect.
-* **cacheKeySuffix** - String to be appended to the cache key
+* **`useDevServer`** - is a `boolean` that sets whether you will be using [Vite dev server](https://vitejs.dev/guide/features.html#hot-module-replacement) for hot module replacement (HMR)
+* **`manifestPath`** - the public server path to your manifest files; it can be a full URL or a partial path, or a Yii2 alias.  This is usually the same as whatever you set your webpack `build.outDir` to in `vite.config.js`
+* **`devServerPublic`** - the URL to the Vite dev server, which is used for the hot module replacement (HMR); it can be a full URL or a partial path, or a Yii2 alias. Usually this is `http://localhost:3000`, since Vite defaults to that. This will appear in `<script>` tags on the frontend when the dev server is running
+* **`devServerInternal`** - the internal URL to the Vite dev server, which may be the same as **devServerPublic** or it may be different if you're using Docker or a VM. This is used by PHP to ping the dev server to ensure it is running; it can be a full URL or a partial path, or a Yii2 alias.
+* **`serverPublic`** - the public server URL to your asset files; it can be a full URL or a partial path, or a Yii2 alias. This will appear in `<script>` tags on the frontend for production builds. `App::env('SITE_URL') . '/dist/'` is a typical setting
+* **`errorEntry`** - is a string, or array of strings, that should be the JavaScript entry point(s) (e.g.: `app.js`) in your `manifest.json` that should be injected into Twig error templates, to allow hot module replacement to work through Twig error pages. `devMode` must be `true` and **useDevServer** must also be `true` for this to have any effect.
+* **`cacheKeySuffix`** - String to be appended to the cache key
 
 Note also that the **manifestPath** defaults to a Yii2 alias `@webroot/` (adjust as necessary to point to your `manifest.json` on the file system); this allows Vite to load the manifest from the file system, rather than via http request, and is the preferred method. However, it works fine as a full URL as well if you have your `manifest.json` hosted on a CDN or such.
 
@@ -92,9 +92,9 @@ export default ({ command }) => ({
 ```
 
 * **`base`** - set to the root if the dev server is running, and otherwise set it to `/dist/` so our built assets are in their own directory (and often not checked into Git).
-* **`manifest`** - set to `true` so that the [Rollup build](https://vitejs.dev/guide/build.html) will generate a manifest file of the production assets
-  * **`outDir`** - specifies where the built production assets should go, as a file system path relative to the `vite.config.js` file.
-* **`input`** - set to an object that has [key/value pairs](https://vitejs.dev/guide/build.html#multi-page-app) for each of our entrypoint scripts (needed since we're not using an `index.html` as our application entrypoint). These should be the full path to the script as referenced in your Twig code
+* **`build.manifest`** - set to `true` so that the [Rollup build](https://vitejs.dev/guide/build.html) will generate a manifest file of the production assets
+* **`build.outDir`** - specifies where the built production assets should go, as a file system path relative to the `vite.config.js` file.
+* **`build.rollupOptions.input`** - set to an object that has [key/value pairs](https://vitejs.dev/guide/build.html#multi-page-app) for each of our entrypoint scripts (needed since we're not using an `index.html` as our application entrypoint). These should be the full path to the script as referenced in your Twig code
 
 #### Modern + Legacy Config
 
@@ -157,7 +157,7 @@ export default ({ command }) => ({
 });
 ```
 
-* **`reload`** - lets you specify and array of file system paths or globs to watch for changes, and issue a page refresh if any of the files change
+* **`plugins.ViteRestart.reload`** - lets you specify and array of file system paths or globs to watch for changes, and issue a page refresh if any of the files change
 
 The Vite plugin has support for enabling live refresh even through Twig error pages as you develop.
 
@@ -210,8 +210,6 @@ In production or otherwise where the Vite dev server is not running, the output 
 In order to use [CSS with Vite](https://vitejs.dev/guide/features.html#css), you _must_ import it in one of your `build.input` JavaScript file entries listed in the `vite.config.js`, e.g.:
 
 ```js
-import "vite/dynamic-import-polyfill";
-
 import '/src/css/app.pcss';
 ```
 
