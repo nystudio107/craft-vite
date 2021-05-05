@@ -6,6 +6,8 @@ Allows the use of the Vite.js next generation frontend tooling with Craft CMS
 
 ![Screenshot](./resources/img/plugin-logo.png)
 
+Related Article: [Vite.js Next Generation Frontend Tooling + Craft CMS](https://nystudio107.com/blog/using-vite-js-next-generation-frontend-tooling-with-craft-cms)
+
 ## Requirements
 
 This plugin requires Craft CMS 3.0.0 or later.
@@ -61,7 +63,7 @@ return [
 ```
 
 * **`useDevServer`** - is a `boolean` that sets whether you will be using [Vite dev server](https://vitejs.dev/guide/features.html#hot-module-replacement) for hot module replacement (HMR)
-* **`manifestPath`** - the public server path to your manifest files; it can be a full URL or a partial path, or a Yii2 alias.  This is usually the same as whatever you set your webpack `build.outDir` to in `vite.config.js`
+* **`manifestPath`** - the public server path to your manifest files; it can be a full URL or a partial path, or a Yii2 alias.  This is usually the same as whatever you set your `build.outDir` to in `vite.config.js`
 * **`devServerPublic`** - the URL to the Vite dev server, which is used for the hot module replacement (HMR); it can be a full URL or a partial path, or a Yii2 alias. Usually this is `http://localhost:3000`, since Vite defaults to that. This will appear in `<script>` tags on the frontend when the dev server is running
 * **`devServerInternal`** - the internal URL to the Vite dev server, which may be the same as **devServerPublic** or it may be different if you're using Docker or a VM. This is used by PHP to ping the dev server to ensure it is running; it can be a full URL or a partial path, or a Yii2 alias.
 * **`serverPublic`** - the public server URL to your asset files; it can be a full URL or a partial path, or a Yii2 alias. This will appear in `<script>` tags on the frontend for production builds. `App::env('SITE_URL') . '/dist/'` is a typical setting

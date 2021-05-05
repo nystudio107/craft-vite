@@ -6,6 +6,8 @@ Allows the use of the Vite.js next generation frontend tooling with Craft CMS
 
 ![Screenshot](./docs/docs/resources/img/plugin-logo.png)
 
+Related Article: [Vite.js Next Generation Frontend Tooling + Craft CMS](https://nystudio107.com/blog/using-vite-js-next-generation-frontend-tooling-with-craft-cms)
+
 ## Requirements
 
 This plugin requires Craft CMS 3.0.0 or later.
