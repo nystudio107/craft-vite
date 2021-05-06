@@ -55,7 +55,6 @@ return [
     'useDevServer' => App::env('DEV_MODE'),
     'manifestPath' => '@webroot/dist/manifest.json',
     'devServerPublic' => 'http://localhost:3000/',
-    'devServerInternal' => 'http://vite:3000/',
     'serverPublic' => App::env('SITE_URL') . '/dist/',
     'errorEntry' => '',
     'cacheKeySuffix' => '',
@@ -65,7 +64,6 @@ return [
 * **`useDevServer`** - is a `boolean` that sets whether you will be using [Vite dev server](https://vitejs.dev/guide/features.html#hot-module-replacement) for hot module replacement (HMR)
 * **`manifestPath`** - the public server path to your manifest files; it can be a full URL or a partial path, or a Yii2 alias.  This is usually the same as whatever you set your `build.outDir` to in `vite.config.js`
 * **`devServerPublic`** - the URL to the Vite dev server, which is used for the hot module replacement (HMR); it can be a full URL or a partial path, or a Yii2 alias. Usually this is `http://localhost:3000`, since Vite defaults to that. This will appear in `<script>` tags on the frontend when the dev server is running
-* **`devServerInternal`** - the internal URL to the Vite dev server, which may be the same as **devServerPublic** or it may be different if you're using Docker or a VM. This is used by PHP to ping the dev server to ensure it is running; it can be a full URL or a partial path, or a Yii2 alias.
 * **`serverPublic`** - the public server URL to your asset files; it can be a full URL or a partial path, or a Yii2 alias. This will appear in `<script>` tags on the frontend for production builds. `App::env('SITE_URL') . '/dist/'` is a typical setting
 * **`errorEntry`** - is a string, or array of strings, that should be the JavaScript entry point(s) (e.g.: `app.js`) in your `manifest.json` that should be injected into Twig error templates, to allow hot module replacement to work through Twig error pages. `devMode` must be `true` and **useDevServer** must also be `true` for this to have any effect.
 * **`cacheKeySuffix`** - String to be appended to the cache key

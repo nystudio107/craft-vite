@@ -42,12 +42,6 @@ return [
     'devServerPublic' => 'http://localhost:3000/',
 
     /**
-     * @var string The internal URL to the dev server, when accessed from the environment in which PHP is executing
-     *              This can be the same as `$devServerPublic`, but may be different in containerized or VM setups
-     */
-    'devServerInternal' => 'http://vite:3000/',
-
-    /**
      * @var string The public URL to use when not using the dev server
      */
     'serverPublic' => App::env('SITE_URL') . '/dist/',
