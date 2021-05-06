@@ -41,12 +41,6 @@ class Settings extends Model
     public $devServerPublic;
 
     /**
-     * @var string The internal URL to the dev server, when accessed from the environment in which PHP is executing
-     *              This can be the same as `$devServerPublic`, but may be different in containerized or VM setups
-     */
-    public $devServerInternal;
-
-    /**
      * @var string The public URL to use when not using the dev server
      */
     public $serverPublic;
@@ -76,7 +70,6 @@ class Settings extends Model
                 [
                     'manifestPath',
                     'devServerPublic',
-                    'devServerInternal',
                     'serverPublic',
                     'errorEntry',
                     'cacheKeySuffix',
