@@ -2,7 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
-## 1.0.3 - UNRELEASED
+## 1.0.3 - 2021.05.07
+### Changed
+* Crawl the `manifest.json` dependency graph recursively to look for CSS files
+
 ### Fixed
 * Don't call any AssetManager methods in the component `init()` method during console requests
 
