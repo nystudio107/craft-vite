@@ -55,7 +55,7 @@ return [
     'useDevServer' => App::env('DEV_MODE'),
     'manifestPath' => '@webroot/dist/manifest.json',
     'devServerPublic' => 'http://localhost:3000/',
-    'serverPublic' => App::env('SITE_URL') . '/dist/',
+    'serverPublic' => App::env('PRIMARY_SITE_URL') . '/dist/',
     'errorEntry' => '',
     'cacheKeySuffix' => '',
 ];
@@ -64,11 +64,13 @@ return [
 * **`useDevServer`** - is a `boolean` that sets whether you will be using [Vite dev server](https://vitejs.dev/guide/features.html#hot-module-replacement) for hot module replacement (HMR)
 * **`manifestPath`** - the public server path to your manifest files; it can be a full URL or a partial path, or a Yii2 alias.  This is usually the same as whatever you set your `build.outDir` to in `vite.config.js`
 * **`devServerPublic`** - the URL to the Vite dev server, which is used for the hot module replacement (HMR); it can be a full URL or a partial path, or a Yii2 alias. Usually this is `http://localhost:3000`, since Vite defaults to that. This will appear in `<script>` tags on the frontend when the dev server is running
-* **`serverPublic`** - the public server URL to your asset files; it can be a full URL or a partial path, or a Yii2 alias. This will appear in `<script>` tags on the frontend for production builds. `App::env('SITE_URL') . '/dist/'` is a typical setting
+* **`serverPublic`** - the public server URL to your asset files; it can be a full URL or a partial path, or a Yii2 alias. This will appear in `<script>` tags on the frontend for production builds. `App::env('PRIMARY_SITE_URL') . '/dist/'` is a typical setting
 * **`errorEntry`** - is a string, or array of strings, that should be the JavaScript entry point(s) (e.g.: `app.js`) in your `manifest.json` that should be injected into Twig error templates, to allow hot module replacement to work through Twig error pages. `devMode` must be `true` and **useDevServer** must also be `true` for this to have any effect.
 * **`cacheKeySuffix`** - String to be appended to the cache key
 
 Note also that the **manifestPath** defaults to a Yii2 alias `@webroot/dist/manifest.json` (adjust as necessary to point to your `manifest.json` on the file system); this allows Vite to load the manifest from the file system, rather than via http request, and is the preferred method. However, it works fine as a full URL as well if you have your `manifest.json` hosted on a CDN or such.
+
+**N.B.:** If you're using TLS (https) in local dev, you may get mixed content errors if you don't change your `devServerPublic` to `https` (and you'd need change your [server.https](https://vitejs.dev/config/#server-https) Vite config too).
 
 ### Configuring Vite.js
 

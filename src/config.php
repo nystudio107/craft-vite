@@ -44,7 +44,7 @@ return [
     /**
      * @var string The public URL to use when not using the dev server
      */
-    'serverPublic' => App::env('SITE_URL') . '/dist/',
+    'serverPublic' => App::env('PRIMARY_SITE_URL') . '/dist/',
 
     /**
      * @var string The JavaScript entry from the manifest.json to inject on Twig error pages
