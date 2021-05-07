@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.4 - UNRELEASED
+### Changed
+* Use `PRIMARY_SITE_URL` in the default config instead of `SITE_URL`
+
 ## 1.0.3 - 2021.05.07
 ### Changed
 * Crawl the `manifest.json` dependency graph recursively to look for CSS files
