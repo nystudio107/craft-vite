@@ -1,14 +1,15 @@
 TAG?=14-alpine
-CONTAINER?=$(shell basename $(CURDIR))-buildchain
+CONTAINER?=$(shell basename $(dir $(CURDIR)))-docs
 DOCKERRUN=docker container run \
 	--name ${CONTAINER} \
 	--rm \
+	-p 3000:3000 \
 	-t \
 	-v `pwd`:/app \
 	${CONTAINER}:${TAG}
-DOCSDEST?=../../sites/nystudio107/web/docs/vite
+DOCSDEST?=../../../sites/nystudio107/web/docs/vite
 
-.PHONY: docker docs npm
+.PHONY: docker build dev install update npm
 
 docker:
 	docker build \
@@ -16,11 +17,20 @@ docker:
 		-t ${CONTAINER}:${TAG} \
 		--build-arg TAG=${TAG} \
 		--no-cache
-docs: docker
+build: docker install update
 	${DOCKERRUN} \
-		run docs
+		run docs:build
 	rm -rf ${DOCSDEST}
-	mv ./docs/docs/.vuepress/dist ${DOCSDEST}
+	mv ./docs/.vitepress/dist ${DOCSDEST}
+dev: docker install
+	${DOCKERRUN} \
+		run docs:dev
+install: docker
+	${DOCKERRUN} \
+		install
+update: docker
+	${DOCKERRUN} \
+		update
 npm: docker
 	${DOCKERRUN} \
 		$(filter-out $@,$(MAKECMDGOALS))

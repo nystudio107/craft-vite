@@ -44,7 +44,7 @@ return [
     /**
      * @var string The public URL to use when not using the dev server
      */
-    'serverPublic' => App::env('SITE_URL') . '/dist/',
+    'serverPublic' => App::env('PRIMARY_SITE_URL') . '/dist/',
 
     /**
      * @var string The JavaScript entry from the manifest.json to inject on Twig error pages
@@ -56,4 +56,16 @@ return [
      * @var string String to be appended to the cache key
      */
     'cacheKeySuffix' => '',
+
+    /**
+     * @var string The internal URL to the dev server, when accessed from the environment in which PHP is executing
+     *              This can be the same as `$devServerPublic`, but may be different in containerized or VM setups.
+     *              ONLY used if $checkDevServer = true
+     */
+    'devServerInternal' => '',
+
+    /**
+     * @var bool Should we check for the presence of the dev server by pinging $devServerInternal to make sure it's running?
+     */
+    'checkDevServer' => false,
 ];
