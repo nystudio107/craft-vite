@@ -9,7 +9,7 @@ DOCKERRUN=docker container run \
 	${CONTAINER}:${TAG}
 DOCSDEST?=../../../sites/nystudio107/web/docs/vite
 
-.PHONY: docker build dev install serve update npm
+.PHONY: docker build dev install update npm
 
 docker:
 	docker build \
@@ -28,9 +28,6 @@ dev: docker install
 install: docker
 	${DOCKERRUN} \
 		install
-serve: docker install
-	${DOCKERRUN} \
-		run docs:serve
 update: docker
 	${DOCKERRUN} \
 		update
