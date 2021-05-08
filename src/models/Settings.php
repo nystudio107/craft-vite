@@ -56,6 +56,18 @@ class Settings extends Model
      */
     public $cacheKeySuffix = '';
 
+    /**
+     * @var string The internal URL to the dev server, when accessed from the environment in which PHP is executing
+     *              This can be the same as `$devServerPublic`, but may be different in containerized or VM setups.
+     *              ONLY used if $checkDevServer = true
+     */
+    public $devServerInternal;
+
+    /**
+     * @var bool Should we check for the presence of the dev server by pinging $devServerInternal to make sure it's running?
+     */
+    public $checkDevServer = false;
+
     // Public Methods
     // =========================================================================
 
@@ -65,7 +77,13 @@ class Settings extends Model
     public function rules()
     {
         return [
-            ['useDevServer', 'boolean'],
+            [
+                [
+                    'useDevServer',
+                    'checkDevServer',
+                ],
+                'boolean'
+            ],
             [
                 [
                     'manifestPath',
@@ -73,6 +91,7 @@ class Settings extends Model
                     'serverPublic',
                     'errorEntry',
                     'cacheKeySuffix',
+                    'devServerInternal',
                 ],
                 'string'
             ],
