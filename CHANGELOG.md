@@ -2,7 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
-## 1.0.4 - UNRELEASED
+## 1.0.4 - 2021.05.08
+### Added
+* Added the `devServerInternal` setting back in, along with `checkDevServer` for people who want the fallback behavior
+
 ### Changed
 * Use `PRIMARY_SITE_URL` in the default config instead of `SITE_URL`
 * Switch over to VitePress for the docs
