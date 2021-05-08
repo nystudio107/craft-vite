@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## 1.0.4 - 2021.05.08
 ### Added
-* Added the `devServerInternal` setting back in, along with `checkDevServer` for people who want the fallback behavior
+* Added the `devServerInternal` setting back in, along with `checkDevServer` for people who want the fallback behavior (https://github.com/nystudio107/craft-vite/issues/2)
 
 ### Changed
 * Use `PRIMARY_SITE_URL` in the default config instead of `SITE_URL`
