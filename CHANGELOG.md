@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 ## 1.0.5 - UNRELEASED
 ### Added
 * Moved the live reload through Twig errors to the ViteService so that plugins can get it too
-* Added `.fetch()` to allow for fetching of local or remote files, with a caching layer
+* Added `.inline()` to allow for inlining of local or remote files in your templates, with a caching layer
 
 ### Changed
 * Use `registerJsFile()` instead of `registerScript()`
