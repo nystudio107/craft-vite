@@ -5,7 +5,8 @@ module.exports = {
     lang: 'en-US',
     themeConfig: {
         repo: 'nystudio107/craft-vite',
-        docsDir: 'docs',
+        docsDir: 'docs/docs',
+        docsBranch: 'v1',
         algolia: {
             apiKey: '',
             indexName: 'craft-vite'

@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.5 - 2021.05.14
+### Added
+* Moved the live reload through Twig errors to the ViteService so that plugins can get it too
+* Added `.inline()` to allow for inlining of local or remote files in your templates, with a caching layer
+
+### Changed
+* Use `registerJsFile()` instead of `registerScript()`
+* Make the cache last for 30 seconds with `devMode` on
+* Refactored to `ViteVariableInterface` & `ViteVariableTrait`
+
 ## 1.0.4 - 2021.05.08
 ### Added
 * Added the `devServerInternal` setting back in, along with `checkDevServer` for people who want the fallback behavior (https://github.com/nystudio107/craft-vite/issues/2)

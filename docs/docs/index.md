@@ -291,6 +291,24 @@ This works exactly the way the `.script()` function works, but instead of output
 
 This is primarily useful in plugins that must exist inside of the CP, or other things that leverage the Yii2 AssetBundles and dependencies.
 
+### The `.inline()` function
+
+The Vite plugin also includes a `.inline()` function that inlines the contents of a local file (via path) or remote file (via URL) in your templates.
+
+Yii2 aliases and/or environment variables may be used, and a caching layer is used so that remote files will be kept in the cache until it is cleared, for performance reasons.
+
+URL example:
+
+```twig
+    {{ craft.vite.inline("https://example.com/my-file.txt") }}
+```
+
+Path example:
+
+```twig
+    {{ craft.vite.inline("@webroot/my-file.txt") }}
+```
+
 ### Other Options
 
 The `.script()` and `.register()` functions accept additional options as well:
