@@ -42,7 +42,7 @@ Additionally, Vite has a caching layer to ensure optimal performance.
 
 Vite.js is JavaScript frontend tooling, so by default it uses an `index.html` as an [entrypoint to your application](https://vitejs.dev/guide/#index-html-and-project-root), but with the Vite plugin and some minor configuration changes, we can use it with server-rendered setups like [Craft CMS](https://craftcms.com).
 
-Configuration for Vite is done via the `config.php` config file. Here's the default `config.php`; it should be renamed to `vite.php` and copied to your `config/` directory to take effect.
+Configuration for Vite is done via the `config.php` config file. Here’s the default `config.php`; it should be renamed to `vite.php` and copied to your `config/` directory to take effect.
 
 ### The `config.php` File
 
@@ -63,29 +63,27 @@ return [
 ];
 ```
 
-These are the settings you'll need to change for your project:
+These are the settings you’ll need to change for your project:
 
 * **`useDevServer`** - is a `boolean` that sets whether you will be using [Vite dev server](https://vitejs.dev/guide/features.html#hot-module-replacement) for hot module replacement (HMR). If this is set to `false`, the files will be pulled from the `manifest.json` specified in `manifestPath`
 * **`manifestPath`** - the public server path to your manifest files; it can be a full URL or a partial path, or a Yii2 alias.  This is usually the same as whatever you set your `build.outDir` to in `vite.config.js`
 * **`devServerPublic`** - the URL to the Vite dev server, which is used for the hot module replacement (HMR); it can be a full URL or a partial path, or a Yii2 alias. Usually this is `http://localhost:3000`, since Vite defaults to that. This will appear in `<script>` tags on the frontend when the dev server is running
 * **`serverPublic`** - the public server URL to your asset files; it can be a full URL or a partial path, or a Yii2 alias. This will appear in `<script>` tags on the frontend for production builds. `App::env('PRIMARY_SITE_URL') . '/dist/'` is a typical setting
   
-These are completely optional settings that you probably won't need to change:
+These are completely optional settings that you probably won’t need to change:
 
-* **`errorEntry`** - is a string, or array of strings, that should be the JavaScript entry point(s) (e.g.: `/src/js/app.ts`) in your `manifest.json` that should be injected into Twig error templates, to allow hot module replacement to work through Twig error pages. `devMode` must be `true` and **useDevServer** must also be `true` for this to have any effect.
+* **`errorEntry`** - is a string, or array of strings, that should be the JavaScript entry point(s) (for example: `/src/js/app.ts`) in your `manifest.json` that should be injected into Twig error templates, to allow hot module replacement to work through Twig error pages. `devMode` must be `true` and **useDevServer** must also be `true` for this to have any effect.
 * **`cacheKeySuffix`** - String to be appended to the cache key
 * **`devServerInternal`** - The internal URL to the dev server, when accessed from the environment in which PHP is executing. This can be the same as `$devServerPublic`, but may be different in containerized or VM setups. ONLY used if `$checkDevServer = true`
-* **`checkDevServer`** - Should we check for the presence of the dev server by pinging $devServerInternal to make sure it's running?
+* **`checkDevServer`** - Should we check for the presence of the dev server by pinging $devServerInternal to make sure it’s running?
 
 Note also that the **manifestPath** defaults to a Yii2 alias `@webroot/dist/manifest.json` (adjust as necessary to point to your `manifest.json` on the file system); this allows Vite to load the manifest from the file system, rather than via http request, and is the preferred method. However, it works fine as a full URL as well if you have your `manifest.json` hosted on a CDN or such.
-
-**N.B.:** If you're using TLS (https) in local dev, you may get mixed content errors if you don't change your `devServerPublic` to `https` (and you'd need change your [server.https](https://vitejs.dev/config/#server-https) Vite config too).
 
 ### Configuring Vite.js
 
 #### Basic Config
 
-Here's a basic `vite.config.js` for use as a [Vite config](https://vitejs.dev/config/):
+Here’s a basic `vite.config.js` for use as a [Vite config](https://vitejs.dev/config/):
 
 ```js
 export default ({ command }) => ({
@@ -105,7 +103,7 @@ export default ({ command }) => ({
 * **`base`** - set to the root if the dev server is running, and otherwise set it to `/dist/` so our built assets are in their own directory (and often not checked into Git).
 * **`build.manifest`** - set to `true` so that the [Rollup build](https://vitejs.dev/guide/build.html) will generate a manifest file of the production assets
 * **`build.outDir`** - specifies where the built production assets should go, as a file system path relative to the `vite.config.js` file.
-* **`build.rollupOptions.input`** - set to an object that has [key/value pairs](https://vitejs.dev/guide/build.html#multi-page-app) for each of our entrypoint scripts (needed since we're not using an `index.html` as our application entrypoint). These should be the full path to the script as referenced in your Twig code
+* **`build.rollupOptions.input`** - set to an object that has [key-value pairs](https://vitejs.dev/guide/build.html#multi-page-app) for each of our entrypoint scripts (needed since we’re not using an `index.html` as our application entrypoint). These should be the full path to the script as referenced in your Twig code
 
 #### Modern + Legacy Config
 
@@ -172,6 +170,54 @@ export default ({ command }) => ({
 
 The Vite plugin has support for enabling live refresh even through Twig error pages as you develop.
 
+### Local Development Environment Setup
+
+#### Using HTTPS
+
+If you’re using TLS (https) in local dev, you may get mixed content errors if you don’t change your `devServerPublic` to `https` (and you’d need change your [server.HTTPS](https://vitejs.dev/config/#server-https) Vite config too).
+
+Then you’ll want to ensure you have a trusted self-signed certificate for your browser, or you can use the [vite-plugin-mkcert](https://github.com/liuweiGL/vite-plugin-mkcert) plugin.
+
+#### Using Laravel Valet
+
+If you’re using [Laravel Valet](https://laravel.com/docs/8.x/valet) you may [run into issues](https://github.com/nystudio107/craft-vite/issues/4) with `https`. If so, you can add this config to your `vite.config.js` (see below):
+
+```js
+  server: {
+    https: {
+      key: fs.readFileSync('localhost-key.pem'),
+      cert: fs.readFileSync('localhost.pem'),
+    },
+    hmr: {
+      host: 'localhost',
+    }
+  },
+```
+
+#### Using Homestead/VM
+
+If you’re using a VM like Homestead, to get Hot Module Replacement [(HMR) working](https://github.com/nystudio107/craft-vite/issues/3), you’ll need to add this config to your `vite.config.js` (see below):
+
+```js
+  server: {
+    host: '0.0.0.0',
+    watch: {
+        usePolling: true,
+    },
+  },
+```
+To work inside of a VM like VirtualBox (which is typically used by Homestead) you need to enable polling.
+
+#### Using Docker
+
+To work properly with a Docker setup, the `server.host` needs to be set to `0.0.0.0` so that it broadcasts to all available IPv4 addresses in your `vite.config.js` (see below):
+
+```js
+  server: {
+    host: '0.0.0.0',
+  },
+```
+
 ### Other Config
 
 Vite uses [esbuild](https://github.com/evanw/esbuild) so it is very fast, and has built-in support for TypeScript and JSX.
@@ -195,7 +241,7 @@ Once the Vite plugin is installed and configured, using it is quite simple. Wher
     {{ craft.vite.script("/src/js/app.ts") }}
 ```
 
-Note that Vite automatically also supports the direct linking to TypeScript (as in the above example), JSX, and other files via plugins. You just link directly to them, that's it.
+Note that Vite automatically also supports the direct linking to TypeScript (as in the above example), JSX, and other files via plugins. You just link directly to them, that’s it.
 
 #### Development
 
@@ -218,7 +264,7 @@ In production or otherwise where the Vite dev server is not running, the output 
 
 ### CSS
 
-In order to use [CSS with Vite](https://vitejs.dev/guide/features.html#css), you _must_ import it in one of your `build.input` JavaScript file entries listed in the `vite.config.js`, e.g.:
+To use [CSS with Vite](https://vitejs.dev/guide/features.html#css), you _must_ import it in one of your `build.input` JavaScript file entries listed in the `vite.config.js`, for example:
 
 ```js
 import '/src/css/app.pcss';
@@ -230,7 +276,7 @@ By default, it loads the [CSS asynchronously](https://www.filamentgroup.com/lab/
 
 ### Polyfills
 
-In order to work properly, you must also import the [Vite Polyfill](https://vitejs.dev/config/#build-polyfilldynamicimport) in your `build.input` JavaScript file entries listed in the `vite.config.js`, e.g.:
+To work properly, you must also import the [Vite Polyfill](https://vitejs.dev/config/#build-polyfilldynamicimport) in your `build.input` JavaScript file entries listed in the `vite.config.js`, for example:
 
 ```js
 import "vite/dynamic-import-polyfill";
@@ -238,7 +284,7 @@ import "vite/dynamic-import-polyfill";
 
 ### Legacy
 
-If you're using the `vite-plugin-legacy` plugin to generate builds compatible with older browsers, the Vite plugin will automatically detect this and use the [module/nomodule](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/) pattern when outputting production build tags.
+If you’re using the `vite-plugin-legacy` plugin to generate builds compatible with older browsers, the Vite plugin will automatically detect this and use the [module/nomodule](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/) pattern when outputting production build tags.
 
 The Twig code:
 
@@ -318,8 +364,8 @@ The `.script()` and `.register()` functions accept additional options as well:
 ```
 * **`PATH`** - `string` - the path to the script
 * **`ASYNC_CSS`** - `boolean` - whether any CSS should be loaded async or not (defaults to `true`)
-* **`SCRIPT_TAG_ATTRS`** - `array` - an array of key/value pairs for additional attributes to add to any generated script tags
-* **`CSS_TAG_ATTRS`** - `array` - an array of key/value pairs for additional attributes to add to any generated css link tags
+* **`SCRIPT_TAG_ATTRS`** - `array` - an array of key-value pairs for additional attributes to add to any generated script tags
+* **`CSS_TAG_ATTRS`** - `array` - an array of key-value pairs for additional attributes to add to any generated CSS link tags
 
 So for example:
 ```twig
