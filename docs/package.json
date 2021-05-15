@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "docs:build": "vitepress build docs",
+    "docs:build": "npm run docs:fix && npm run docs:lint && vitepress build docs",
     "docs:dev": "vitepress dev docs",
     "docs:fix": "textlint --fix ./docs/**/*.md",
     "docs:lint": "textlint ./docs/**/*.md"
