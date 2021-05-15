@@ -28,6 +28,12 @@ dev: docker install
 install: docker
 	${DOCKERRUN} \
 		install
+fix: docker install
+	${DOCKERRUN} \
+		run docs:fix
+lint: docker install
+	${DOCKERRUN} \
+		run docs:lint
 update: docker
 	${DOCKERRUN} \
 		update
