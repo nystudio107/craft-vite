@@ -52,7 +52,7 @@ Configuration for Vite is done via the `config.php` config file. Here’s the de
 use craft\helpers\App;
 
 return [
-    'useDevServer' => App::env('DEV_MODE'),
+    'useDevServer' => App::env('ENVIRONMENT') === 'dev',
     'manifestPath' => '@webroot/dist/manifest.json',
     'devServerPublic' => 'http://localhost:3000/',
     'serverPublic' => App::env('PRIMARY_SITE_URL') . '/dist/',
