@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.6 - UNRELEASED
+### Changed
+* Change the default `useDevServer` setting to `App::env('ENVIRONMENT') === 'dev'` (https://github.com/nystudio107/craft-vite/issues/6)
+
 ## 1.0.5 - 2021.05.14
 ### Added
 * Moved the live reload through Twig errors to the ViteService so that plugins can get it too
