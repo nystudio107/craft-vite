@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.7 - UNRELEASED
+
 ## 1.0.6 - 2021.05.20
 ### Changed
 * Change the default `useDevServer` setting to `App::env('ENVIRONMENT') === 'dev'` (https://github.com/nystudio107/craft-vite/issues/6)
