@@ -2,9 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
-## 1.0.6 - UNRELEASED
+## 1.0.6 - 2021.05.20
 ### Changed
 * Change the default `useDevServer` setting to `App::env('ENVIRONMENT') === 'dev'` (https://github.com/nystudio107/craft-vite/issues/6)
+* Refactored the code from a monolithic `ViteService` to helpers, as appropriate
+
+### Fixed
+* Fixed an issue where it was outputting `type="nomodule"` for legacy scripts, when it should have just been `nomodule`
 
 ## 1.0.5 - 2021.05.14
 ### Added
