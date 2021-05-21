@@ -60,6 +60,7 @@ return [
     'cacheKeySuffix' => '',
     'devServerInternal' => '',
     'checkDevServer' => false,
+    'includeReactRefreshShim' => false,
 ];
 ```
 
@@ -76,6 +77,7 @@ These are completely optional settings that you probably won’t need to change:
 * **`cacheKeySuffix`** - String to be appended to the cache key
 * **`devServerInternal`** - The internal URL to the dev server, when accessed from the environment in which PHP is executing. This can be the same as `$devServerPublic`, but may be different in containerized or VM setups. ONLY used if `$checkDevServer = true`
 * **`checkDevServer`** - Should we check for the presence of the dev server by pinging $devServerInternal to make sure it’s running?
+* **`includeReactRefreshShim`** - whether or not the required [shim for `react-refresh`](https://vitejs.dev/guide/backend-integration.html#backend-integration) should be included when the Vite dev server is running
 
 Note also that the **manifestPath** defaults to a Yii2 alias `@webroot/dist/manifest.json` (adjust as necessary to point to your `manifest.json` on the file system); this allows Vite to load the manifest from the file system, rather than via http request, and is the preferred method. However, it works fine as a full URL as well if you have your `manifest.json` hosted on a CDN or such.
 
@@ -217,6 +219,26 @@ To work properly with a Docker setup, the `server.host` needs to be set to `0.0.
     host: '0.0.0.0',
   },
 ```
+
+#### Using Nitro
+
+Getting Vite up and running in Nitro has been problematic for some.
+
+Since the state of the Nitro frontend development tooling is in flux, check the [Nitro Issues](https://github.com/craftcms/nitro/issues) or the `#nitro` discord channel for the latest.
+
+You have 3 options when running Vite with Nitro:
+
+1. Run Vite inside of the Nitro Docker container
+2. Run Vite in its own Docker container, using its own separate Dockerfile
+3. Run Vite locally on your computer and configure it to use a port _other_ than `3000`
+
+Option `1` is probably the most viable, but Vite requires Node.js 14 or later, and with Nitro the Node.js version is tied to the PHP version of your site.  Also people have stated that using `nitro npm run dev` doesn’t work, but using `nitro ssh` and then running `npm run dev` from inside the container _does_ work.
+
+Following the [Support for vite configuration](https://github.com/craftcms/nitro/issues/360) GitHub issue is likely a good idea.
+
+If you know Docker, option `2` is a good way to go. You can see an example of how you might do it in the [craft-plugin-vite-buildchain](https://github.com/nystudio107/craft-plugin-vite-buildchain/tree/v1/buildchain) repository.
+
+I would generally discourage option `3`, because we want to run our development tools inside of our local development environment, and not on locally on our computer.
 
 ### Other Config
 
