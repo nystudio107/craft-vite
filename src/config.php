@@ -68,4 +68,9 @@ return [
      * @var bool Should we check for the presence of the dev server by pinging $devServerInternal to make sure it's running?
      */
     'checkDevServer' => false,
+
+    /**
+     * @var bool Whether the react-refresh-shim should be included
+     */
+    'includeReactRefreshShim' => false,
 ];

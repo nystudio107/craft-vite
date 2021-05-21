@@ -68,6 +68,11 @@ class Settings extends Model
      */
     public $checkDevServer = false;
 
+    /**
+     * @var bool Whether the react-refresh-shim should be included
+     */
+    public $includeReactRefreshShim = false;
+
     // Public Methods
     // =========================================================================
 
@@ -81,6 +86,7 @@ class Settings extends Model
                 [
                     'useDevServer',
                     'checkDevServer',
+                    'includeReactRefreshShim',
                 ],
                 'boolean'
             ],
