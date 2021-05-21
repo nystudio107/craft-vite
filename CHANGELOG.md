@@ -2,7 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
-## 1.0.7 - UNRELEASED
+## 1.0.7 - 2021.05.21
+### Added
+* Added a `includeReactRefreshShim` setting that will automatically include the required [shim for `react-refresh`](https://vitejs.dev/guide/backend-integration.html#backend-integration) when the Vite dev server is running (https://github.com/nystudio107/craft-vite/issues/5)
+
+### Changed
+* Removed custom user/agent header that was a holdover from `curl`
+* Re-worked how the various JavaScript shims are stored and injected
 
 ## 1.0.6 - 2021.05.20
 ### Changed
