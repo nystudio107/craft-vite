@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.8 - UNRELEASED
+### Added
+* Added `craft.vite.includeCriticalCssTags()` to make it easy to include inline Critical CSS generated via `rollup-plugin-critical` 
+
 ## 1.0.7 - 2021.05.21
 ### Added
 * Added a `includeReactRefreshShim` setting that will automatically include the required [shim for `react-refresh`](https://vitejs.dev/guide/backend-integration.html#backend-integration) when the Vite dev server is running (https://github.com/nystudio107/craft-vite/issues/5)
