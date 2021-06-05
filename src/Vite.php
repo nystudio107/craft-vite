@@ -12,6 +12,7 @@ namespace nystudio107\vite;
 
 use nystudio107\vite\models\Settings;
 use nystudio107\vite\variables\ViteVariable;
+use nystudio107\vite\services\Helper as HelperService;
 
 use nystudio107\pluginvite\services\ViteService;
 
@@ -33,6 +34,7 @@ use yii\base\Event;
  * @since     1.0.0
  *
  * @property  ViteService $vite
+ * @property  HelperService $helper
  */
 class Vite extends Plugin
 {
@@ -58,6 +60,7 @@ class Vite extends Plugin
     public function __construct($id, $parent = null, array $config = [])
     {
         $config['components'] = [
+            'helper' => HelperService::class,
             'vite' => [
                 'class' => ViteService::class,
             ]
@@ -94,7 +97,6 @@ class Vite extends Plugin
     {
         parent::init();
         self::$plugin = $this;
-
         // Configure our Vite service with the settings
         $settings = $this->getSettings();
         if ($settings) {
@@ -105,7 +107,9 @@ class Vite extends Plugin
                 $viteAttrs
             ));
         }
-       // Log that the plugin has loaded
+        // Add our event listeners
+        $this->installEventListeners();
+        // Log that the plugin has loaded
         Craft::info(
             Craft::t(
                 'vite',

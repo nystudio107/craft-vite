@@ -73,4 +73,14 @@ return [
      * @var bool Whether the react-refresh-shim should be included
      */
     'includeReactRefreshShim' => false,
+
+    /**
+     * @var string File system path (or URL) to where the Critical CSS files are stored
+     */
+    'criticalPath' => '@webroot/dist/criticalcss',
+
+    /**
+     * @var string the suffix added to the name of the currently rendering template for the critical css file name
+     */
+    'criticalSuffix' =>'_critical.min.css',
 ];

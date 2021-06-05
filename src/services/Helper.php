@@ -8,15 +8,18 @@
  * @copyright Copyright (c) 2021 nystudio107
  */
 
-namespace nystudio107\vite\variables;
+namespace nystudio107\vite\services;
 
+use nystudio107\vite\Vite;
+use nystudio107\vite\models\Settings;
+
+use nystudio107\pluginvite\helpers\FileHelper;
+
+use Craft;
 use craft\base\Component;
-use nystudio107\pluginvite\variables\ViteVariableInterface;
-use nystudio107\pluginvite\variables\ViteVariableTrait;
+use craft\helpers\Html;
 
-use craft\helpers\Template;
-
-use Twig\Markup;
+use Twig\Error\LoaderError;
 
 /**
  * @author    nystudio107
@@ -32,15 +35,17 @@ class Helper extends Component
      * @param null|string $name
      * @param array $attributes additional HTML key/value pair attributes to add to the resulting tag
      *
-     * @return Markup
-     * @throws \Twig\Error\LoaderError
+     * @return string
+     * @throws LoaderError
      */
-    public function includeCriticalCssTags($name = null, array $attributes = []): Markup
+    public function getCriticalCssTags($name = null, array $attributes = []): string
     {
         // Resolve the template name
-        $template = Craft::$app->getView()->resolveTemplate($name ?? Twigpack::$templateName ?? '');
+        $template = Craft::$app->getView()->resolveTemplate($name ?? Vite::$templateName ?? '');
         if ($template) {
-            $name = self::combinePaths(
+            /** @var Settings $settings */
+            $settings = Vite::$plugin->getSettings();
+            $name = FileHelper::createUrl(
                 pathinfo($template, PATHINFO_DIRNAME),
                 pathinfo($template, PATHINFO_FILENAME)
             );
@@ -50,53 +55,34 @@ class Helper extends Component
             }
             $name = strstr($name, $dirPrefix);
             $name = (string)str_replace($dirPrefix, '', $name);
-            $path = self::combinePaths(
-                    $config['localFiles']['basePath'],
-                    $config['localFiles']['criticalPrefix'],
+            $path = FileHelper::createUrl(
+                    $settings->criticalPath,
                     $name
-                ) . $config['localFiles']['criticalSuffix'];
+                ) . $settings->criticalSuffix;
 
-            return self::getCssInlineTags($path, $attributes);
+            return $this->getCssInlineTags($path, $attributes);
         }
 
         return '';
-
-        return Template::raw(
-            Twigpack::$plugin->manifest->getCriticalCssTags($name, null, $attributes) ?? ''
-        );
     }
 
     /**
-     * Combined the passed in paths, whether file system or URL
-     *
-     * @param string ...$paths
+     * @param string $path
+     * @param array $attributes additional HTML key/value pair attributes to add to the resulting tag
      *
      * @return string
      */
-    protected function combinePaths(string ...$paths): string
+    public function getCssInlineTags(string $path, array $attributes = []): string
     {
-        $last_key = count($paths) - 1;
-        array_walk($paths, function (&$val, $key) use ($last_key) {
-            switch ($key) {
-                case 0:
-                    $val = rtrim($val, '/ ');
-                    break;
-                case $last_key:
-                    $val = ltrim($val, '/ ');
-                    break;
-                default:
-                    $val = trim($val, '/ ');
-                    break;
-            }
-        });
+        /** @var Settings $settings */
+        $settings = Vite::$plugin->getSettings();
+        $result = FileHelper::fetch($path, null, $settings->cacheKeySuffix);
+        if ($result) {
+            $config = [];
 
-        $first = array_shift($paths);
-        $last = array_pop($paths);
-        $paths = array_filter($paths);
-        array_unshift($paths, $first);
-        $paths[] = $last;
+            return Html::style($result, array_merge($config, $attributes));
+        }
 
-        return implode('/', $paths);
+        return '';
     }
-
 }

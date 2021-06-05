@@ -10,11 +10,14 @@
 
 namespace nystudio107\vite\variables;
 
+use nystudio107\vite\Vite;
+
 use nystudio107\pluginvite\variables\ViteVariableInterface;
 use nystudio107\pluginvite\variables\ViteVariableTrait;
 
 use craft\helpers\Template;
 
+use Twig\Error\LoaderError;
 use Twig\Markup;
 
 /**
@@ -34,12 +37,12 @@ class ViteVariable implements ViteVariableInterface
      * @param array $attributes additional HTML key/value pair attributes to add to the resulting tag
      *
      * @return Markup
-     * @throws \Twig\Error\LoaderError
+     * @throws LoaderError
      */
     public function includeCriticalCssTags($name = null, array $attributes = []): Markup
     {
         return Template::raw(
-            Twigpack::$plugin->manifest->getCriticalCssTags($name, null, $attributes) ?? ''
+            Vite::$plugin->helper->getCriticalCssTags($name, $attributes) ?? ''
         );
     }
 

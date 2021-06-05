@@ -73,6 +73,16 @@ class Settings extends Model
      */
     public $includeReactRefreshShim = false;
 
+    /**
+     * @var string File system path (or URL) to where the Critical CSS files are stored
+     */
+    public $criticalPath = '';
+
+    /**
+     * @var string the suffix added to the name of the currently rendering template for the critical css file name
+     */
+    public $criticalSuffix = '_critical.min.css';
+
     // Public Methods
     // =========================================================================
 
