@@ -61,6 +61,8 @@ return [
     'devServerInternal' => '',
     'checkDevServer' => false,
     'includeReactRefreshShim' => false,
+    'criticalPath' => '@webroot/dist/criticalcss',
+    'criticalSuffix' =>'_critical.min.css',
 ];
 ```
 
@@ -78,6 +80,12 @@ These are completely optional settings that you probably won’t need to change:
 * **`devServerInternal`** - The internal URL to the dev server, when accessed from the environment in which PHP is executing. This can be the same as `$devServerPublic`, but may be different in containerized or VM setups. ONLY used if `$checkDevServer = true`
 * **`checkDevServer`** - Should we check for the presence of the dev server by pinging $devServerInternal to make sure it’s running?
 * **`includeReactRefreshShim`** - whether or not the required [shim for `react-refresh`](https://vitejs.dev/guide/backend-integration.html#backend-integration) should be included when the Vite dev server is running
+
+If you're using the [rollup-plugin-critical](https://github.com/nystudio107/rollup-plugin-critical) to generate [critical CSS](https://nystudio107.com/blog/implementing-critical-css), use these settings:
+
+* **`criticalPath`** - File system path (or URL) to where the Critical CSS files are stored
+* **`criticalSuffix`** - the suffix added to the name of the currently rendering template for the critical css file name
+
 
 Note also that the **manifestPath** defaults to a Yii2 alias `@webroot/dist/manifest.json` (adjust as necessary to point to your `manifest.json` on the file system); this allows Vite to load the manifest from the file system, rather than via http request, and is the preferred method. However, it works fine as a full URL as well if you have your `manifest.json` hosted on a CDN or such.
 
@@ -376,6 +384,32 @@ Path example:
 ```twig
     {{ craft.vite.inline("@webroot/my-file.txt") }}
 ```
+
+### The `.includeCriticalCssTags()` function
+
+The Vite plugin includes a `.includeCriticalCssTags()` function that will look for a file in `criticalPath` that matches the name of the currently rendering template, with `criticalSuffix` appended to it.
+
+Used in combination with the [rollup-plugin-critical](https://github.com/nystudio107/rollup-plugin-critical) plugin, this automates the inclusion of critical CSS. e.g.:
+
+```twig
+    {{ craft.vite.includeCriticalCssTags() }}
+```
+
+If you want to pass in your own path to the CSS that should be included, you can do that via:
+
+```twig
+    {{ craft.vite.includeCriticalCssTags("/path/to/file.css") }}
+```
+
+...and you can also pass in attributes to be added to the `<style>` tag as well:
+
+```twig
+    {{ craft.vite.includeCriticalCssTags(null, {
+         'data-css-info': 'bar',
+    }) }}
+```
+
+If `null` is passed in as the first parameter, it'll use the automatic template matching to determine the file name.
 
 ### Other Options
 
