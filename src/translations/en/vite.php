@@ -14,5 +14,6 @@
  * @since     1.0.0
  */
 return [
-    'Vite plugin loaded' => 'Vite plugin loaded',
+    'Vite Cache' => 'Vite Cache',
+    '{name} plugin loaded' => '{name} plugin loaded'
 ];
