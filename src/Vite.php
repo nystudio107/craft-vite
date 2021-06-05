@@ -12,14 +12,17 @@ namespace nystudio107\vite;
 
 use nystudio107\vite\models\Settings;
 use nystudio107\vite\variables\ViteVariable;
+use nystudio107\vite\services\Helper as HelperService;
 
 use nystudio107\pluginvite\services\ViteService;
 
 use Craft;
 use craft\base\Plugin;
 use craft\events\RegisterCacheOptionsEvent;
+use craft\events\TemplateEvent;
 use craft\utilities\ClearCaches;
 use craft\web\twig\variables\CraftVariable;
+use craft\web\View;
 
 use yii\base\Event;
 
@@ -31,6 +34,7 @@ use yii\base\Event;
  * @since     1.0.0
  *
  * @property  ViteService $vite
+ * @property  HelperService $helper
  */
 class Vite extends Plugin
 {
@@ -42,6 +46,11 @@ class Vite extends Plugin
      */
     public static $plugin;
 
+    /**
+     * @var string
+     */
+    public static $templateName;
+
     // Static Methods
     // =========================================================================
 
@@ -51,6 +60,7 @@ class Vite extends Plugin
     public function __construct($id, $parent = null, array $config = [])
     {
         $config['components'] = [
+            'helper' => HelperService::class,
             'vite' => [
                 'class' => ViteService::class,
             ]
@@ -87,7 +97,6 @@ class Vite extends Plugin
     {
         parent::init();
         self::$plugin = $this;
-
         // Configure our Vite service with the settings
         $settings = $this->getSettings();
         if ($settings) {
@@ -98,6 +107,36 @@ class Vite extends Plugin
                 $viteAttrs
             ));
         }
+        // Add our event listeners
+        $this->installEventListeners();
+        // Log that the plugin has loaded
+        Craft::info(
+            Craft::t(
+                'vite',
+                '{name} plugin loaded',
+                ['name' => $this->name]
+            ),
+            __METHOD__
+        );
+    }
+
+    /**
+     * Clear all the caches!
+     */
+    public function clearAllCaches()
+    {
+        // Clear all of Vite's caches
+        $this->vite->invalidateCaches();
+    }
+
+    // Protected Methods
+    // =========================================================================
+
+    /**
+     * Install our event listeners.
+     */
+    protected function installEventListeners()
+    {
         // Register our variable
         Event::on(
             CraftVariable::class,
@@ -127,28 +166,17 @@ class Vite extends Plugin
                 );
             }
         );
-        // Log that the plugin has loaded
-        Craft::info(
-            Craft::t(
-                'vite',
-                '{name} plugin loaded',
-                ['name' => $this->name]
-            ),
-            __METHOD__
+        // Remember the name of the currently rendering template
+        // Handler: View::EVENT_BEFORE_RENDER_PAGE_TEMPLATE
+        Event::on(
+            View::class,
+            View::EVENT_BEFORE_RENDER_PAGE_TEMPLATE,
+            function (TemplateEvent $event) {
+                self::$templateName = $event->template;
+            }
         );
-    }
 
-    /**
-     * Clear all the caches!
-     */
-    public function clearAllCaches()
-    {
-        // Clear all of Vite's caches
-        $this->vite->invalidateCaches();
     }
-
-    // Protected Methods
-    // =========================================================================
 
     /**
      * Returns the custom Control Panel cache options.

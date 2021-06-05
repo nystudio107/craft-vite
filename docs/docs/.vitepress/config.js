@@ -8,8 +8,8 @@ module.exports = {
         docsDir: 'docs/docs',
         docsBranch: 'v1',
         algolia: {
-            apiKey: '',
-            indexName: 'craft-vite'
+            apiKey: '7d9dcb02b63eaad3f338be636c5e7fc3',
+            indexName: 'vite'
         },
         editLinks: true,
         editLinkText: 'Edit this page on GitHub',
