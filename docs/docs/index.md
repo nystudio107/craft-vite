@@ -421,7 +421,7 @@ Pass in the path to your entrypoint script, and it will return the hash of the C
 
 If the CSS file in the manifest has the name `app.245485b3.css`, the above function will return `245485b3`.
 
-This can be used for critical CSS patterns, e.g.:
+This can be used for critical CSS patterns, for example:
 
 ```twig
 {# -- Critical CSS -- #}
