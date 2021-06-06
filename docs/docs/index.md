@@ -411,6 +411,44 @@ To pass in your own path to the CSS that should be included, you can do that via
 
 If `null` is passed in as the first parameter, it’ll use the automatic template matching to determine the filename.
 
+### The `.getCssHash()` function
+
+Pass in the path to your entrypoint script, and it will return the hash of the CSS asset:
+
+```twig
+   {% set cssHash = craft.vite.getCssHash("/src/js/app.ts") %}
+```
+
+If the CSS file in the manifest has the name `app.245485b3.css`, the above function will return `245485b3`.
+
+This can be used for critical CSS patterns, for example:
+
+```twig
+{# -- Critical CSS -- #}
+{#
+# Use Nginx Server Sider Includes (SSI) to render different HTML depending on
+# the value in the `critical-css` cookie. ref: http://nginx.org/en/docs/http/ngx_http_ssi_module.html
+#}
+{% set cssHash = craft.vite.getCssHash("/src/js/app.ts") %}
+{#
+ # If the `critical-css` cookie is set, the client already has the CSS file download,
+ # so don't include the critical CSS, and load the full stylesheet(s) synchronously
+ #}
+<!--# if expr="$HTTP_COOKIE=/critical\-css\={{ cssHash }}/" -->
+{{ craft.vite.script("/src/js/app.ts", false) }}
+<!--# else -->
+{#
+# If the cookie is not set, set the cookie, then include the critical CSS for this page,
+# and load the full stylesheet(s) asychronously
+#}
+<script>
+     Cookie.set("critical-css", "{{ cssHash }}", { expires: "7D", secure: true });
+</script>
+{{ craft.vite.includeCriticalCssTags() }}
+{{ craft.vite.script("/src/js/app.ts", true) }}
+<!--# endif -->
+```
+
 ### Other Options
 
 The `.script()` and `.register()` functions accept additional options as well:

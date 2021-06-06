@@ -46,4 +46,16 @@ class ViteVariable implements ViteVariableInterface
         );
     }
 
+    /**
+     * Return the hash value for the first CSS file bundled with the module specified via $path
+     *
+     * @param $path
+     * @return Markup
+     */
+    public function getCssHash($path): Markup
+    {
+        return Template::raw(
+            Vite::$plugin->helper->getCssHash($path) ?? ''
+        );
+    }
 }

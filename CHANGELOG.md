@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.9 - 2021.06.05
+### Added
+* Added `craft.vite.getCssHash()` that returns the content hash for the build CSS assets
+
 ## 1.0.8 - 2021.06.05
 ### Added
 * Added `craft.vite.includeCriticalCssTags()` to make it easy to include inline Critical CSS generated via `rollup-plugin-critical` 

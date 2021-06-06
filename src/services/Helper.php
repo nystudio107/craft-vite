@@ -14,6 +14,7 @@ use nystudio107\vite\Vite;
 use nystudio107\vite\models\Settings;
 
 use nystudio107\pluginvite\helpers\FileHelper;
+use nystudio107\pluginvite\helpers\ManifestHelper;
 
 use Craft;
 use craft\base\Component;
@@ -81,6 +82,34 @@ class Helper extends Component
             $config = [];
 
             return Html::style($result, array_merge($config, $attributes));
+        }
+
+        return '';
+    }
+
+    /**
+     * Return the hash value for the first CSS file bundled with the module specified via $path
+     *
+     * @param $path
+     * @return string
+     */
+    public function getCssHash($path): string
+    {
+        /** @var Settings $settings */
+        $settings = Vite::$plugin->getSettings();
+        ManifestHelper::fetchManifest($settings->manifestPath);
+        $tags = ManifestHelper::manifestTags($path, false);
+        foreach($tags as $tag) {
+            if (!empty($tag)) {
+                if ($tag['type'] === 'css') {
+                    // Extract only the Hash Value
+                    $modulePath = pathinfo($tag['url']);
+                    $moduleFilename = $modulePath['filename'];
+                    $moduleHash = substr($moduleFilename, strpos($moduleFilename, ".") + 1);
+
+                    return $moduleHash;
+                }
+            }
         }
 
         return '';
