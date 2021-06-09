@@ -475,7 +475,4 @@ So for example:
 
 Some things to do, and ideas for potential features:
 
-* Some way to support Critical CSS generation (likely via a Rollup plugin)
-* Favicons as part of the production build process (likely via a Rollup plugin)
-
 Brought to you by [nystudio107](https://nystudio107.com)
