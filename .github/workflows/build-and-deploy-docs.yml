@@ -23,9 +23,9 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
       - run: npm run docs:build
-      - run: cp -vr /home/runner/work/craft-vite/craft-vite/docs/docs/.vitepress/dist ${{ GITHUB_WORKSPACE }}
+      - run: cp -vr /home/runner/work/craft-vite/craft-vite/docs/docs/.vitepress/dist $GITHUB_WORKSPACE
       - run: ls -al /home/runner/work/craft-vite/craft-vite/docs/docs/.vitepress/dist
-      - run: ls -al ${{ GITHUB_WORKSPACE }}
+      - run: ls -al $GITHUB_WORKSPACE
       - name: rsync deployments
         uses: burnett01/rsync-deployments@4.1
         with:
