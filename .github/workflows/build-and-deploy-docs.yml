@@ -23,6 +23,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
       - run: npm run docs:build
+      - run: cp -r /home/runner/work/craft-vite/craft-vite/docs/docs/.vitepress/dist ${{ github.workspace }}
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -32,7 +33,7 @@ jobs:
         uses: burnett01/rsync-deployments@4.1
         with:
           switches: -avzr --delete
-          path: docs/docs/.vitepress/dist
+          path: ./dist
           remote_path: ${{ secrets.NYS_DOCS_ROOT }}/vite
           remote_host: ${{ secrets.NYS_DEPLOY_REMOTE_HOST }}
           remote_port: ${{ secrets.NYS_DEPLOY_REMOTE_PORT }}
