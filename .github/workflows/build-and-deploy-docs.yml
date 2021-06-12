@@ -24,6 +24,8 @@ jobs:
       - run: npm ci
       - run: npm run docs:build
       - run: cp -vr /home/runner/work/craft-vite/craft-vite/docs/docs/.vitepress/dist ${{ github.workspace }}
+      - run: ls -al /home/runner/work/craft-vite/craft-vite/docs/docs/.vitepress/dist
+      - run: ls -al ${{ github.workspace }}
       - uses: actions/checkout@v2
       - name: rsync deployments
         uses: burnett01/rsync-deployments@4.1
