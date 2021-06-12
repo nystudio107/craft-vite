@@ -28,8 +28,8 @@ jobs:
         uses: burnett01/rsync-deployments@4.1
         with:
           switches: -avzr --delete
-          path: ./dist/*
-          remote_path: ${{ secrets.NYS_DOCS_ROOT }}/vite
+          path: ./dist/
+          remote_path: ${{ secrets.NYS_DOCS_ROOT }}/vite/
           remote_host: ${{ secrets.NYS_DEPLOY_REMOTE_HOST }}
           remote_port: ${{ secrets.NYS_DEPLOY_REMOTE_PORT }}
           remote_user: ${{ secrets.NYS_DEPLOY_REMOTE_USER }}
