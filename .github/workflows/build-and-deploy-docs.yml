@@ -1,10 +1,11 @@
 name: Build and Deploy Docs
+env:
+  DOCS_DEST_DIR: vite
 on:
   push:
     branches:
       - v1
-    paths:
-      - 'docs/**'
+      - develop
   pull_request:
     branches:
       - v1
@@ -35,7 +36,7 @@ jobs:
         with:
           switches: -avzr --delete
           path: ./dist/
-          remote_path: ${{ secrets.NYS_DOCS_ROOT }}/vite/
+          remote_path: ${{ secrets.NYS_DOCS_ROOT }}/${{ env.DOCS_DEST_DIR }}/
           remote_host: ${{ secrets.NYS_DEPLOY_REMOTE_HOST }}
           remote_port: ${{ secrets.NYS_DEPLOY_REMOTE_PORT }}
           remote_user: ${{ secrets.NYS_DEPLOY_REMOTE_USER }}
