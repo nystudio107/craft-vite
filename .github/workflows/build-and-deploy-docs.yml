@@ -24,13 +24,11 @@ jobs:
       - run: npm ci
       - run: npm run docs:build
       - run: cp -vr /home/runner/work/craft-vite/craft-vite/docs/docs/.vitepress/dist $GITHUB_WORKSPACE
-      - run: ls -al /home/runner/work/craft-vite/craft-vite/docs/docs/.vitepress/dist
-      - run: ls -al $GITHUB_WORKSPACE
       - name: rsync deployments
         uses: burnett01/rsync-deployments@4.1
         with:
           switches: -avzr --delete
-          path: ./dist
+          path: ./dist/*
           remote_path: ${{ secrets.NYS_DOCS_ROOT }}/vite
           remote_host: ${{ secrets.NYS_DEPLOY_REMOTE_HOST }}
           remote_port: ${{ secrets.NYS_DEPLOY_REMOTE_PORT }}
