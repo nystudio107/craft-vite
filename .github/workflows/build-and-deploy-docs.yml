@@ -1,9 +1,9 @@
 name: Build and Deploy Docs
 on:
   push:
-    branches: [ master, develop ]
+    branches: [ v1 ]
   pull_request:
-    branches: [ master, develop ]
+    branches: [ v1 ]
   workflow_dispatch:
 jobs:
   build:
