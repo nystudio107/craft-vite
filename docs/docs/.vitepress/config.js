@@ -1,5 +1,5 @@
 module.exports = {
-    title: 'Vite plugin Documentation',
+    title: 'Vite Plugin Documentation',
     description: 'Documentation for the Vite plugin',
     base: '/docs/vite/',
     lang: 'en-US',
