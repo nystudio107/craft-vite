@@ -11,5 +11,5 @@ export default {
                 'sidebar-bottom': () => h(SidebarBottom)
             }
         )
-    }
+    },
 }
