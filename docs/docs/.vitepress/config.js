@@ -1,14 +1,12 @@
 module.exports = {
-    title: 'Vite Documentation',
+    title: 'Vite plugin Documentation',
     description: 'Documentation for the Vite plugin',
     base: '/docs/vite/',
     lang: 'en-US',
     head: [
-        [
-            'script',
-            {},
-            "(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');ga('create', 'UA-69117511-1', 'auto');ga('require', 'displayfeatures');ga('send', 'pageview');"
-        ],
+        ['meta', { content: 'https://github.com/nystudio107', property: 'og:see_also', }],
+        ['meta', { content: 'https://www.youtube.com/channel/UCOZTZHQdC-unTERO7LRS6FA', property: 'og:see_also', }],
+        ['meta', { content: 'https://www.facebook.com/newyorkstudio107', property: 'og:see_also', }],
     ],
     themeConfig: {
         repo: 'nystudio107/craft-vite',
@@ -21,5 +19,6 @@ module.exports = {
         editLinks: true,
         editLinkText: 'Edit this page on GitHub',
         lastUpdated: 'Last Updated',
+        sidebar: 'auto',
     },
 };
