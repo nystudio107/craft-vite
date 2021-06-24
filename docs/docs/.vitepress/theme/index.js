@@ -34,7 +34,7 @@ export default {
             ga('set', 'anonymizeIp', true)
             // Send a page view any time the route changes
             watch(ctx.router.route, (newValue, oldValue) => {
-                ga('set', 'page', newValue)
+                ga('set', 'page', newValue.path)
                 ga('send', 'pageview')
             })
         }
