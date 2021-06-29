@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.10 - 2021.06.28
+### Changed
+* Always include the `@vite/client.js` script if the dev server is running (https://github.com/nystudio107/craft-vite/issues/9)
+
 ## 1.0.9 - 2021.06.05
 ### Added
 * Added `craft.vite.getCssHash()` that returns the content hash for the build CSS assets
