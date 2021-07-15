@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## 1.0.12 - 2021.07.14
 ### Changed
-* Switched the `checkDevServer` test file to `@vite/client` to accommodate with the change in Vite `^2.4.0` to use the `.mjs` extension
+* Switched the `checkDevServer` test file to `@vite/client` to accommodate with the change in Vite `^2.4.0` to use the `.mjs` extension (https://github.com/nystudio107/craft-vite/issues/11)
 
 ## 1.0.11 - 2021.06.29
 ### Changed
