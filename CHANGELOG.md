@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.13 - 2021.07.14
+### Added
+* Added a `craft.vite.devServerRunning()` method to allow you to determine if the Vite dev server is running or not from your Twig templates (https://github.com/nystudio107/craft-vite/issues/10)
+
 ## 1.0.12 - 2021.07.14
 ### Changed
 * Switched the `checkDevServer` test file to `@vite/client` to accommodate with the change in Vite `^2.4.0` to use the `.mjs` extension (https://github.com/nystudio107/craft-vite/issues/11)
