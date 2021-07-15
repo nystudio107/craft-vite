@@ -389,6 +389,20 @@ Path example:
     {{ craft.vite.inline("@webroot/my-file.txt") }}
 ```
 
+### The `.devServerRunning()` function
+
+The Vite plugin has a `.devServerRunning()` function that allows you to determine if the Vite dev server is running from your Twig templates.
+
+For instance, you could do:
+
+```twig
+{% if craft.vite.devServerIsRunning() %}
+   <base href="{{ alias('@viteBaseUrl') }}">
+{% endif %}
+```
+
+To side-step the [Vite Processed Assets](https://nystudio107.com/blog/using-vite-js-next-generation-frontend-tooling-with-craft-cms#vite-processed-assets) issue.
+
 ### The `.includeCriticalCssTags()` function
 
 The Vite plugin includes a `.includeCriticalCssTags()` function that will look for a file in `criticalPath` that matches the name of the currently rendering template, with `criticalSuffix` appended to it.
