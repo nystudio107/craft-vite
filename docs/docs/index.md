@@ -303,6 +303,8 @@ plugins: [
 
 If the Vite dev server is running, it will rewrite any absolute URLs that are prefixed with `/src/` and end in one of these extensions: `svg|jp?g|png|webp`
 
+This [issue may be addressed in Vite core](https://github.com/vitejs/vite/pull/4337#issuecomment-885710791) shortly.
+
 ### Other Config
 
 Vite uses [esbuild](https://github.com/evanw/esbuild) so it is very fast, and has built-in support for TypeScript and JSX.
