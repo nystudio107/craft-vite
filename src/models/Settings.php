@@ -102,6 +102,7 @@ class Settings extends Model
                     'useDevServer',
                     'checkDevServer',
                     'includeReactRefreshShim',
+                    'includeModulePreloadShim',
                 ],
                 'boolean'
             ],
