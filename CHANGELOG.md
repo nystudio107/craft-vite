@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.14 - 2021.08.10
+### Added
+* Added [Preload Directives Generation](https://vitejs.dev/guide/features.html#preload-directives-generation) that will automatically generate `<link rel="modulepreload">` directives for entry chunks and their direct imports ([PR#2](https://github.com/nystudio107/craft-plugin-vite/pull/2))
+
 ## 1.0.13 - 2021.07.14
 ### Added
 * Added a `craft.vite.devServerRunning()` method to allow you to determine if the Vite dev server is running or not from your Twig templates (https://github.com/nystudio107/craft-vite/issues/10)
