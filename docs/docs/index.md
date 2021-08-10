@@ -65,6 +65,7 @@ return [
     'devServerInternal' => '',
     'checkDevServer' => false,
     'includeReactRefreshShim' => false,
+    'includeModulePreloadShim' => true,
     'criticalPath' => '@webroot/dist/criticalcss',
     'criticalSuffix' =>'_critical.min.css',
 ];
@@ -84,6 +85,7 @@ These are completely optional settings that you probably won’t need to change:
 * **`devServerInternal`** - The internal URL to the dev server, when accessed from the environment in which PHP is executing. This can be the same as `$devServerPublic`, but may be different in containerized or VM setups. ONLY used if `$checkDevServer = true`
 * **`checkDevServer`** - Should we check for the presence of the dev server by pinging $devServerInternal to make sure it’s running?
 * **`includeReactRefreshShim`** - whether or not the required [shim for `react-refresh`](https://vitejs.dev/guide/backend-integration.html#backend-integration) should be included when the Vite dev server is running
+* **`includeModulePreloadShim`** - whether or not the [shim for `modulepreload-polyfill`](https://vitejs.dev/guide/features.html#preload-directives-generation) should be included to polyfill `<link rel="modulepreload">`
 
 If you’re using the [rollup-plugin-critical](https://github.com/nystudio107/rollup-plugin-critical) to generate [critical CSS](https://nystudio107.com/blog/implementing-critical-css), use these settings:
 
