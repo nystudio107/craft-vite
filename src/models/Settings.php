@@ -74,6 +74,11 @@ class Settings extends Model
     public $includeReactRefreshShim = false;
 
     /**
+     * @var bool Whether the modulepreload-polyfill shim should be included
+     */
+    public $includeModulePreloadShim = true;
+
+    /**
      * @var string File system path (or URL) to where the Critical CSS files are stored
      */
     public $criticalPath = '';
