@@ -65,6 +65,7 @@ return [
     'devServerInternal' => '',
     'checkDevServer' => false,
     'includeReactRefreshShim' => false,
+    'includeModulePreloadShim' => true,
     'criticalPath' => '@webroot/dist/criticalcss',
     'criticalSuffix' =>'_critical.min.css',
 ];
@@ -84,6 +85,7 @@ These are completely optional settings that you probably won’t need to change:
 * **`devServerInternal`** - The internal URL to the dev server, when accessed from the environment in which PHP is executing. This can be the same as `$devServerPublic`, but may be different in containerized or VM setups. ONLY used if `$checkDevServer = true`
 * **`checkDevServer`** - Should we check for the presence of the dev server by pinging $devServerInternal to make sure it’s running?
 * **`includeReactRefreshShim`** - whether or not the required [shim for `react-refresh`](https://vitejs.dev/guide/backend-integration.html#backend-integration) should be included when the Vite dev server is running
+* **`includeModulePreloadShim`** - whether or not the [shim for `modulepreload-polyfill`](https://vitejs.dev/guide/features.html#preload-directives-generation) should be included to polyfill `<link rel="modulepreload">`
 
 If you’re using the [rollup-plugin-critical](https://github.com/nystudio107/rollup-plugin-critical) to generate [critical CSS](https://nystudio107.com/blog/implementing-critical-css), use these settings:
 
@@ -251,6 +253,59 @@ Following the [Support for vite configuration](https://github.com/craftcms/nitro
 If you know Docker, option `2` is a good way to go. You can see an example of how you might do it in the [craft-plugin-vite-buildchain](https://github.com/nystudio107/craft-plugin-vite-buildchain/tree/v1/buildchain) repository.
 
 I would generally discourage option `3`, because we want to run our development tools inside of our local development environment, and not on locally on our computer.
+
+### Vite-Processed Assets
+
+This is cribbed from the [Laravel Vite integration](https://laravel-vite.netlify.app/guide/usage.html#static-assets) docs:
+
+There is currently an [unsolved issue when referencing assets in files processed by Vite](https://github.com/vitejs/vite/issues/2196), such as a Vue or CSS file. In development, URLs will not be properly rewritten.
+
+Additionally, there is currently no way to get the path of a Vite-processed asset (eg. an image that was imported in a Vue SFC) from the back-end, since the manifest does not reference the original file path. In most cases, this should not be an issue, as this is not a common use case.
+
+What you can do is leverage the /public [Public Directory](https://vitejs.dev/guide/assets.html#the-public-directory) for static assets in Vite, so the URLs will not get rewritten.
+
+The basic problem is if you have a CSS rule like:
+```css
+background-image: url('/src/img/woof.jpg');
+```
+
+...and your local dev runs off of something like `myhost.test` then the image will be referenced as:
+```
+/src/img/woof.jpg
+```
+
+...which then resolves to the current host:
+```
+http://myhost.test/src/img/woof.jpg
+```
+
+...when what you really want is for it to be coming from the Vite dev server:
+```
+http://localhost:3000/src/img/woof.jpg
+```
+
+This is only a problem when you're using Vite with a backend system like Craft CMS, where the host you run the website from is different from where the Vite dev server runs.
+
+To work around this, you can either put your static assets in your backend system's server root, so they resolve as expected, or you can use this little plugin suggested in [this GitHub issue](https://github.com/vitejs/vite/issues/2394):
+```js
+plugins: [
+ {
+   name: 'static-asset-fixer',
+   enforce: 'post',
+   apply: 'serve',
+   transform: (code, id) => {
+     return {
+       code: code.replace(/\/src\/(.*)\.(svg|jp?g|png|webp)/g, 'http://localhost:3000/src/$1.$2'),
+       map: null,
+     }
+   },
+ },
+],
+```
+
+If the Vite dev server is running, it will rewrite any absolute URLs that are prefixed with `/src/` and end in one of these extensions: `svg|jp?g|png|webp`
+
+This [issue may be addressed in Vite core](https://github.com/vitejs/vite/pull/4337#issuecomment-885710791) shortly.
 
 ### Other Config
 
