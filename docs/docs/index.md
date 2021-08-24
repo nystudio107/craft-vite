@@ -80,7 +80,7 @@ These are the settings you’ll need to change for your project:
   
 These are completely optional settings that you probably won’t need to change:
 
-* **`errorEntry`** - is a string, or array of strings, that should be the JavaScript entry point(s) (for example: `/src/js/app.ts`) in your `manifest.json` that should be injected into Twig error templates, to allow hot module replacement to work through Twig error pages. `devMode` must be `true` and **useDevServer** must also be `true` for this to have any effect.
+* **`errorEntry`** - is a string, or array of strings, that should be the JavaScript entry point(s) (for example: `src/js/app.ts`) in your `manifest.json` that should be injected into Twig error templates, to allow hot module replacement to work through Twig error pages. `devMode` must be `true` and **useDevServer** must also be `true` for this to have any effect.
 * **`cacheKeySuffix`** - String to be appended to the cache key
 * **`devServerInternal`** - The internal URL to the dev server, when accessed from the environment in which PHP is executing. This can be the same as `$devServerPublic`, but may be different in containerized or VM setups. ONLY used if `$checkDevServer = true`
 * **`checkDevServer`** - Should we check for the presence of the dev server by pinging $devServerInternal to make sure it’s running?
@@ -109,7 +109,7 @@ export default ({ command }) => ({
     outDir: '../cms/web/dist/',
     rollupOptions: {
       input: {
-        app: '/src/js/app.ts',
+        app: './src/js/app.ts',
       }
     },
   },
@@ -137,7 +137,7 @@ export default ({ command }) => ({
       outDir: '../cms/web/dist/',
       rollupOptions: {
          input: {
-            app: '/src/js/app.ts',
+            app: './src/js/app.ts',
          }
       },
    },
@@ -168,7 +168,7 @@ export default ({ command }) => ({
     outDir: '../cms/web/dist/',
     rollupOptions: {
       input: {
-        app: '/src/js/app.ts',
+        app: './src/js/app.ts',
       }
     },
   },
@@ -327,7 +327,7 @@ Check out [Awesome Vite](https://github.com/vitejs/awesome-vite) for other great
 Once the Vite plugin is installed and configured, using it is quite simple. Where you would normally link to a JavaScript file via Twig in a `<script>` tag, you instead do:
 
 ```twig
-    {{ craft.vite.script("/src/js/app.ts") }}
+    {{ craft.vite.script("src/js/app.ts") }}
 ```
 
 Note that Vite automatically also supports the direct linking to TypeScript (as in the above example), JSX, and other files via plugins. You just link directly to them, that’s it.
@@ -378,7 +378,7 @@ If you’re using the `vite-plugin-legacy` plugin to generate builds compatible 
 The Twig code:
 
 ```twig
-    {{ craft.vite.script("/src/js/app.ts") }}
+    {{ craft.vite.script("src/js/app.ts") }}
 ```
 
 Would then result in the following output, depending on whether the Vite dev server is running:
@@ -419,7 +419,7 @@ So that includes:
 In addition to the `craft.vite.script()` function, the Vite plugin also provides a `.register()` function:
 
 ```twig
-    {{ craft.vite.register("/src/js/app.ts") }}
+    {{ craft.vite.register("src/js/app.ts") }}
 ```
 
 This works exactly the way the `.script()` function works, but instead of outputting the tags, it _registers_ them with the `Craft::$app->getView()`.
@@ -489,7 +489,7 @@ If `null` is passed in as the first parameter, it’ll use the automatic templat
 Pass in the path to your entrypoint script, and it will return the hash of the CSS asset:
 
 ```twig
-   {% set cssHash = craft.vite.getCssHash("/src/js/app.ts") %}
+   {% set cssHash = craft.vite.getCssHash("src/js/app.ts") %}
 ```
 
 If the CSS file in the manifest has the name `app.245485b3.css`, the above function will return `245485b3`.
@@ -502,13 +502,13 @@ This can be used for critical CSS patterns, for example:
 # Use Nginx Server Sider Includes (SSI) to render different HTML depending on
 # the value in the `critical-css` cookie. ref: http://nginx.org/en/docs/http/ngx_http_ssi_module.html
 #}
-{% set cssHash = craft.vite.getCssHash("/src/js/app.ts") %}
+{% set cssHash = craft.vite.getCssHash("src/js/app.ts") %}
 {#
  # If the `critical-css` cookie is set, the client already has the CSS file download,
  # so don't include the critical CSS, and load the full stylesheet(s) synchronously
  #}
 <!--# if expr="$HTTP_COOKIE=/critical\-css\={{ cssHash }}/" -->
-{{ craft.vite.script("/src/js/app.ts", false) }}
+{{ craft.vite.script("src/js/app.ts", false) }}
 <!--# else -->
 {#
 # If the cookie is not set, set the cookie, then include the critical CSS for this page,
@@ -518,7 +518,7 @@ This can be used for critical CSS patterns, for example:
      Cookie.set("critical-css", "{{ cssHash }}", { expires: "7D", secure: true });
 </script>
 {{ craft.vite.includeCriticalCssTags() }}
-{{ craft.vite.script("/src/js/app.ts", true) }}
+{{ craft.vite.script("src/js/app.ts", true) }}
 <!--# endif -->
 ```
 
@@ -537,7 +537,7 @@ The `.script()` and `.register()` functions accept additional options as well:
 So for example:
 ```twig
     {{ craft.vite.script(
-        "/src/js/app.ts",
+        "src/js/app.ts",
         false,
         { 'data-script-info': 'foo' },
         { 'data-css-info': 'bar' },
