@@ -8,19 +8,19 @@ All notable changes to this project will be documented in this file.
 
 ## 1.0.13 - 2021.07.14
 ### Added
-* Added a `craft.vite.devServerRunning()` method to allow you to determine if the Vite dev server is running or not from your Twig templates (https://github.com/nystudio107/craft-vite/issues/10)
+* Added a `craft.vite.devServerRunning()` method to allow you to determine if the Vite dev server is running or not from your Twig templates ([#10](https://github.com/nystudio107/craft-vite/issues/10))
 
 ## 1.0.12 - 2021.07.14
 ### Changed
-* Switched the `checkDevServer` test file to `@vite/client` to accommodate with the change in Vite `^2.4.0` to use the `.mjs` extension (https://github.com/nystudio107/craft-vite/issues/11)
+* Switched the `checkDevServer` test file to `@vite/client` to accommodate with the change in Vite `^2.4.0` to use the `.mjs` extension ([#11](https://github.com/nystudio107/craft-vite/issues/11))
 
 ## 1.0.11 - 2021.06.29
 ### Changed
-* Roll back the automatic inclusion of `@vite/client.js` (https://github.com/nystudio107/craft-vite/issues/9)
+* Roll back the automatic inclusion of `@vite/client.js` ([#9](https://github.com/nystudio107/craft-vite/issues/9))
 
 ## 1.0.10 - 2021.06.28
 ### Changed
-* Always include the `@vite/client.js` script if the dev server is running (https://github.com/nystudio107/craft-vite/issues/9)
+* Always include the `@vite/client.js` script if the dev server is running ([#9](https://github.com/nystudio107/craft-vite/issues/9))
 
 ## 1.0.9 - 2021.06.05
 ### Added
@@ -32,7 +32,7 @@ All notable changes to this project will be documented in this file.
 
 ## 1.0.7 - 2021.05.21
 ### Added
-* Added a `includeReactRefreshShim` setting that will automatically include the required [shim for `react-refresh`](https://vitejs.dev/guide/backend-integration.html#backend-integration) when the Vite dev server is running (https://github.com/nystudio107/craft-vite/issues/5)
+* Added a `includeReactRefreshShim` setting that will automatically include the required [shim for `react-refresh`](https://vitejs.dev/guide/backend-integration.html#backend-integration) when the Vite dev server is running ([#5](https://github.com/nystudio107/craft-vite/issues/5))
 
 ### Changed
 * Removed custom user/agent header that was a holdover from `curl`
@@ -40,7 +40,7 @@ All notable changes to this project will be documented in this file.
 
 ## 1.0.6 - 2021.05.20
 ### Changed
-* Change the default `useDevServer` setting to `App::env('ENVIRONMENT') === 'dev'` (https://github.com/nystudio107/craft-vite/issues/6)
+* Change the default `useDevServer` setting to `App::env('ENVIRONMENT') === 'dev'` ([#6](https://github.com/nystudio107/craft-vite/issues/6))
 * Refactored the code from a monolithic `ViteService` to helpers, as appropriate
 
 ### Fixed
@@ -58,7 +58,7 @@ All notable changes to this project will be documented in this file.
 
 ## 1.0.4 - 2021.05.08
 ### Added
-* Added the `devServerInternal` setting back in, along with `checkDevServer` for people who want the fallback behavior (https://github.com/nystudio107/craft-vite/issues/2)
+* Added the `devServerInternal` setting back in, along with `checkDevServer` for people who want the fallback behavior ([#2](https://github.com/nystudio107/craft-vite/issues/2))
 
 ### Changed
 * Use `PRIMARY_SITE_URL` in the default config instead of `SITE_URL`
