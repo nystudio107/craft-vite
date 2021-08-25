@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.15 - UNRELEASED
+### Changed
+* Changed the `DEVMODE_CACHE_DURATION` to `1` second ([#3](https://github.com/nystudio107/craft-plugin-vite/issues/3))
+
 ## 1.0.14 - 2021.08.10
 ### Added
 * Added [Preload Directives Generation](https://vitejs.dev/guide/features.html#preload-directives-generation) that will automatically generate `<link rel="modulepreload">` directives for entry chunks and their direct imports ([PR#2](https://github.com/nystudio107/craft-plugin-vite/pull/2))
