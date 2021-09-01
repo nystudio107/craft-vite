@@ -304,10 +304,9 @@ return [
 	'checkDevServer' => true,
 	'devServerInternal' => 'http://localhost:3000',
 	'devServerPublic' => App::env('PRIMARY_SITE_URL') . ':3000',
-	'errorEntry' => 'src/js/app.js',
-	'manifestPath' => '@webroot/dist/manifest.json',
 	'serverPublic' => App::env('PRIMARY_SITE_URL') . '/dist/',
-	'useDevServer' => (bool) App::env('ENVIRONMENT') == 'dev',
+	'useDevServer' => App::env('ENVIRONMENT') === 'dev',
+	// other config settings...
 ];
 ```
 
