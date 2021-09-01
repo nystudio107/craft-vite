@@ -254,6 +254,63 @@ If you know Docker, option `2` is a good way to go. You can see an example of ho
 
 I would generally discourage option `3`, because we want to run our development tools inside of our local development environment, and not on locally on our computer.
 
+#### Using DDEV
+
+To run Vite inside a DDEV container, you’ll have to [define a custom service](https://ddev.readthedocs.io/en/latest/users/extend/custom-compose-files/) that proxies requests from the front-end to the vite server running inside the VM. This is done by creating a `/.ddev/docker-compose.*.yaml` file, and exposing an additional port to your project.
+
+Create a file named `docker-compose.vite.yaml` and save it in your project’s `/.ddev` folder, with the following contents:
+
+```yaml
+# Override the web container's standard HTTP_EXPOSE and HTTPS_EXPOSE services
+# to expose port `3000` of DDEV's web container.
+version: '3.6'
+services:
+  web:
+    ports:
+      - '3000'
+    environment:
+      - HTTP_EXPOSE=${DDEV_ROUTER_HTTP_PORT}:80,${DDEV_MAILHOG_PORT}:8025,3001:3000
+      - HTTPS_EXPOSE=${DDEV_ROUTER_HTTPS_PORT}:80,${DDEV_MAILHOG_HTTPS_PORT}:8025,3000:3000
+```
+
+As of this writing, DDEV automatically builds web containers with Node 14 installed; if you needed to change this, or simply wish to be explicit in the version to run in the VM, create a file `/.ddev/web-build/Dockerfile` with the following contents (adjust the `ENV NODE_VERSION=14` line as required):
+
+```dockerfile
+ARG BASE_IMAGE
+FROM $BASE_IMAGE
+ENV NODE_VERSION=14
+RUN sudo apt-get remove -y nodejs
+RUN curl -sSL --fail https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash -
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y -o Dpkg::Options::="--force-confold" --no-install-recommends --no-install-suggests nodejs
+```
+
+In your `vite.config.js`, the `server.host` should to be set to `0.0.0.0`, and `server.port` set to `3000`:
+
+```js
+server: {
+  host: '0.0.0.0',
+  port: 3000
+}
+```
+
+With the above set up, Craft Vite will now have access to the `devServerInternal` via `http://localhost:3000`, and `devServerPublic` via `https://projectname.ddev.site:3000`. Note that `devServerPublic` can run over http or https, `devServerInternal` is always http. Your `config/vite.php` file might thus look like:
+
+```php
+<?php
+
+use craft\helpers\App;
+
+return [
+	'checkDevServer' => true,
+	'devServerInternal' => 'http://localhost:3000',
+	'devServerPublic' => App::env('PRIMARY_SITE_URL') . ':3000',
+	'errorEntry' => 'src/js/app.js',
+	'manifestPath' => '@webroot/dist/manifest.json',
+	'serverPublic' => App::env('PRIMARY_SITE_URL') . '/dist/',
+	'useDevServer' => (bool) App::env('ENVIRONMENT') == 'dev',
+];
+```
+
 ### Vite-Processed Assets
 
 This is cribbed from the [Laravel Vite integration](https://laravel-vite.netlify.app/guide/usage.html#static-assets) docs:
