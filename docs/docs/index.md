@@ -310,6 +310,14 @@ return [
 ];
 ```
 
+If you’re using the [rollup-plugin-critical](https://github.com/nystudio107/rollup-plugin-critical) to generate [critical CSS](https://nystudio107.com/blog/implementing-critical-css), you must add extra Debian packages to enable Puppeteer Headless Chrome support. Add the following line to your `/.ddev/config.yaml` file:
+
+```yaml
+webimage_extra_packages: [gconf-service, libasound2, libatk1.0-0, libcairo2, libgconf-2-4, libgdk-pixbuf2.0-0, libgtk-3-0, libnspr4, libpango-1.0-0, libpangocairo-1.0-0, libx11-xcb1, libxcomposite1, libxcursor1, libxdamage1, libxfixes3, libxi6, libxrandr2, libxrender1, libxss1, libxtst6, fonts-liberation, libappindicator1, libnss3, xdg-utils]
+```
+
+Then be sure to set `criticalUrl` to `http://localhost` as part of your rollup configuration.
+
 ### Vite-Processed Assets
 
 This is cribbed from the [Laravel Vite integration](https://laravel-vite.netlify.app/guide/usage.html#static-assets) docs:
