@@ -316,7 +316,7 @@ If you’re using the [rollup-plugin-critical](https://github.com/nystudio107/ro
 webimage_extra_packages: [gconf-service, libasound2, libatk1.0-0, libcairo2, libgconf-2-4, libgdk-pixbuf2.0-0, libgtk-3-0, libnspr4, libpango-1.0-0, libpangocairo-1.0-0, libx11-xcb1, libxcomposite1, libxcursor1, libxdamage1, libxfixes3, libxi6, libxrandr2, libxrender1, libxss1, libxtst6, fonts-liberation, libappindicator1, libnss3, xdg-utils]
 ```
 
-Then in your `rollup.config.js`, be sure to set `criticalUrl` to `http://localhost`.
+Then be sure to set `criticalUrl` to `http://localhost` as part of your rollup configuration.
 
 ### Vite-Processed Assets
 
