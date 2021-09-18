@@ -254,6 +254,70 @@ If you know Docker, option `2` is a good way to go. You can see an example of ho
 
 I would generally discourage option `3`, because we want to run our development tools inside of our local development environment, and not on locally on our computer.
 
+#### Using DDEV
+
+To run Vite inside a DDEV container, you’ll have to [define a custom service](https://ddev.readthedocs.io/en/latest/users/extend/custom-compose-files/) that proxies requests from the front-end to the vite server running inside the VM. This is done by creating a `/.ddev/docker-compose.*.yaml` file, and exposing an additional port to your project.
+
+Create a file named `docker-compose.vite.yaml` and save it in your project’s `/.ddev` folder, with the following contents:
+
+```yaml
+# Override the web container's standard HTTP_EXPOSE and HTTPS_EXPOSE services
+# to expose port `3000` of DDEV's web container.
+version: '3.6'
+services:
+  web:
+    ports:
+      - '3000'
+    environment:
+      - HTTP_EXPOSE=${DDEV_ROUTER_HTTP_PORT}:80,${DDEV_MAILHOG_PORT}:8025,3001:3000
+      - HTTPS_EXPOSE=${DDEV_ROUTER_HTTPS_PORT}:80,${DDEV_MAILHOG_HTTPS_PORT}:8025,3000:3000
+```
+
+As of this writing, DDEV automatically builds web containers with Node 14 installed; if you needed to change this, or simply wish to be explicit in the version to run in the VM, create a file `/.ddev/web-build/Dockerfile` with the following contents (adjust the `ENV NODE_VERSION=14` line as required):
+
+```dockerfile
+ARG BASE_IMAGE
+FROM $BASE_IMAGE
+ENV NODE_VERSION=14
+RUN sudo apt-get remove -y nodejs
+RUN curl -sSL --fail https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash -
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y -o Dpkg::Options::="--force-confold" --no-install-recommends --no-install-suggests nodejs
+```
+
+In your `vite.config.js`, the `server.host` should to be set to `0.0.0.0`, and `server.port` set to `3000`:
+
+```js
+server: {
+  host: '0.0.0.0',
+  port: 3000
+}
+```
+
+With the above set up, Craft Vite will now have access to the `devServerInternal` via `http://localhost:3000`, and `devServerPublic` via `https://projectname.ddev.site:3000`. Note that `devServerPublic` can run over http or https, `devServerInternal` is always http. Your `config/vite.php` file might thus look like:
+
+```php
+<?php
+
+use craft\helpers\App;
+
+return [
+	'checkDevServer' => true,
+	'devServerInternal' => 'http://localhost:3000',
+	'devServerPublic' => App::env('PRIMARY_SITE_URL') . ':3000',
+	'serverPublic' => App::env('PRIMARY_SITE_URL') . '/dist/',
+	'useDevServer' => App::env('ENVIRONMENT') === 'dev',
+	// other config settings...
+];
+```
+
+If you’re using the [rollup-plugin-critical](https://github.com/nystudio107/rollup-plugin-critical) to generate [critical CSS](https://nystudio107.com/blog/implementing-critical-css), you must add extra Debian packages to enable Puppeteer Headless Chrome support. Add the following line to your `/.ddev/config.yaml` file:
+
+```yaml
+webimage_extra_packages: [gconf-service, libasound2, libatk1.0-0, libcairo2, libgconf-2-4, libgdk-pixbuf2.0-0, libgtk-3-0, libnspr4, libpango-1.0-0, libpangocairo-1.0-0, libx11-xcb1, libxcomposite1, libxcursor1, libxdamage1, libxfixes3, libxi6, libxrandr2, libxrender1, libxss1, libxtst6, fonts-liberation, libappindicator1, libnss3, xdg-utils]
+```
+
+Then be sure to set `criticalUrl` to `http://localhost` as part of your rollup configuration.
+
 ### Vite-Processed Assets
 
 This is cribbed from the [Laravel Vite integration](https://laravel-vite.netlify.app/guide/usage.html#static-assets) docs:
@@ -425,6 +489,41 @@ In addition to the `craft.vite.script()` function, the Vite plugin also provides
 This works exactly the way the `.script()` function works, but instead of outputting the tags, it _registers_ them with the `Craft::$app->getView()`.
 
 This is primarily useful in plugins that must exist inside of the CP, or other things that leverage the Yii2 AssetBundles and dependencies.
+
+### The `.asset()` function
+
+The Vite plugin includes a `.asset()` function that retrieves an asset served via Vite in your templates. Assets served from Vite include images or fonts that are referenced via CSS, or are imported via JavaScript.
+
+You pass in a relative path to the asset, just as you do for JavaScript files in Vite. For example:
+
+```twig
+    {{ craft.vite.asset("src/images/quote-open.svg") }}
+```
+
+This will return a URL like this when the Vite dev server is running:
+```html
+http://localhost:3000/src/assets/img/quote-open.svg
+```
+
+...and a URL like this in production when the Vite dev server is not running:
+```
+http://localhost:8000/dist/assets/quote-open.66b94608.svg
+```
+
+**N.B.:** this is only for assets referenced via CSS or imported via JavaScript. For other static assets, you can either put them in the [Vite public directory](https://vitejs.dev/guide/assets.html#the-public-directory) or you can use the [rollup-plugin-copy](https://github.com/vladshcherbin/rollup-plugin-copy) to copy the assets into your public `dist/` directory:
+
+```javascript
+import copy from 'rollup-plugin-copy';
+
+export default ({ command }) => ({
+   plugins: [
+      copy({
+         targets: [ { src: 'src/fonts/**/*', dest: '../cms/web/dist/fonts' } ],
+         hook: 'writeBundle'
+      }),
+   ]
+});
+```
 
 ### The `.inline()` function
 
