@@ -490,6 +490,41 @@ This works exactly the way the `.script()` function works, but instead of output
 
 This is primarily useful in plugins that must exist inside of the CP, or other things that leverage the Yii2 AssetBundles and dependencies.
 
+### The `.asset()` function
+
+The Vite plugin includes a `.asset()` function that retrieves an asset served via Vite in your templates. Assets served from Vite include images or fonts that are referenced via CSS, or are imported via JavaScript.
+
+You pass in a relative path to the asset, just as you do for JavaScript files in Vite. For example:
+
+```twig
+    {{ craft.vite.asset("src/images/quote-open.svg") }}
+```
+
+This will return a URL like this when the Vite dev server is running:
+```html
+http://localhost:3000/src/assets/img/quote-open.svg
+```
+
+...and a URL like this in production when the Vite dev server is not running:
+```
+http://localhost:8000/dist/assets/quote-open.66b94608.svg
+```
+
+**N.B.:** this is only for assets referenced via CSS or imported via JavaScript. For other static assets, you can either put them in the [Vite public directory](https://vitejs.dev/guide/assets.html#the-public-directory) or you can use the [rollup-plugin-copy](https://github.com/vladshcherbin/rollup-plugin-copy) to copy the assets into your public `dist/` directory:
+
+```javascript
+import copy from 'rollup-plugin-copy';
+
+export default ({ command }) => ({
+   plugins: [
+      copy({
+         targets: [ { src: 'src/fonts/**/*', dest: '../cms/web/dist/fonts' } ],
+         hook: 'writeBundle'
+      }),
+   ]
+});
+```
+
 ### The `.inline()` function
 
 The Vite plugin also includes a `.inline()` function that inlines the contents of a local file (via path) or remote file (via URL) in your templates.
