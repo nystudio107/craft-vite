@@ -550,7 +550,7 @@ The Vite plugin has a `.devServerRunning()` function that allows you to determin
 For instance, you could do:
 
 ```twig
-{% if craft.vite.devServerIsRunning() %}
+{% if craft.vite.devServerRunning() %}
    <base href="{{ alias('@viteBaseUrl') }}">
 {% endif %}
 ```
