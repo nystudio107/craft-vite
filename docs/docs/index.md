@@ -256,7 +256,7 @@ I would generally discourage option `3`, because we want to run our development 
 
 #### Using DDEV
 
-To run Vite inside a DDEV container, you’ll have to [define a custom service](https://ddev.readthedocs.io/en/latest/users/extend/custom-compose-files/) that proxies requests from the front-end to the vite server running inside the VM. This is done by creating a `/.ddev/docker-compose.*.yaml` file, and exposing an additional port to your project.
+To run Vite inside a DDEV container, you’ll have to [define a custom service](https://ddev.readthedocs.io/en/latest/users/extend/custom-compose-files/) that proxies requests from the frontend to the vite server running inside the VM. This is done by creating a `/.ddev/docker-compose.*.yaml` file, and exposing an additional port to your project.
 
 Create a file named `docker-compose.vite.yaml` and save it in your project’s `/.ddev` folder, with the following contents:
 
@@ -273,7 +273,7 @@ services:
       - HTTPS_EXPOSE=${DDEV_ROUTER_HTTPS_PORT}:80,${DDEV_MAILHOG_HTTPS_PORT}:8025,3000:3000
 ```
 
-As of this writing, DDEV automatically builds web containers with Node 14 installed; if you needed to change this, or simply wish to be explicit in the version to run in the VM, create a file `/.ddev/web-build/Dockerfile` with the following contents (adjust the `ENV NODE_VERSION=14` line as required):
+As of this writing, DDEV automatically builds web containers with Node.js 14 installed; if you needed to change this, or simply wish to be explicit in the version to run in the VM, create a file `/.ddev/web-build/Dockerfile` with the following contents (adjust the `ENV NODE_VERSION=14` line as required):
 
 ```dockerfile
 ARG BASE_IMAGE
@@ -324,7 +324,7 @@ This is cribbed from the [Laravel Vite integration](https://laravel-vite.netlify
 
 There is currently an [unsolved issue when referencing assets in files processed by Vite](https://github.com/vitejs/vite/issues/2196), such as a Vue or CSS file. In development, URLs will not be properly rewritten.
 
-Additionally, there is currently no way to get the path of a Vite-processed asset (eg. an image that was imported in a Vue SFC) from the back-end, since the manifest does not reference the original file path. In most cases, this should not be an issue, as this is not a common use case.
+Additionally, there is currently no way to get the path of a Vite-processed asset (for example an image that was imported in a Vue SFC) from the back-end, since the manifest does not reference the original file path. In most cases, this should not be an issue, as this is not a common use case.
 
 What you can do is leverage the /public [Public Directory](https://vitejs.dev/guide/assets.html#the-public-directory) for static assets in Vite, so the URLs will not get rewritten.
 
@@ -348,28 +348,17 @@ http://myhost.test/src/img/woof.jpg
 http://localhost:3000/src/img/woof.jpg
 ```
 
-This is only a problem when you're using Vite with a backend system like Craft CMS, where the host you run the website from is different from where the Vite dev server runs.
+This is only a problem when you’re using Vite with a backend system like Craft CMS, where the host you run the site from is different from where the Vite dev server runs.
 
-To work around this, you can either put your static assets in your backend system's server root, so they resolve as expected, or you can use this little plugin suggested in [this GitHub issue](https://github.com/vitejs/vite/issues/2394):
+To work around this, as of Vite ^2.6.0 you can use the server.origin config to tell Vite to serve the static assets it builds from the Vite dev server, and not the site server:
 ```js
-plugins: [
- {
-   name: 'static-asset-fixer',
-   enforce: 'post',
-   apply: 'serve',
-   transform: (code, id) => {
-     return {
-       code: code.replace(/\/src\/(.*)\.(svg|jp?g|png|webp)/g, 'http://localhost:3000/src/$1.$2'),
-       map: null,
-     }
-   },
- },
-],
+  server: {
+   origin: 'http://localhost:3000/src/', 
+   host: '0.0.0.0',
+}
 ```
 
-If the Vite dev server is running, it will rewrite any absolute URLs that are prefixed with `/src/` and end in one of these extensions: `svg|jp?g|png|webp`
-
-This [issue may be addressed in Vite core](https://github.com/vitejs/vite/pull/4337#issuecomment-885710791) shortly.
+This issue was [discussed in detail](https://github.com/vitejs/vite/pull/4337#issuecomment-885710791), and [fixed via a pull request](https://github.com/vitejs/vite/pull/5104) that was rolled into Vite `^2.6.0` in the form of the `origin` setting.
 
 ### Other Config
 
