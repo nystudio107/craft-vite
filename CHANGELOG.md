@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.17 - 2021.10.21
+### Fixed
+* Fixed an issue with potentially duplicated `modulepreload` links by adding tags via an associative array ([#16](https://github.com/nystudio107/craft-vite/issues/16))
+
 ## 1.0.16 - 2021.09.18
 ### Added
 * Added `craft.vite.asset()` to retrive assets such as images that are imported in JavaScript or CSS
