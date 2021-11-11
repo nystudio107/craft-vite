@@ -353,7 +353,7 @@ This is only a problem when you’re using Vite with a backend system like Craft
 To work around this, as of Vite ^2.6.0 you can use the server.origin config to tell Vite to serve the static assets it builds from the Vite dev server, and not the site server:
 ```js
   server: {
-   origin: 'http://localhost:3000/src/', 
+   origin: 'http://localhost:3000/', 
    host: '0.0.0.0',
 }
 ```
