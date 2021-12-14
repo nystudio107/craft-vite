@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.18 - 2021.12.14
+### Fixed
+* Fixed an issue where the needle/haystack logic was reversed in `strpos()` which could cause it to not match properly in some setups ([#5](https://github.com/nystudio107/craft-plugin-vite/pull/5))
+
 ## 1.0.17 - 2021.10.21
 ### Fixed
 * Fixed an issue with potentially duplicated `modulepreload` links by adding tags via an associative array ([#16](https://github.com/nystudio107/craft-vite/issues/16))
