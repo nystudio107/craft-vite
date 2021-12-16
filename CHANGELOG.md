@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.19 - 2021.12.15
+### Added
+* Added the `.entry()` function to retrieve and entry from the `manifest.json` to a JavaScript file, CSS file, or asset
+
 ## 1.0.18 - 2021.12.14
 ### Fixed
 * Fixed an issue where the needle/haystack logic was reversed in `strpos()` which could cause it to not match properly in some setups ([#5](https://github.com/nystudio107/craft-plugin-vite/pull/5))

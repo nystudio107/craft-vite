@@ -479,6 +479,21 @@ This works exactly the way the `.script()` function works, but instead of output
 
 This is primarily useful in plugins that must exist inside of the CP, or other things that leverage the Yii2 AssetBundles and dependencies.
 
+### The `.entry()` function
+
+The Vite plugin includes an `.entry()` function that retrieves the URL to the entry in the `manifest.json` file. This function will **not** ever return a URL from the devServer.
+
+You pass in a relative path to the entry, just as you do for JavaScript files in Vite. For example:
+
+```twig
+    {{ craft.vite.entry("app.css") }}
+```
+
+This will return a URL like this in regardless of whether the devServer is running or not:
+```
+http://localhost:8000/dist/assets/app.66b94608.css
+```
+
 ### The `.asset()` function
 
 The Vite plugin includes a `.asset()` function that retrieves an asset served via Vite in your templates. Assets served from Vite include images or fonts that are referenced via CSS, or are imported via JavaScript.
