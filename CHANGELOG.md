@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.20 - 2021.12.16
+### Fixed
+* Fixed a regression caused by [#5](https://github.com/nystudio107/craft-plugin-vite/pull/5) to ensure assets load on production ([#6](https://github.com/nystudio107/craft-plugin-vite/issues/6))
+
 ## 1.0.19 - 2021.12.15
 ### Added
 * Added the `.entry()` function to retrieve and entry from the `manifest.json` to a JavaScript file, CSS file, or asset
