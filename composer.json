@@ -1,42 +1,42 @@
 {
-    "name": "nystudio107/craft-vite",
-    "description": "Allows the use of the Vite.js next generation frontend tooling with Craft CMS",
-    "type": "craft-plugin",
-    "version": "1.0.20",
-    "keywords": [
-        "craft",
-        "cms",
-        "craftcms",
-        "craft-plugin",
-        "vite"
-    ],
-    "support": {
-        "docs": "https://github.com/nystudio107/craft-vite/blob/master/README.md",
-        "issues": "https://github.com/nystudio107/craft-vite/issues"
-    },
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "nystudio107",
-            "homepage": "https://nystudio107.com"
-        }
-    ],
-    "require": {
-        "craftcms/cms": "^3.0.0",
-        "nystudio107/craft-plugin-vite": "^1.0.19"
-    },
-    "autoload": {
-        "psr-4": {
-          "nystudio107\\vite\\": "src/"
-        }
-    },
-    "extra": {
-        "name": "Vite",
-        "handle": "vite",
-        "developer": "nystudio107",
-        "developerUrl": "https://nystudio107.com",
-        "documentationUrl": "https://github.com/nystudio107/craft-vite/blob/master/README.md",
-        "changelogUrl": "https://raw.githubusercontent.com/nystudio107/craft-vite/master/CHANGELOG.md",
-        "class": "nystudio107\\vite\\Vite"
+  "name": "nystudio107/craft-vite",
+  "description": "Allows the use of the Vite.js next generation frontend tooling with Craft CMS",
+  "type": "craft-plugin",
+  "version": "1.0.21",
+  "keywords": [
+    "craft",
+    "cms",
+    "craftcms",
+    "craft-plugin",
+    "vite"
+  ],
+  "support": {
+    "docs": "https://github.com/nystudio107/craft-vite/blob/master/README.md",
+    "issues": "https://github.com/nystudio107/craft-vite/issues"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "nystudio107",
+      "homepage": "https://nystudio107.com"
     }
+  ],
+  "require": {
+    "craftcms/cms": "^3.0.0",
+    "nystudio107/craft-plugin-vite": "^1.0.20"
+  },
+  "autoload": {
+    "psr-4": {
+      "nystudio107\\vite\\": "src/"
+    }
+  },
+  "extra": {
+    "name": "Vite",
+    "handle": "vite",
+    "developer": "nystudio107",
+    "developerUrl": "https://nystudio107.com",
+    "documentationUrl": "https://github.com/nystudio107/craft-vite/blob/master/README.md",
+    "changelogUrl": "https://raw.githubusercontent.com/nystudio107/craft-vite/master/CHANGELOG.md",
+    "class": "nystudio107\\vite\\Vite"
+  }
 }
