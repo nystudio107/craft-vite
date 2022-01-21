@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.23 - 2022.01.21
+
+### Fixed
+
+* Removed errant debugging code
+
 ## 1.0.22 - 2022.01.20
 
 ### Added
