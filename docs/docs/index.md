@@ -242,20 +242,16 @@ If you’re using [Laravel Valet](https://laravel.com/docs/8.x/valet) you
 may [run into issues](https://github.com/nystudio107/craft-vite/issues/4) with `https`. If so, you can add this config
 to your `vite.config.js` (see below):
 
-```js
+```
   server: {
   https: {
     key: fs.readFileSync('localhost-key.pem'),
-      cert
-  :
-    fs.readFileSync('localhost.pem'),
-  }
-,
+    cert: fs.readFileSync('localhost.pem'),
+  },
   hmr: {
     host: 'localhost',
   }
 }
-,
 ```
 
 #### Using Homestead/VM
@@ -264,17 +260,13 @@ If you’re using a VM like Homestead, to get Hot Module
 Replacement [(HMR) working](https://github.com/nystudio107/craft-vite/issues/3), you’ll need to add this config to
 your `vite.config.js` (see below):
 
-```js
+```
   server: {
   host: '0.0.0.0',
-    watch
-:
-  {
+    watch: {
     usePolling: true,
-  }
-,
+  },
 }
-,
 ```
 
 To work inside of a VM like VirtualBox (which is typically used by Homestead) you need to enable polling.
@@ -284,11 +276,10 @@ To work inside of a VM like VirtualBox (which is typically used by Homestead) yo
 To work properly with a Docker setup, the `server.host` needs to be set to `0.0.0.0` so that it broadcasts to all
 available IPv4 addresses in your `vite.config.js` (see below):
 
-```js
+```
   server: {
-  host: '0.0.0.0',
-}
-,
+    host: '0.0.0.0',
+  }
 ```
 
 #### Using Nitro
@@ -356,12 +347,10 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y -o Dpkg:
 
 In your `vite.config.js`, the `server.host` should to be set to `0.0.0.0`, and `server.port` set to `3000`:
 
-```js
+```
 server: {
   host: '0.0.0.0',
-    port
-:
-  3000
+  port: 3000
 }
 ```
 
@@ -412,14 +401,8 @@ for static assets in Vite, so the URLs will not get rewritten.
 
 The basic problem is if you have a CSS rule like:
 
-```css
-background-image:
-url
-
-(
-'/src/img/woof.jpg'
-)
-;
+```
+background-image: url('/src/img/woof.jpg');
 ```
 
 ...and your local dev runs off of something like `myhost.test` then the image will be referenced as:
@@ -446,12 +429,10 @@ is different from where the Vite dev server runs.
 To work around this, as of Vite ^2.6.0 you can use the server.origin config to tell Vite to serve the static assets it
 builds from the Vite dev server, and not the site server:
 
-```js
+```
   server: {
   origin: 'http://localhost:3000',
-    host
-:
-  '0.0.0.0',
+  host: '0.0.0.0',
 }
 ```
 
@@ -518,7 +499,7 @@ In production or otherwise where the Vite dev server is not running, the output 
 ##### Module Preload tags
 
 The Vite plugin will also generate `<link rel="modulepreload">` tags for any script modules that your script output
-via `{{ craft.vite.script() }}` imports. The tags will look like this:
+via `craft.vite.script()` imports. The tags will look like this:
 
 ```html
 
@@ -526,7 +507,7 @@ via `{{ craft.vite.script() }}` imports. The tags will look like this:
 ```
 
 Preloading [helps with performance](https://developers.google.com/web/updates/2017/12/modulepreload) by telling the
-browser about what it needs to fetch so that it's not stuck with nothing to do during those long roundtrips.
+browser about what it needs to fetch so that it’s not stuck with nothing to do during those long roundtrips.
 
 ##### Sub-Resource Integrity
 
