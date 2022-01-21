@@ -1,6 +1,7 @@
 ---
-title: Vite plugin for Craft CMS 3.x description: Documentation for the Vite plugin. The Vite plugin allows the use of
-the Vite.js next generation frontend tooling with Craft CMS
+title: Vite plugin for Craft CMS 3.x
+
+description: Documentation for the Vite plugin. The Vite plugin allows the use of the Vite.js next generation frontend tooling with Craft CMS
 ---
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/nystudio107/craft-vite/badges/quality-score.png?b=v1)](https://scrutinizer-ci.com/g/nystudio107/craft-vite/?branch=v1) [![Code Coverage](https://scrutinizer-ci.com/g/nystudio107/craft-vite/badges/coverage.png?b=v1)](https://scrutinizer-ci.com/g/nystudio107/craft-vite/?branch=v1) [![Build Status](https://scrutinizer-ci.com/g/nystudio107/craft-vite/badges/build.png?b=v1)](https://scrutinizer-ci.com/g/nystudio107/craft-vite/build-status/v1) [![Code Intelligence Status](https://scrutinizer-ci.com/g/nystudio107/craft-vite/badges/code-intelligence.svg?b=v1)](https://scrutinizer-ci.com/code-intelligence)
 
@@ -513,6 +514,36 @@ In production or otherwise where the Vite dev server is not running, the output 
 <script type="module" src="https://example.com/dist/assets/app.56c9ea9d.js" crossorigin></script>
 <link href="https://example.com/dist/assets/app.c30f6458.css" rel="stylesheet" media="print" onload="this.media='all'">
 ```
+
+##### Module Preload tags
+
+The Vite plugin will also generate `<link rel="modulepreload">` tags for any script modules that your script output
+via `{{ craft.vite.script() }}` imports. The tags will look like this:
+
+```html
+
+<link href="http://localhost:8000//dist/assets/vendor.a785de16.js" rel="modulepreload" crossorigin>
+```
+
+Preloading [helps with performance](https://developers.google.com/web/updates/2017/12/modulepreload) by telling the
+browser about what it needs to fetch so that it's not stuck with nothing to do during those long roundtrips.
+
+##### Sub-Resource Integrity
+
+If you use a Vite plugin such as [vite-plugin-manifest-sri](https://github.com/ElMassimo/vite-plugin-manifest-sri), the
+Craft Vite plugin will
+include [subresource integrity](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) attributes
+for the `<script type="module">` & `<link rel="modulepreload">` tags that it generates as well. For example:
+
+```html
+
+<script type="module" src="http://localhost:3000/src/js/app.ts"
+        integrity="oqVuAfXRKap7fdgcCY5uykM6+R9GqQ8K/uxy9rx7HNQlGYl1kPzQho1wx4JwY8wC"></script>
+```
+
+Subresource Integrity (SRI) is a security feature that enables browsers to verify that resources they fetch are
+delivered without unexpected manipulation. It works by allowing you to provide a cryptographic hash that a fetched
+resource must match.
 
 ##### Script `onload` events
 
