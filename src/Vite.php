@@ -10,20 +10,18 @@
 
 namespace nystudio107\vite;
 
-use nystudio107\vite\models\Settings;
-use nystudio107\vite\variables\ViteVariable;
-use nystudio107\vite\services\Helper as HelperService;
-
-use nystudio107\pluginvite\services\ViteService;
-
 use Craft;
+use craft\base\Model;
 use craft\base\Plugin;
 use craft\events\RegisterCacheOptionsEvent;
 use craft\events\TemplateEvent;
 use craft\utilities\ClearCaches;
 use craft\web\twig\variables\CraftVariable;
 use craft\web\View;
-
+use nystudio107\pluginvite\services\ViteService;
+use nystudio107\vite\models\Settings;
+use nystudio107\vite\services\Helper as HelperService;
+use nystudio107\vite\variables\ViteVariable;
 use yii\base\Event;
 
 /**
@@ -44,15 +42,30 @@ class Vite extends Plugin
     /**
      * @var Vite
      */
-    public static $plugin;
+    public static Plugin $plugin;
 
     /**
      * @var string
      */
-    public static $templateName;
+    public static string $templateName;
 
     // Static Methods
     // =========================================================================
+    /**
+     * @var string
+     */
+    public string $schemaVersion = '1.0.0';
+
+    // Public Properties
+    // =========================================================================
+    /**
+     * @var bool
+     */
+    public bool $hasCpSettings = false;
+    /**
+     * @var bool
+     */
+    public bool $hasCpSection = false;
 
     /**
      * @inheritdoc
@@ -69,31 +82,13 @@ class Vite extends Plugin
         parent::__construct($id, $parent, $config);
     }
 
-    // Public Properties
-    // =========================================================================
-
-    /**
-     * @var string
-     */
-    public $schemaVersion = '1.0.0';
-
-    /**
-     * @var bool
-     */
-    public $hasCpSettings = false;
-
-    /**
-     * @var bool
-     */
-    public $hasCpSection = false;
-
     // Public Methods
     // =========================================================================
 
     /**
      * @inheritdoc
      */
-    public function init()
+    public function init(): void
     {
         parent::init();
         self::$plugin = $this;
@@ -121,21 +116,9 @@ class Vite extends Plugin
     }
 
     /**
-     * Clear all the caches!
-     */
-    public function clearAllCaches()
-    {
-        // Clear all of Vite's caches
-        $this->vite->invalidateCaches();
-    }
-
-    // Protected Methods
-    // =========================================================================
-
-    /**
      * Install our event listeners.
      */
-    protected function installEventListeners()
+    protected function installEventListeners(): void
     {
         // Register our variable
         Event::on(
@@ -171,12 +154,15 @@ class Vite extends Plugin
         Event::on(
             View::class,
             View::EVENT_BEFORE_RENDER_PAGE_TEMPLATE,
-            function (TemplateEvent $event) {
+            static function (TemplateEvent $event) {
                 self::$templateName = $event->template;
             }
         );
 
     }
+
+    // Protected Methods
+    // =========================================================================
 
     /**
      * Returns the custom Control Panel cache options.
@@ -196,9 +182,18 @@ class Vite extends Plugin
     }
 
     /**
+     * Clear all the caches!
+     */
+    public function clearAllCaches(): void
+    {
+        // Clear all of Vite's caches
+        $this->vite->invalidateCaches();
+    }
+
+    /**
      * @inheritdoc
      */
-    protected function createSettingsModel()
+    protected function createSettingsModel(): ?Model
     {
         return new Settings();
     }

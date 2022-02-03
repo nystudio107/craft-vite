@@ -10,9 +10,6 @@
 
 namespace nystudio107\vite\models;
 
-use nystudio107\vite\Vite;
-
-use Craft;
 use craft\base\Model;
 
 /**
@@ -28,65 +25,65 @@ class Settings extends Model
     /**
      * @var bool Should the dev server be used for?
      */
-    public $useDevServer;
+    public bool $useDevServer = false;
 
     /**
      * @var string File system path (or URL) to the Vite-built manifest.json
      */
-    public $manifestPath;
+    public string $manifestPath = '';
 
     /**
      * @var string The public URL to the dev server (what appears in `<script src="">` tags
      */
-    public $devServerPublic;
+    public string $devServerPublic = '';
 
     /**
      * @var string The public URL to use when not using the dev server
      */
-    public $serverPublic;
+    public string $serverPublic = '';
 
     /**
      * @var string The JavaScript entry from the manifest.json to inject on Twig error pages
      *              This can be a string or an array of strings
      */
-    public $errorEntry = '';
+    public string $errorEntry = '';
 
     /**
      * @var string String to be appended to the cache key
      */
-    public $cacheKeySuffix = '';
+    public string $cacheKeySuffix = '';
 
     /**
      * @var string The internal URL to the dev server, when accessed from the environment in which PHP is executing
      *              This can be the same as `$devServerPublic`, but may be different in containerized or VM setups.
      *              ONLY used if $checkDevServer = true
      */
-    public $devServerInternal;
+    public string $devServerInternal = '';
 
     /**
      * @var bool Should we check for the presence of the dev server by pinging $devServerInternal to make sure it's running?
      */
-    public $checkDevServer = false;
+    public bool $checkDevServer = false;
 
     /**
      * @var bool Whether the react-refresh-shim should be included
      */
-    public $includeReactRefreshShim = false;
+    public bool $includeReactRefreshShim = false;
 
     /**
      * @var bool Whether the modulepreload-polyfill shim should be included
      */
-    public $includeModulePreloadShim = true;
+    public bool $includeModulePreloadShim = true;
 
     /**
      * @var string File system path (or URL) to where the Critical CSS files are stored
      */
-    public $criticalPath = '';
+    public string $criticalPath = '';
 
     /**
      * @var string the suffix added to the name of the currently rendering template for the critical css file name
      */
-    public $criticalSuffix = '_critical.min.css';
+    public string $criticalSuffix = '_critical.min.css';
 
     // Public Methods
     // =========================================================================
@@ -94,7 +91,7 @@ class Settings extends Model
     /**
      * @inheritdoc
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [

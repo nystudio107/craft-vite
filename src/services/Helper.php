@@ -10,16 +10,13 @@
 
 namespace nystudio107\vite\services;
 
-use nystudio107\vite\Vite;
-use nystudio107\vite\models\Settings;
-
-use nystudio107\pluginvite\helpers\FileHelper;
-use nystudio107\pluginvite\helpers\ManifestHelper;
-
 use Craft;
 use craft\base\Component;
 use craft\helpers\Html;
-
+use nystudio107\pluginvite\helpers\FileHelper;
+use nystudio107\pluginvite\helpers\ManifestHelper;
+use nystudio107\vite\models\Settings;
+use nystudio107\vite\Vite;
 use Twig\Error\LoaderError;
 
 /**
@@ -39,7 +36,7 @@ class Helper extends Component
      * @return string
      * @throws LoaderError
      */
-    public function getCriticalCssTags($name = null, array $attributes = []): string
+    public function getCriticalCssTags(?string $name = null, array $attributes = []): string
     {
         // Resolve the template name
         $template = Craft::$app->getView()->resolveTemplate($name ?? Vite::$templateName ?? '');
@@ -99,16 +96,14 @@ class Helper extends Component
         $settings = Vite::$plugin->getSettings();
         ManifestHelper::fetchManifest($settings->manifestPath);
         $tags = ManifestHelper::manifestTags($path, false);
-        foreach($tags as $tag) {
-            if (!empty($tag)) {
-                if ($tag['type'] === 'css') {
-                    // Extract only the Hash Value
-                    $modulePath = pathinfo($tag['url']);
-                    $moduleFilename = $modulePath['filename'];
-                    $moduleHash = substr($moduleFilename, strpos($moduleFilename, ".") + 1);
+        foreach ($tags as $tag) {
+            if (!empty($tag) && $tag['type'] === 'css') {
+                // Extract only the Hash Value
+                $modulePath = pathinfo($tag['url']);
+                $moduleFilename = $modulePath['filename'];
+                $moduleHash = substr($moduleFilename, strpos($moduleFilename, ".") + 1);
 
-                    return $moduleHash;
-                }
+                return $moduleHash;
             }
         }
 
