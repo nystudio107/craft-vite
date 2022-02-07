@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## 4.0.0-beta.1 - 2022.02.07
+
+### Added
+
+* Initial Craft CMS 4 compatibility
+
 ## 1.0.23 - 2022.01.21
 
 ### Fixed
