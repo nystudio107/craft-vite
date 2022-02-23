@@ -36,7 +36,7 @@
     "developer": "nystudio107",
     "developerUrl": "https://nystudio107.com",
     "documentationUrl": "https://github.com/nystudio107/craft-vite/blob/master/README.md",
-    "changelogUrl": "https://raw.githubusercontent.com/nystudio107/craft-vite/master/CHANGELOG.md",
+    "changelogUrl": "https://raw.githubusercontent.com/nystudio107/craft-vite/v1/CHANGELOG.md",
     "class": "nystudio107\\vite\\Vite"
   }
 }
