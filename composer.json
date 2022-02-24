@@ -11,8 +11,9 @@
     "vite"
   ],
   "support": {
-    "docs": "https://github.com/nystudio107/craft-vite/blob/master/README.md",
-    "issues": "https://github.com/nystudio107/craft-vite/issues"
+    "docs": "https://nystudio107.com/docs/vite/",
+    "issues": "https://nystudio107.com/plugins/vite/support",
+    "source": "https://github.com/nystudio107/craft-vite"
   },
   "license": "MIT",
   "authors": [
@@ -31,11 +32,7 @@
     }
   },
   "extra": {
-    "changelogUrl": "https://raw.githubusercontent.com/nystudio107/craft-vite/v4/CHANGELOG.md",
     "class": "nystudio107\\vite\\Vite",
-    "developer": "nystudio107",
-    "developerUrl": "https://nystudio107.com",
-    "documentationUrl": "https://nystudio107.com/docs/vite/",
     "handle": "vite",
     "name": "Vite"
   }
