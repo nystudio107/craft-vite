@@ -1,6 +1,6 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/nystudio107/craft-vite/badges/quality-score.png?b=v1)](https://scrutinizer-ci.com/g/nystudio107/craft-vite/?branch=v1) [![Code Coverage](https://scrutinizer-ci.com/g/nystudio107/craft-vite/badges/coverage.png?b=v1)](https://scrutinizer-ci.com/g/nystudio107/craft-vite/?branch=v1) [![Build Status](https://scrutinizer-ci.com/g/nystudio107/craft-vite/badges/build.png?b=v1)](https://scrutinizer-ci.com/g/nystudio107/craft-vite/build-status/v1) [![Code Intelligence Status](https://scrutinizer-ci.com/g/nystudio107/craft-vite/badges/code-intelligence.svg?b=v1)](https://scrutinizer-ci.com/code-intelligence)
 
-# Vite plugin for Craft CMS 3.x
+# Vite plugin for Craft CMS 4.x
 
 Allows the use of the Vite.js next generation frontend tooling with Craft CMS
 
@@ -12,7 +12,7 @@ Most of the magic is actually in the [nystudio107/craft-plugin-vite](https://git
 
 ## Requirements
 
-This plugin requires Craft CMS 3.0.0 or later.
+This plugin requires Craft CMS 4.0.0 or later.
 
 **Installation**
 

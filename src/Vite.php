@@ -49,15 +49,14 @@ class Vite extends Plugin
      */
     public static string $templateName;
 
-    // Static Methods
+    // Public Properties
     // =========================================================================
+
     /**
      * @var string
      */
     public string $schemaVersion = '1.0.0';
 
-    // Public Properties
-    // =========================================================================
     /**
      * @var bool
      */
@@ -116,6 +115,18 @@ class Vite extends Plugin
     }
 
     /**
+     * Clear all the caches!
+     */
+    public function clearAllCaches(): void
+    {
+        // Clear all of Vite's caches
+        $this->vite->invalidateCaches();
+    }
+
+    // Protected Methods
+    // =========================================================================
+
+    /**
      * Install our event listeners.
      */
     protected function installEventListeners(): void
@@ -161,9 +172,6 @@ class Vite extends Plugin
 
     }
 
-    // Protected Methods
-    // =========================================================================
-
     /**
      * Returns the custom Control Panel cache options.
      *
@@ -179,15 +187,6 @@ class Vite extends Plugin
                 'action' => [$this, 'clearAllCaches'],
             ],
         ];
-    }
-
-    /**
-     * Clear all the caches!
-     */
-    public function clearAllCaches(): void
-    {
-        // Clear all of Vite's caches
-        $this->vite->invalidateCaches();
     }
 
     /**

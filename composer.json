@@ -2,7 +2,7 @@
   "name": "nystudio107/craft-vite",
   "description": "Allows the use of the Vite.js next generation frontend tooling with Craft CMS",
   "type": "craft-plugin",
-  "version": "4.0.0-beta.1",
+  "version": "4.0.0-beta.2",
   "keywords": [
     "craft",
     "cms",
@@ -11,8 +11,9 @@
     "vite"
   ],
   "support": {
-    "docs": "https://github.com/nystudio107/craft-vite/blob/master/README.md",
-    "issues": "https://github.com/nystudio107/craft-vite/issues"
+    "docs": "https://nystudio107.com/docs/vite/",
+    "issues": "https://nystudio107.com/plugins/vite/support",
+    "source": "https://github.com/nystudio107/craft-vite"
   },
   "license": "MIT",
   "authors": [
@@ -31,12 +32,8 @@
     }
   },
   "extra": {
-    "name": "Vite",
+    "class": "nystudio107\\vite\\Vite",
     "handle": "vite",
-    "developer": "nystudio107",
-    "developerUrl": "https://nystudio107.com",
-    "documentationUrl": "https://github.com/nystudio107/craft-vite/blob/master/README.md",
-    "changelogUrl": "https://raw.githubusercontent.com/nystudio107/craft-vite/master/CHANGELOG.md",
-    "class": "nystudio107\\vite\\Vite"
+    "name": "Vite"
   }
 }
