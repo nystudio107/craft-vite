@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## 4.0.0-beta.3 - 2022.03.22
+
+### Changed
+
+* Only clear caches in `init()` if we're using the dev server
+* Cache the status of the devServer for the duration of the request
+
 ## 4.0.0-beta.2 - 2022.03.04
 
 ### Fixed
