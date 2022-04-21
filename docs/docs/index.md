@@ -332,19 +332,6 @@ services:
       - HTTPS_EXPOSE=${DDEV_ROUTER_HTTPS_PORT}:80,${DDEV_MAILHOG_HTTPS_PORT}:8025,3000:3000
 ```
 
-As of this writing, DDEV automatically builds web containers with Node.js 14 installed; if you needed to change this, or
-simply wish to be explicit in the version to run in the VM, create a file `/.ddev/web-build/Dockerfile` with the
-following contents (adjust the `ENV NODE_VERSION=14` line as required):
-
-```dockerfile
-ARG BASE_IMAGE
-FROM $BASE_IMAGE
-ENV NODE_VERSION=14
-RUN sudo apt-get remove -y nodejs
-RUN curl -sSL --fail https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash -
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y -o Dpkg::Options::="--force-confold" --no-install-recommends --no-install-suggests nodejs
-```
-
 In your `vite.config.js`, the `server.host` should to be set to `0.0.0.0`, and `server.port` set to `3000`:
 
 ```
@@ -382,6 +369,9 @@ webimage_extra_packages: [ gconf-service, libasound2, libatk1.0-0, libcairo2, li
 ```
 
 Then be sure to set `criticalUrl` to `http://localhost` as part of your rollup configuration.
+
+Finally note that as of DDEV 1.19 you are able to specify Node (and Composer) versions directly via `/.ddev/config.yaml`.  See more at https://ddev.readthedocs.io/en/stable/users/cli-usage/#nodejs-npm-nvm-and-yarn
+
 
 ### Vite-Processed Assets
 
