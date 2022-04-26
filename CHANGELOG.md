@@ -2,10 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
-## 4.0.0-beta.3 - 2022.03.22
-
+## 4.0.0-beta.4 - 2022.04.26
 ### Changed
+* Don't log the full exception on a Guzzle error, just log the message
 
+### Fixed
+* Fix semver for `nystudio107/craft-plugin-vite` so it's not pinned to a specific version
+
+## 4.0.0-beta.3 - 2022.03.22
+### Changed
 * Only clear caches in `init()` if we're using the dev server
 * Cache the status of the devServer for the duration of the request
 
