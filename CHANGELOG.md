@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## 4.0.0 - 2022.05.15
+### Added
+* Initial Craft CMS 4 release
+
+### Fixed
+* Fixed an issue where the plugin couldn't detect the Vite dev server by testing `__vite_ping` instead of `@vite/client` to determine whether the dev server is running or not ([#33](https://github.com/nystudio107/craft-vite/issues/33)) ([#8](https://github.com/nystudio107/craft-plugin-vite/issues/8))
+
 ## 4.0.0-beta.4 - 2022.04.26
 ### Changed
 * Don't log the full exception on a Guzzle error, just log the message
