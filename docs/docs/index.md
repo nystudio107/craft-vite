@@ -489,7 +489,7 @@ Subresource Integrity (SRI) is a security feature that enables browsers to verif
 delivered without unexpected manipulation. It works by allowing you to provide a cryptographic hash that a fetched
 resource must match.
 
-**n.b.:** If you use a service such as [CloudFlare](https://www.cloudflare.com/) with **Auto Minify** enabled, this alters the payload that is being delivery dynamically, which will cause the SRI check to fail, and your content will not load.
+**N.B.:** If you use a service such as [CloudFlare](https://www.cloudflare.com/) with **Auto Minify** enabled, this alters the payload that is being delivered dynamically, which will cause the SRI check to fail, and your files will not load.
 
 The same is true for any modifications to the built JavaScript. External changes to the built files is exactly what SRI is designed to thwart. So you will need to either disable any options that dynamically alter your built files, or don't use SRI.
 
