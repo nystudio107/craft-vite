@@ -16,7 +16,7 @@ Article: [Vite.js Next Generation Frontend Tooling + Craft CMS](https://nystudio
 
 ## Requirements
 
-This plugin requires Craft CMS 3.0.0 or later.
+This plugin requires Craft CMS 3.0.0 or Craft CMS 4.0.0 or later.
 
 ## Installation
 
@@ -282,33 +282,6 @@ available IPv4 addresses in your `vite.config.js` (see below):
   }
 ```
 
-#### Using Nitro
-
-Getting Vite up and running in Nitro has been problematic for some.
-
-Since the state of the Nitro frontend development tooling is in flux, check
-the [Nitro Issues](https://github.com/craftcms/nitro/issues) or the `#nitro` discord channel for the latest.
-
-You have 3 options when running Vite with Nitro:
-
-1. Run Vite inside of the Nitro Docker container
-2. Run Vite in its own Docker container, using its own separate Dockerfile
-3. Run Vite locally on your computer and configure it to use a port _other_ than `3000`
-
-Option `1` is probably the most viable, but Vite requires Node.js 14 or later, and with Nitro the Node.js version is
-tied to the PHP version of your site. Also people have stated that using `nitro npm run dev` doesn’t work, but
-using `nitro ssh` and then running `npm run dev` from inside the container _does_ work.
-
-Following the [Support for vite configuration](https://github.com/craftcms/nitro/issues/360) GitHub issue is likely a
-good idea.
-
-If you know Docker, option `2` is a good way to go. You can see an example of how you might do it in
-the [craft-plugin-vite-buildchain](https://github.com/nystudio107/craft-plugin-vite-buildchain/tree/v1/buildchain)
-repository.
-
-I would generally discourage option `3`, because we want to run our development tools inside of our local development
-environment, and not on locally on our computer.
-
 #### Using DDEV
 
 To run Vite inside a DDEV container, you’ll have
@@ -515,6 +488,10 @@ for the `<script type="module">` & `<link rel="modulepreload">` tags that it gen
 Subresource Integrity (SRI) is a security feature that enables browsers to verify that resources they fetch are
 delivered without unexpected manipulation. It works by allowing you to provide a cryptographic hash that a fetched
 resource must match.
+
+**n.b.:** If you use a service such as [CloudFlare](https://www.cloudflare.com/) with **Auto Minify** enabled, this alters the payload that is being delivery dynamically, which will cause the SRI check to fail, and your content will not load.
+
+The same is true for any modifications to the built JavaScript. External changes to the built files is exactly what SRI is designed to thwart. So you will need to either disable any options that dynamically alter your built files, or don't use SRI.
 
 ##### Script `onload` events
 
