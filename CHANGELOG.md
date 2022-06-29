@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 4.0.1 - 2022.06.29
+### Changed
+* Adds a boolean as a second param to the `craft.vite.asset(url, true)` so that assets in the vite public folder can be referenced correctly from Twig ([#9](https://github.com/nystudio107/craft-plugin-vite/pull/9))
+
 ## 4.0.0 - 2022.05.15
 ### Added
 * Initial Craft CMS 4 release
