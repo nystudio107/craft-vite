@@ -661,6 +661,12 @@ export default ({command}) => ({
 });
 ```
 
+If you need to access assets that are in the `public/` directory from Twig, there is a second parameter you can pass to `craft.vite.asset` to inidicate that the asset is coming from the `public/` directory:
+
+```twig
+    {{ craft.vite.asset("src/images/quote-open.svg", true) }}
+```
+
 ### The `.inline()` function
 
 The Vite plugin also includes a `.inline()` function that inlines the contents of a local file (via path) or remote
