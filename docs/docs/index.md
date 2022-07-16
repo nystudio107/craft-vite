@@ -189,6 +189,25 @@ export default ({command}) => ({
 This will generate `-legacy` files for your production bundles, and the Vite plugin automatically detects them and uses
 the [module/nomodule](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/) pattern for you.
 
+#### Entry Script HMR
+
+Your entry scripts are what you list in the `build.rollupOptions.input` section of the config.
+
+Vite is typically used with frameworks which take care of the HMR via the dev server. However,  in order to get your entry scripts to HMR you need to add this snippet to each entry script:
+
+```js
+// Accept HMR as per: https://vitejs.dev/guide/api-hmr.html
+if (import.meta.hot) {
+  import.meta.hot.accept(() => {
+    console.log("HMR")
+  });
+}
+```
+
+If you don't do the above, you'll get a full page reload whenever you modify one of your entry scripts.
+
+Anything your scripts import will be automatically HMR'd by the dev server.
+
 #### Live Reload of Twig Config
 
 Vite provides hot module replacement (HRM) of CSS and JavaScript as you build your application out of the box.
