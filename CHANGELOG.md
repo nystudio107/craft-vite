@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 4.0.2 - 2022.07.16
+### Changed
+* Fixed an issue where `checkDevServer` didn't work with Vite 3, because they removed the intercepting of `__vite_ping` ([#37](https://github.com/nystudio107/craft-vite/issues/37))
+
 ## 4.0.1 - 2022.06.29
 ### Changed
 * Adds a boolean as a second param to the `craft.vite.asset(url, true)` so that assets in the vite public folder can be referenced correctly from Twig ([#9](https://github.com/nystudio107/craft-plugin-vite/pull/9))
