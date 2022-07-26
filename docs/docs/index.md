@@ -156,6 +156,34 @@ export default ({command}) => ({
   since we’re not using an `index.html` as our application entrypoint). These should be the full path to the script as
   referenced in your Twig code
 
+#### Specifying the dev server port
+
+Prior to version 3, Vite used port `3000` by default for the dev server. Now it uses port `5137` by default, so we can specify the port we want to use specifically:
+
+```js
+export default ({command}) => ({
+  base: command === 'serve' ? '' : '/dist/',
+  build: {
+    manifest: true,
+    outDir: '../cms/web/dist/',
+    rollupOptions: {
+      input: {
+        app: './src/js/app.ts',
+      }
+    },
+  },
+  server: {
+    fs: {
+      strict: false
+    },
+    origin: 'http://localhost:3000',
+    port: 3000,
+    strictPort: true,
+  }
+});
+```
+
+
 #### Modern + Legacy Config
 
 By default, Vite generates JavaScript bundles that work with modern browsers that
