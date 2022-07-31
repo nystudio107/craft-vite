@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## 4.0.3 - UNRELEASED
+### Added
+* Added support for detecting dev-mode in Craft CMS v4 by changing `App::env('ENVIRONMENT') === 'dev'`
+* to `App::env('ENVIRONMENT') === 'dev' || App::env('CRAFT_ENVIRONMENT') === 'dev'` ([#41](https://github.com/nystudio107/craft-vite/pull/41))
+
 ## 4.0.2 - 2022.07.16
 ### Changed
 * Fixed an issue where `checkDevServer` didn't work with Vite 3, because they removed the intercepting of `__vite_ping` ([#37](https://github.com/nystudio107/craft-vite/issues/37))
