@@ -65,7 +65,7 @@ to `vite.php` and copied to your `config/` directory to take effect.
 use craft\helpers\App;
 
 return [
-    'useDevServer' => App::env('ENVIRONMENT') === 'dev', # For Craft CMS 4.x use `App::env('CRAFT_ENVIRONMENT') === 'dev'`
+    'useDevServer' => App::env('ENVIRONMENT') === 'dev' || App::env('CRAFT_ENVIRONMENT') === 'dev',
     'manifestPath' => '@webroot/dist/manifest.json',
     'devServerPublic' => 'http://localhost:3000/',
     'serverPublic' => App::env('PRIMARY_SITE_URL') . '/dist/',
@@ -375,7 +375,7 @@ return [
 	'devServerInternal' => 'http://localhost:3000',
 	'devServerPublic' => App::env('PRIMARY_SITE_URL') . ':3000',
 	'serverPublic' => App::env('PRIMARY_SITE_URL') . '/dist/',
-	'useDevServer' => App::env('ENVIRONMENT') === 'dev',
+	'useDevServer' => App::env('ENVIRONMENT') === 'dev' || App::env('CRAFT_ENVIRONMENT') === 'dev',
 	// other config settings...
 ];
 ```
