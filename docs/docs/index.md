@@ -1,11 +1,11 @@
 ---
-title: Vite plugin for Craft CMS 3.x
+title: Vite plugin for Craft CMS
 
 description: Documentation for the Vite plugin. The Vite plugin allows the use of the Vite.js next generation frontend tooling with Craft CMS
 ---
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/nystudio107/craft-vite/badges/quality-score.png?b=v1)](https://scrutinizer-ci.com/g/nystudio107/craft-vite/?branch=v1) [![Code Coverage](https://scrutinizer-ci.com/g/nystudio107/craft-vite/badges/coverage.png?b=v1)](https://scrutinizer-ci.com/g/nystudio107/craft-vite/?branch=v1) [![Build Status](https://scrutinizer-ci.com/g/nystudio107/craft-vite/badges/build.png?b=v1)](https://scrutinizer-ci.com/g/nystudio107/craft-vite/build-status/v1) [![Code Intelligence Status](https://scrutinizer-ci.com/g/nystudio107/craft-vite/badges/code-intelligence.svg?b=v1)](https://scrutinizer-ci.com/code-intelligence)
 
-# Vite plugin for Craft CMS 3.x
+# Vite plugin for Craft CMS
 
 Allows the use of the Vite.js next generation frontend tooling with Craft CMS
 
@@ -16,7 +16,7 @@ Article: [Vite.js Next Generation Frontend Tooling + Craft CMS](https://nystudio
 
 ## Requirements
 
-This plugin requires Craft CMS 3.0.0 or Craft CMS 4.0.0 or later.
+This plugin requires Craft CMS 3.0.0 or later, or Craft CMS 4.0.0 or later.
 
 ## Installation
 
@@ -65,7 +65,7 @@ to `vite.php` and copied to your `config/` directory to take effect.
 use craft\helpers\App;
 
 return [
-    'useDevServer' => App::env('ENVIRONMENT') === 'dev',
+    'useDevServer' => App::env('ENVIRONMENT') === 'dev' || App::env('CRAFT_ENVIRONMENT') === 'dev',
     'manifestPath' => '@webroot/dist/manifest.json',
     'devServerPublic' => 'http://localhost:3000/',
     'serverPublic' => App::env('PRIMARY_SITE_URL') . '/dist/',
@@ -345,7 +345,7 @@ contents:
 version: '3.6'
 services:
   web:
-    ports:
+    expose:
       - '3000'
     environment:
       - HTTP_EXPOSE=${DDEV_ROUTER_HTTP_PORT}:80,${DDEV_MAILHOG_PORT}:8025,3001:3000
@@ -375,7 +375,7 @@ return [
 	'devServerInternal' => 'http://localhost:3000',
 	'devServerPublic' => App::env('PRIMARY_SITE_URL') . ':3000',
 	'serverPublic' => App::env('PRIMARY_SITE_URL') . '/dist/',
-	'useDevServer' => App::env('ENVIRONMENT') === 'dev',
+	'useDevServer' => App::env('ENVIRONMENT') === 'dev' || App::env('CRAFT_ENVIRONMENT') === 'dev',
 	// other config settings...
 ];
 ```

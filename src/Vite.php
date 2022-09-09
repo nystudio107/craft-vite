@@ -10,20 +10,19 @@
 
 namespace nystudio107\vite;
 
-use nystudio107\vite\models\Settings;
-use nystudio107\vite\variables\ViteVariable;
-use nystudio107\vite\services\Helper as HelperService;
-
-use nystudio107\pluginvite\services\ViteService;
-
 use Craft;
 use craft\base\Plugin;
 use craft\events\RegisterCacheOptionsEvent;
 use craft\events\TemplateEvent;
+use craft\helpers\ArrayHelper;
 use craft\utilities\ClearCaches;
 use craft\web\twig\variables\CraftVariable;
 use craft\web\View;
-
+use nystudio107\pluginvite\services\ViteService;
+use nystudio107\vite\helpers\PluginConfig as PluginConfigHelper;
+use nystudio107\vite\models\Settings;
+use nystudio107\vite\services\Helper as HelperService;
+use nystudio107\vite\variables\ViteVariable;
 use yii\base\Event;
 
 /**
@@ -59,12 +58,17 @@ class Vite extends Plugin
      */
     public function __construct($id, $parent = null, array $config = [])
     {
-        $config['components'] = [
-            'helper' => HelperService::class,
-            'vite' => [
-                'class' => ViteService::class,
+        $definition = PluginConfigHelper::serviceDefinitionFromConfig('vite', ViteService::class);
+        // Add in our default config
+        $viteConfig = [
+            'components' => [
+                'helper' => HelperService::class,
+                'vite' => $definition
             ]
         ];
+        // Merge in the passed config, so it our config can be overridden by Plugins::pluginConfigs['vite']
+        // ref: https://github.com/craftcms/cms/issues/1989
+        $config = ArrayHelper::merge($viteConfig, $config);
 
         parent::__construct($id, $parent, $config);
     }
@@ -97,16 +101,6 @@ class Vite extends Plugin
     {
         parent::init();
         self::$plugin = $this;
-        // Configure our Vite service with the settings
-        $settings = $this->getSettings();
-        if ($settings) {
-            $settingsAttrs = $settings->getAttributes();
-            $viteAttrs = $this->vite->getAttributes();
-            Craft::configure($this->vite, array_intersect_key(
-                $settingsAttrs,
-                $viteAttrs
-            ));
-        }
         // Add our event listeners
         $this->installEventListeners();
         // Log that the plugin has loaded
