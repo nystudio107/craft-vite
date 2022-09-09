@@ -26,10 +26,10 @@ use craft\helpers\App;
 
 return [
 
-   /**
-    * @var bool Should the dev server be used?
-    */
-    'useDevServer' => App::env('ENVIRONMENT') === 'dev',
+    /**
+     * @var bool Should the dev server be used?
+     */
+    'useDevServer' => App::env('ENVIRONMENT') === 'dev' || App::env('CRAFT_ENVIRONMENT') === 'dev',
 
     /**
      * @var string File system path (or URL) to the Vite-built manifest.json
@@ -87,5 +87,5 @@ return [
     /**
      * @var string the suffix added to the name of the currently rendering template for the critical css file name
      */
-    'criticalSuffix' =>'_critical.min.css',
+    'criticalSuffix' => '_critical.min.css',
 ];
