@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## 4.0.3 - UNRELEASED
+## 4.0.3 - 2022.09.09
 ### Added
 * Added support for detecting dev-mode in Craft CMS v4 by changing `App::env('ENVIRONMENT') === 'dev'`
 * to `App::env('ENVIRONMENT') === 'dev' || App::env('CRAFT_ENVIRONMENT') === 'dev'` ([#41](https://github.com/nystudio107/craft-vite/pull/41))
