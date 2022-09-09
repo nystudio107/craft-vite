@@ -73,17 +73,14 @@ class Vite extends Plugin
      */
     public function __construct($id, $parent = null, array $config = [])
     {
-        $definition = PluginConfigHelper::serviceDefinitionFromConfig('vite', ViteService::class);
-        // Add in our default config
-        $viteConfig = [
-            'components' => [
-                'helper' => HelperService::class,
-                'vite' => $definition
-            ]
-        ];
         // Merge in the passed config, so it our config can be overridden by Plugins::pluginConfigs['vite']
         // ref: https://github.com/craftcms/cms/issues/1989
-        $config = ArrayHelper::merge($viteConfig, $config);
+        $config = ArrayHelper::merge([
+            'components' => [
+                'helper' => HelperService::class,
+                'vite' => PluginConfigHelper::serviceDefinitionFromConfig('vite', ViteService::class)
+            ]
+        ], $config);
 
         parent::__construct($id, $parent, $config);
     }
