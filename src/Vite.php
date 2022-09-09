@@ -15,7 +15,6 @@ use craft\base\Model;
 use craft\base\Plugin;
 use craft\events\RegisterCacheOptionsEvent;
 use craft\events\TemplateEvent;
-use craft\helpers\ArrayHelper;
 use craft\utilities\ClearCaches;
 use craft\web\twig\variables\CraftVariable;
 use craft\web\View;
@@ -68,21 +67,20 @@ class Vite extends Plugin
      */
     public bool $hasCpSection = false;
 
+    // Public Static Methods
+    // =========================================================================
+
     /**
      * @inheritdoc
      */
-    public function __construct($id, $parent = null, array $config = [])
+    public static function config(): array
     {
-        // Merge in the passed config, so it our config can be overridden by Plugins::pluginConfigs['vite']
-        // ref: https://github.com/craftcms/cms/issues/1989
-        $config = ArrayHelper::merge([
+        return [
             'components' => [
                 'helper' => HelperService::class,
                 'vite' => PluginConfigHelper::serviceDefinitionFromConfig('vite', ViteService::class)
             ]
-        ], $config);
-
-        parent::__construct($id, $parent, $config);
+        ];
     }
 
     // Public Methods
