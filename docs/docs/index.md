@@ -16,7 +16,7 @@ Article: [Vite.js Next Generation Frontend Tooling + Craft CMS](https://nystudio
 
 ## Requirements
 
-This plugin requires Craft CMS 3.0.0 or Craft CMS 4.0.0 or later.
+This plugin requires Craft CMS 3.0.0 or later, or Craft CMS 4.0.0 or later.
 
 ## Installation
 
@@ -345,7 +345,7 @@ contents:
 version: '3.6'
 services:
   web:
-    ports:
+    expose:
       - '3000'
     environment:
       - HTTP_EXPOSE=${DDEV_ROUTER_HTTP_PORT}:80,${DDEV_MAILHOG_PORT}:8025,3001:3000
