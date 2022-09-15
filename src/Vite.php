@@ -62,6 +62,7 @@ class Vite extends Plugin
      * @var bool
      */
     public bool $hasCpSettings = false;
+
     /**
      * @var bool
      */
