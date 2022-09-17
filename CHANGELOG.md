@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.29 - UNRELEASED
+### Changed
+* Move to using `ServicesTrait` and add getter methods for services
+
 ## 1.0.28 - 2022.09.09
 ### Added
 * Added support for detecting dev-mode in Craft CMS v4 by changing `App::env('ENVIRONMENT') === 'dev'` 

@@ -19,7 +19,7 @@ use yii\base\InvalidConfigException;
 /**
  * @author    nystudio107
  * @package   Vite
- * @since     1.0.28
+ * @since     1.0.29
  *
  * @property  ViteService $vite
  * @property  HelperService $helper
