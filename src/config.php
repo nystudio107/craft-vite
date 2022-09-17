@@ -1,6 +1,6 @@
 <?php
 /**
- * Vite plugin for Craft CMS 3.x
+ * Vite plugin for Craft CMS
  *
  * Allows the use of the Vite.js next generation frontend tooling with Craft CMS
  *
@@ -26,9 +26,9 @@ use craft\helpers\App;
 
 return [
 
-   /**
-    * @var bool Should the dev server be used?
-    */
+    /**
+     * @var bool Should the dev server be used?
+     */
     'useDevServer' => App::env('ENVIRONMENT') === 'dev' || App::env('CRAFT_ENVIRONMENT') === 'dev',
 
     /**
@@ -87,5 +87,5 @@ return [
     /**
      * @var string the suffix added to the name of the currently rendering template for the critical css file name
      */
-    'criticalSuffix' =>'_critical.min.css',
+    'criticalSuffix' => '_critical.min.css',
 ];

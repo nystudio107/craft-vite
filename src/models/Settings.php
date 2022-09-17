@@ -1,6 +1,6 @@
 <?php
 /**
- * Vite plugin for Craft CMS 3.x
+ * Vite plugin for Craft CMS
  *
  * Allows the use of the Vite.js next generation frontend tooling with Craft CMS
  *
@@ -10,9 +10,6 @@
 
 namespace nystudio107\vite\models;
 
-use nystudio107\vite\Vite;
-
-use Craft;
 use craft\base\Model;
 
 /**
