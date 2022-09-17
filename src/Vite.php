@@ -1,6 +1,6 @@
 <?php
 /**
- * Vite plugin for Craft CMS 3.x
+ * Vite plugin for Craft CMS
  *
  * Allows the use of the Vite.js next generation frontend tooling with Craft CMS
  *
@@ -18,10 +18,8 @@ use craft\events\TemplateEvent;
 use craft\utilities\ClearCaches;
 use craft\web\twig\variables\CraftVariable;
 use craft\web\View;
-use nystudio107\pluginvite\services\ViteService;
-use nystudio107\vite\helpers\PluginConfig as PluginConfigHelper;
 use nystudio107\vite\models\Settings;
-use nystudio107\vite\services\Helper as HelperService;
+use nystudio107\vite\services\ServicesTrait;
 use nystudio107\vite\variables\ViteVariable;
 use yii\base\Event;
 
@@ -31,12 +29,14 @@ use yii\base\Event;
  * @author    nystudio107
  * @package   Vite
  * @since     1.0.0
- *
- * @property  ViteService $vite
- * @property  HelperService $helper
  */
 class Vite extends Plugin
 {
+    // Traits
+    // =========================================================================
+
+    use ServicesTrait;
+
     // Static Properties
     // =========================================================================
 
@@ -67,22 +67,6 @@ class Vite extends Plugin
      * @var bool
      */
     public bool $hasCpSection = false;
-
-    // Public Static Methods
-    // =========================================================================
-
-    /**
-     * @inheritdoc
-     */
-    public static function config(): array
-    {
-        return [
-            'components' => [
-                'helper' => HelperService::class,
-                'vite' => PluginConfigHelper::serviceDefinitionFromConfig('vite', ViteService::class)
-            ]
-        ];
-    }
 
     // Public Methods
     // =========================================================================
