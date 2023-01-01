@@ -2,9 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
-## 1.0.29 - UNRELEASED
+## 1.0.29 - 2023.01.01
 ### Changed
 * Move to using `ServicesTrait` and add getter methods for services
+* Update the docs to use Vitepress `^1.0.0-alpha.29`
+
+### Fixed
+* Fixed an issue where `craft.vite.includeCriticalCssTags()` would fail if you had `template` in the file path ([#45](https://github.com/nystudio107/craft-vite/issues/45))
 
 ## 1.0.28 - 2022.09.09
 ### Added
