@@ -1,6 +1,6 @@
 <?php
 /**
- * Vite plugin for Craft CMS 3.x
+ * Vite plugin for Craft CMS
  *
  * Allows the use of the Vite.js next generation frontend tooling with Craft CMS
  *
@@ -15,14 +15,11 @@ use craft\base\Model;
 use craft\base\Plugin;
 use craft\events\RegisterCacheOptionsEvent;
 use craft\events\TemplateEvent;
-use craft\helpers\ArrayHelper;
 use craft\utilities\ClearCaches;
 use craft\web\twig\variables\CraftVariable;
 use craft\web\View;
-use nystudio107\pluginvite\services\ViteService;
-use nystudio107\vite\helpers\PluginConfig as PluginConfigHelper;
 use nystudio107\vite\models\Settings;
-use nystudio107\vite\services\Helper as HelperService;
+use nystudio107\vite\services\ServicesTrait;
 use nystudio107\vite\variables\ViteVariable;
 use yii\base\Event;
 
@@ -32,12 +29,14 @@ use yii\base\Event;
  * @author    nystudio107
  * @package   Vite
  * @since     1.0.0
- *
- * @property  ViteService $vite
- * @property  HelperService $helper
  */
 class Vite extends Plugin
 {
+    // Traits
+    // =========================================================================
+
+    use ServicesTrait;
+
     // Static Properties
     // =========================================================================
 
@@ -63,30 +62,11 @@ class Vite extends Plugin
      * @var bool
      */
     public bool $hasCpSettings = false;
+
     /**
      * @var bool
      */
     public bool $hasCpSection = false;
-
-    /**
-     * @inheritdoc
-     */
-    public function __construct($id, $parent = null, array $config = [])
-    {
-        $definition = PluginConfigHelper::serviceDefinitionFromConfig('vite', ViteService::class);
-        // Add in our default config
-        $viteConfig = [
-            'components' => [
-                'helper' => HelperService::class,
-                'vite' => $definition
-            ]
-        ];
-        // Merge in the passed config, so it our config can be overridden by Plugins::pluginConfigs['vite']
-        // ref: https://github.com/craftcms/cms/issues/1989
-        $config = ArrayHelper::merge($viteConfig, $config);
-
-        parent::__construct($id, $parent, $config);
-    }
 
     // Public Methods
     // =========================================================================

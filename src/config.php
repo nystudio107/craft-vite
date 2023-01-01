@@ -1,6 +1,6 @@
 <?php
 /**
- * Vite plugin for Craft CMS 3.x
+ * Vite plugin for Craft CMS
  *
  * Allows the use of the Vite.js next generation frontend tooling with Craft CMS
  *

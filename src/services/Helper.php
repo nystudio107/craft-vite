@@ -1,6 +1,6 @@
 <?php
 /**
- * Vite plugin for Craft CMS 3.x
+ * Vite plugin for Craft CMS
  *
  * Allows the use of the Vite.js next generation frontend tooling with Craft CMS
  *
@@ -52,7 +52,10 @@ class Helper extends Component
                 $dirPrefix = CRAFT_TEMPLATES_PATH;
             }
             $name = strstr($name, $dirPrefix);
-            $name = (string)str_replace($dirPrefix, '', $name);
+            $pos = strpos($name, $dirPrefix);
+            if ($pos !== false) {
+                $name = (string)substr_replace($name, '', $pos, strlen($dirPrefix));
+            }
             $path = FileHelper::createUrl(
                     $settings->criticalPath,
                     $name
