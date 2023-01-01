@@ -1,6 +1,6 @@
 <?php
 /**
- * Vite plugin for Craft CMS 3.x
+ * Vite plugin for Craft CMS
  *
  * Allows the use of the Vite.js next generation frontend tooling with Craft CMS
  *
@@ -10,13 +10,10 @@
 
 namespace nystudio107\vite\variables;
 
-use nystudio107\vite\Vite;
-
+use craft\helpers\Template;
 use nystudio107\pluginvite\variables\ViteVariableInterface;
 use nystudio107\pluginvite\variables\ViteVariableTrait;
-
-use craft\helpers\Template;
-
+use nystudio107\vite\Vite;
 use Twig\Error\LoaderError;
 use Twig\Markup;
 
