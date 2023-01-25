@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## 4.0.5 - 2023.01.25
+### Changed
+* Updated the `craft.vite.asset()` function to work with Vite 3.x or later, where assets are stored as top-level entries in the `manifest.json` ([#56](https://github.com/nystudio107/craft-vite/issues/56)) ([#31](https://github.com/nystudio107/craft-vite/issues/31))
+* You can now include CSS manually if it's a top-level entry in your `vite.config.js` (rather than being imported into your JavaScript) via `craft.vite.asset("src/css/app.css")` ([#31](https://github.com/nystudio107/craft-vite/issues/31))
+
 ## 4.0.4 - 2023.01.01
 ### Changed
 * Move to using `ServicesTrait` and add getter methods for services
