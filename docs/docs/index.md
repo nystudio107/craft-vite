@@ -714,6 +714,32 @@ If you need to access assets that are in the `public/` directory from Twig, ther
     {{ craft.vite.asset("src/images/quote-open.svg", true) }}
 ```
 
+#### Using `craft.vite.asset` with CSS
+
+If you are using Vite 3.x or later, you can also use `craft.vite.asset` to manually include CSS that is a top-level entry in your `vite.config.js` (rather than being imported into your JavaScript):
+
+```twig
+    {{ craft.vite.asset("src/css/app.css") }}
+```
+
+This assumes your `vite.config.js` looks something like this:
+
+```js
+  build: {
+    emptyOutDir: true,
+    manifest: true,
+    rollupOptions: {
+      input: {
+        app: 'src/js/app.ts',
+        css: 'src/css/app.css'
+      },
+      output: {
+        sourcemap: true
+      },
+    }
+  },
+```
+
 ### The `.inline()` function
 
 The Vite plugin also includes a `.inline()` function that inlines the contents of a local file (via path) or remote
