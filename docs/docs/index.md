@@ -611,16 +611,16 @@ In production or otherwise where the Vite dev server is not running, the output 
 ```html
 
 <script>
-    !function () {
-        var e = document, t = e.createElement("script");
-        if (!("noModule" in t) && "onbeforeload" in t) {
-            var n = !1;
-            e.addEventListener("beforeload", function (e) {
-                if (e.target === t) n = !0; else if (!e.target.hasAttribute("nomodule") || !n) return;
-                e.preventDefault()
-            }, !0), t.type = "module", t.src = ".", e.head.appendChild(t), t.remove()
-        }
-    }();
+  !function () {
+    var e = document, t = e.createElement("script");
+    if (!("noModule" in t) && "onbeforeload" in t) {
+      var n = !1;
+      e.addEventListener("beforeload", function (e) {
+        if (e.target === t) n = !0; else if (!e.target.hasAttribute("nomodule") || !n) return;
+        e.preventDefault()
+      }, !0), t.type = "module", t.src = ".", e.head.appendChild(t), t.remove()
+    }
+  }();
 </script>
 <script type="nomodule" src="https://example.com/dist/assets/polyfills-legacy.8fce4e35.js"></script>
 <script type="module" src="https://example.com/dist/assets/app.56c9ea9d.js" crossorigin></script>
@@ -712,6 +712,32 @@ If you need to access assets that are in the `public/` directory from Twig, ther
 
 ```twig
     {{ craft.vite.asset("src/images/quote-open.svg", true) }}
+```
+
+#### Using `craft.vite.asset` with CSS
+
+If you are using Vite 3.x or later, you can also use `craft.vite.asset` to manually include CSS that is a top-level entry in your `vite.config.js` (rather than being imported into your JavaScript):
+
+```twig
+    {{ craft.vite.asset("src/css/app.css") }}
+```
+
+This assumes your `vite.config.js` looks something like this:
+
+```js
+  build: {
+    emptyOutDir: true,
+    manifest: true,
+    rollupOptions: {
+      input: {
+        app: 'src/js/app.ts',
+        css: 'src/css/app.css'
+      },
+      output: {
+        sourcemap: true
+      },
+    }
+  },
 ```
 
 ### The `.inline()` function
