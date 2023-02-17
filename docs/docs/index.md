@@ -158,7 +158,7 @@ export default ({command}) => ({
 
 #### Specifying the dev server port
 
-Prior to version 3, Vite used port `3000` by default for the dev server. Now it uses port `5137` by default, so we can specify the port we want to use specifically:
+Prior to version 3, Vite used port `3000` by default for the dev server. Now it uses port `5173` by default, so we can specify the port we want to use specifically:
 
 ```js
 export default ({command}) => ({
