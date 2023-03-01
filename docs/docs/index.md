@@ -789,10 +789,11 @@ this automates the inclusion of critical CSS. For example:
     {{ craft.vite.includeCriticalCssTags() }}
 ```
 
-To pass in your own path to the CSS that should be included, you can do that via:
+To pass in your own path to a specific critical CSS file, specify the template path you used to generate that file 
+(see `criticalPages` in the `vite.config.js` in the [rollup-plugin-critical](https://github.com/nystudio107/rollup-plugin-critical). 
 
 ```twig
-    {{ craft.vite.includeCriticalCssTags("/path/to/file.css") }}
+    {{ craft.vite.includeCriticalCssTags("homepage/index") }}
 ```
 
 ...and you can also pass in attributes to be added to the `<style>` tag as well:
