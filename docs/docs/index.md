@@ -1,6 +1,5 @@
 ---
 title: Vite plugin for Craft CMS
-
 description: Documentation for the Vite plugin. The Vite plugin allows the use of the Vite.js next generation frontend tooling with Craft CMS
 ---
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/nystudio107/craft-vite/badges/quality-score.png?b=v1)](https://scrutinizer-ci.com/g/nystudio107/craft-vite/?branch=v1) [![Code Coverage](https://scrutinizer-ci.com/g/nystudio107/craft-vite/badges/coverage.png?b=v1)](https://scrutinizer-ci.com/g/nystudio107/craft-vite/?branch=v1) [![Build Status](https://scrutinizer-ci.com/g/nystudio107/craft-vite/badges/build.png?b=v1)](https://scrutinizer-ci.com/g/nystudio107/craft-vite/build-status/v1) [![Code Intelligence Status](https://scrutinizer-ci.com/g/nystudio107/craft-vite/badges/code-intelligence.svg?b=v1)](https://scrutinizer-ci.com/code-intelligence)
@@ -9,7 +8,7 @@ description: Documentation for the Vite plugin. The Vite plugin allows the use o
 
 Allows the use of the Vite.js next generation frontend tooling with Craft CMS
 
-![Screenshot](./resources/img/plugin-logo.png)
+![Plugin logo](./resources/img/plugin-logo.png)
 
 Related
 Article: [Vite.js Next Generation Frontend Tooling + Craft CMS](https://nystudio107.com/blog/using-vite-js-next-generation-frontend-tooling-with-craft-cms)
@@ -289,8 +288,8 @@ If you’re using [Laravel Valet](https://laravel.com/docs/8.x/valet) you
 may [run into issues](https://github.com/nystudio107/craft-vite/issues/4) with `https`. If so, you can add this config
 to your `vite.config.js` (see below):
 
-```
-  server: {
+```js
+server: {
   https: {
     key: fs.readFileSync('localhost-key.pem'),
     cert: fs.readFileSync('localhost.pem'),
@@ -307,8 +306,8 @@ If you’re using a VM like Homestead, to get Hot Module
 Replacement [(HMR) working](https://github.com/nystudio107/craft-vite/issues/3), you’ll need to add this config to
 your `vite.config.js` (see below):
 
-```
-  server: {
+```js
+server: {
   host: '0.0.0.0',
     watch: {
     usePolling: true,
@@ -323,10 +322,10 @@ To work inside of a VM like VirtualBox (which is typically used by Homestead) yo
 To work properly with a Docker setup, the `server.host` needs to be set to `0.0.0.0` so that it broadcasts to all
 available IPv4 addresses in your `vite.config.js` (see below):
 
-```
-  server: {
-    host: '0.0.0.0',
-  }
+```js
+server: {
+  host: '0.0.0.0',
+}
 ```
 
 #### Using DDEV
@@ -371,12 +370,12 @@ https, `devServerInternal` is always http. Your `config/vite.php` file might thu
 use craft\helpers\App;
 
 return [
-	'checkDevServer' => true,
-	'devServerInternal' => 'http://localhost:3000',
-	'devServerPublic' => App::env('PRIMARY_SITE_URL') . ':3000',
-	'serverPublic' => App::env('PRIMARY_SITE_URL') . '/dist/',
-	'useDevServer' => App::env('ENVIRONMENT') === 'dev' || App::env('CRAFT_ENVIRONMENT') === 'dev',
-	// other config settings...
+    'checkDevServer' => true,
+    'devServerInternal' => 'http://localhost:3000',
+    'devServerPublic' => App::env('PRIMARY_SITE_URL') . ':3000',
+    'serverPublic' => App::env('PRIMARY_SITE_URL') . '/dist/',
+    'useDevServer' => App::env('ENVIRONMENT') === 'dev' || App::env('CRAFT_ENVIRONMENT') === 'dev',
+    // other config settings...
 ];
 ```
 
@@ -411,7 +410,7 @@ for static assets in Vite, so the URLs will not get rewritten.
 
 The basic problem is if you have a CSS rule like:
 
-```
+```css
 background-image: url('/src/img/woof.jpg');
 ```
 
@@ -439,8 +438,8 @@ is different from where the Vite dev server runs.
 To work around this, as of Vite ^2.6.0 you can use the server.origin config to tell Vite to serve the static assets it
 builds from the Vite dev server, and not the site server:
 
-```
-  server: {
+```js
+server: {
   origin: 'http://localhost:3000',
   host: '0.0.0.0',
 }
@@ -479,7 +478,7 @@ Once the Vite plugin is installed and configured, using it is quite simple. Wher
 JavaScript file via Twig in a `<script>` tag, you instead do:
 
 ```twig
-    {{ craft.vite.script("src/js/app.ts") }}
+{{ craft.vite.script("src/js/app.ts") }}
 ```
 
 Note that Vite automatically also supports the direct linking to TypeScript (as in the above example), JSX, and other
@@ -490,7 +489,6 @@ files via plugins. You just link directly to them, that’s it.
 If the Vite dev server is running, this will cause it to output something like this:
 
 ```html
-
 <script type="module" src="http://localhost:3000/src/js/app.ts"></script>
 ```
 
@@ -501,7 +499,6 @@ This is causing it to get the script file from the Vite dev server, with full ho
 In production or otherwise where the Vite dev server is not running, the output will look something like this:
 
 ```html
-
 <script type="module" src="https://example.com/dist/assets/app.56c9ea9d.js" crossorigin></script>
 <link href="https://example.com/dist/assets/app.c30f6458.css" rel="stylesheet" media="print" onload="this.media='all'">
 ```
@@ -512,7 +509,6 @@ The Vite plugin will also generate `<link rel="modulepreload">` tags for any scr
 via `craft.vite.script()` imports. The tags will look like this:
 
 ```html
-
 <link href="http://localhost:8000//dist/assets/vendor.a785de16.js" rel="modulepreload" crossorigin>
 ```
 
@@ -527,7 +523,6 @@ include [subresource integrity](https://developer.mozilla.org/en-US/docs/Web/Sec
 for the `<script type="module">` & `<link rel="modulepreload">` tags that it generates as well. For example:
 
 ```html
-
 <script type="module" src="http://localhost:3000/src/js/app.ts"
         integrity="oqVuAfXRKap7fdgcCY5uykM6+R9GqQ8K/uxy9rx7HNQlGYl1kPzQho1wx4JwY8wC"></script>
 ```
@@ -588,7 +583,7 @@ outputting production build tags.
 The Twig code:
 
 ```twig
-    {{ craft.vite.script("src/js/app.ts") }}
+{{ craft.vite.script("src/js/app.ts") }}
 ```
 
 Would then result in the following output, depending on whether the Vite dev server is running:
@@ -598,7 +593,6 @@ Would then result in the following output, depending on whether the Vite dev ser
 If the Vite dev server is running, this will cause it to output something like this:
 
 ```html
-
 <script type="module" src="http://localhost:3000/src/js/app.ts"></script>
 ```
 
@@ -609,7 +603,6 @@ This is causing it to get the script file from the Vite dev server, with full ho
 In production or otherwise where the Vite dev server is not running, the output will look something like this:
 
 ```html
-
 <script>
     !function () {
         var e = document, t = e.createElement("script");
@@ -641,7 +634,7 @@ So that includes:
 In addition to the `craft.vite.script()` function, the Vite plugin also provides a `.register()` function:
 
 ```twig
-    {{ craft.vite.register("src/js/app.ts") }}
+{{ craft.vite.register("src/js/app.ts") }}
 ```
 
 This works exactly the way the `.script()` function works, but instead of outputting the tags, it _registers_ them with
@@ -658,7 +651,7 @@ function will **not** ever return a URL from the devServer.
 You pass in a relative path to the entry, just as you do for JavaScript files in Vite. For example:
 
 ```twig
-    {{ craft.vite.entry("app.css") }}
+{{ craft.vite.entry("app.css") }}
 ```
 
 This will return a URL like this in regardless of whether the devServer is running or not:
@@ -675,12 +668,12 @@ from Vite include images or fonts that are referenced via CSS, or are imported v
 You pass in a relative path to the asset, just as you do for JavaScript files in Vite. For example:
 
 ```twig
-    {{ craft.vite.asset("src/images/quote-open.svg") }}
+{{ craft.vite.asset("src/images/quote-open.svg") }}
 ```
 
 This will return a URL like this when the Vite dev server is running:
 
-```html
+```
 http://localhost:3000/src/assets/img/quote-open.svg
 ```
 
@@ -711,7 +704,7 @@ export default ({command}) => ({
 If you need to access assets that are in the `public/` directory from Twig, there is a second parameter you can pass to `craft.vite.asset` to inidicate that the asset is coming from the `public/` directory:
 
 ```twig
-    {{ craft.vite.asset("src/images/quote-open.svg", true) }}
+{{ craft.vite.asset("src/images/quote-open.svg", true) }}
 ```
 
 #### Using `craft.vite.asset` with CSS
@@ -719,25 +712,25 @@ If you need to access assets that are in the `public/` directory from Twig, ther
 If you are using Vite 3.x or later, you can also use `craft.vite.asset` to manually include CSS that is a top-level entry in your `vite.config.js` (rather than being imported into your JavaScript):
 
 ```twig
-    {{ craft.vite.asset("src/css/app.css") }}
+{{ craft.vite.asset("src/css/app.css") }}
 ```
 
 This assumes your `vite.config.js` looks something like this:
 
 ```js
-  build: {
-    emptyOutDir: true,
-    manifest: true,
-    rollupOptions: {
-      input: {
-        app: 'src/js/app.ts',
-        css: 'src/css/app.css'
-      },
-      output: {
-        sourcemap: true
-      },
-    }
-  },
+build: {
+  emptyOutDir: true,
+  manifest: true,
+  rollupOptions: {
+    input: {
+      app: 'src/js/app.ts',
+      css: 'src/css/app.css'
+    },
+    output: {
+      sourcemap: true
+    },
+  }
+},
 ```
 
 ### The `.inline()` function
@@ -751,13 +744,13 @@ the cache until it is cleared, for performance reasons.
 URL example:
 
 ```twig
-    {{ craft.vite.inline("https://example.com/my-file.txt") }}
+{{ craft.vite.inline("https://example.com/my-file.txt") }}
 ```
 
 Path example:
 
 ```twig
-    {{ craft.vite.inline("@webroot/my-file.txt") }}
+{{ craft.vite.inline("@webroot/my-file.txt") }}
 ```
 
 ### The `.devServerRunning()` function
@@ -769,7 +762,7 @@ For instance, you could do:
 
 ```twig
 {% if craft.vite.devServerRunning() %}
-   <base href="{{ alias('@viteBaseUrl') }}">
+  <base href="{{ alias('@viteBaseUrl') }}">
 {% endif %}
 ```
 
@@ -786,22 +779,22 @@ Used in combination with the [rollup-plugin-critical](https://github.com/nystudi
 this automates the inclusion of critical CSS. For example:
 
 ```twig
-    {{ craft.vite.includeCriticalCssTags() }}
+{{ craft.vite.includeCriticalCssTags() }}
 ```
 
 To pass in your own path to a specific critical CSS file, specify the template path you used to generate that file 
 (see `criticalPages` in the `vite.config.js` in the [rollup-plugin-critical](https://github.com/nystudio107/rollup-plugin-critical). 
 
 ```twig
-    {{ craft.vite.includeCriticalCssTags("homepage/index") }}
+{{ craft.vite.includeCriticalCssTags("homepage/index") }}
 ```
 
 ...and you can also pass in attributes to be added to the `<style>` tag as well:
 
 ```twig
-    {{ craft.vite.includeCriticalCssTags(null, {
-         'data-css-info': 'bar',
-    }) }}
+{{ craft.vite.includeCriticalCssTags(null, {
+  'data-css-info': 'bar',
+}) }}
 ```
 
 If `null` is passed in as the first parameter, it’ll use the automatic template matching to determine the filename.
@@ -811,7 +804,7 @@ If `null` is passed in as the first parameter, it’ll use the automatic templat
 Pass in the path to your entrypoint script, and it will return the hash of the CSS asset:
 
 ```twig
-   {% set cssHash = craft.vite.getCssHash("src/js/app.ts") %}
+{% set cssHash = craft.vite.getCssHash("src/js/app.ts") %}
 ```
 
 If the CSS file in the manifest has the name `app.245485b3.css`, the above function will return `245485b3`.
@@ -821,9 +814,9 @@ This can be used for critical CSS patterns, for example:
 ```twig
 {# -- Critical CSS -- #}
 {#
-# Use Nginx Server Sider Includes (SSI) to render different HTML depending on
-# the value in the `critical-css` cookie. ref: http://nginx.org/en/docs/http/ngx_http_ssi_module.html
-#}
+ # Use Nginx Server Sider Includes (SSI) to render different HTML depending on
+ # the value in the `critical-css` cookie. ref: http://nginx.org/en/docs/http/ngx_http_ssi_module.html
+ #}
 {% set cssHash = craft.vite.getCssHash("src/js/app.ts") %}
 {#
  # If the `critical-css` cookie is set, the client already has the CSS file download,
@@ -833,11 +826,11 @@ This can be used for critical CSS patterns, for example:
 {{ craft.vite.script("src/js/app.ts", false) }}
 <!--# else -->
 {#
-# If the cookie is not set, set the cookie, then include the critical CSS for this page,
-# and load the full stylesheet(s) asychronously
-#}
+ # If the cookie is not set, set the cookie, then include the critical CSS for this page,
+ # and load the full stylesheet(s) asychronously
+ #}
 <script>
-     Cookie.set("critical-css", "{{ cssHash }}", { expires: "7D", secure: true });
+  Cookie.set("critical-css", "{{ cssHash }}", { expires: "7D", secure: true });
 </script>
 {{ craft.vite.includeCriticalCssTags() }}
 {{ craft.vite.script("src/js/app.ts", true) }}
@@ -849,7 +842,7 @@ This can be used for critical CSS patterns, for example:
 The `.script()` and `.register()` functions accept additional options as well:
 
 ```twig
-    {{ craft.vite.script(PATH, ASYNC_CSS, SCRIPT_TAG_ATTRS, CSS_TAG_ATTRS) }}
+{{ craft.vite.script(PATH, ASYNC_CSS, SCRIPT_TAG_ATTRS, CSS_TAG_ATTRS) }}
 ```
 
 * **`PATH`** - `string` - the path to the script
@@ -862,16 +855,14 @@ The `.script()` and `.register()` functions accept additional options as well:
 So for example:
 
 ```twig
-    {{ craft.vite.script(
-        "src/js/app.ts",
-        false,
-        { 'data-script-info': 'foo' },
-        { 'data-css-info': 'bar' },
-    ) }}
+{{ craft.vite.script(
+  "src/js/app.ts",
+  false,
+  { 'data-script-info': 'foo' },
+  { 'data-css-info': 'bar' },
+) }}
 ```
 
-## Vite Roadmap
-
-Some things to do, and ideas for potential features:
+---
 
 Brought to you by [nystudio107](https://nystudio107.com)
