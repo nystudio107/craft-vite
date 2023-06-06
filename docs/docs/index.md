@@ -806,6 +806,28 @@ To pass in your own path to a specific critical CSS file, specify the template p
 
 If `null` is passed in as the first parameter, it’ll use the automatic template matching to determine the filename.
 
+### The `.getCssInlineTags()` function
+
+If you want to inline an existing CSS file by URL or path, you do it by path:
+
+```twig
+    {{ craft.vite.getCssInlineTags("@webroot/path/to/css/file.css") }}
+```
+
+or by URL (but keep in mind, this will generate an additional blocking XHR):
+
+```twig
+    {{ craft.vite.getCssInlineTags("@web/path/to/css/file.css") }}
+```
+
+...and you can also pass in attributes to be added to the `<style>` tag as well:
+
+```twig
+    {{ craft.vite.getCssInlineTags("@web/path/to/css/file.css", {
+         'data-css-info': 'bar',
+    }) }}
+```
+
 ### The `.getCssHash()` function
 
 Pass in the path to your entrypoint script, and it will return the hash of the CSS asset:
