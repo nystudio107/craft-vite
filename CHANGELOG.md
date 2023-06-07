@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## 4.0.6 - 2023.06.07
+### Added
+* Add the `getCssInlineTags()` function to the `ViteVariable` so it's accessible via Twig templates
+* Added the `create-release` GitHub workflow to automate release tagging
+
 ## 4.0.5 - 2023.01.25
 ### Changed
 * Updated the `craft.vite.asset()` function to work with Vite 3.x or later, where assets are stored as top-level entries in the `manifest.json` ([#56](https://github.com/nystudio107/craft-vite/issues/56)) ([#31](https://github.com/nystudio107/craft-vite/issues/31))
