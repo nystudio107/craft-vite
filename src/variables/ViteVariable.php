@@ -44,6 +44,22 @@ class ViteVariable implements ViteVariableInterface
     }
 
     /**
+     * Returns the passed in CSS file at the specified file system path or URL, wrapped in
+     * <style></style> tags
+     *
+     * @param string $path
+     * @param array $attributes additional HTML key/value pair attributes to add to the resulting tag
+     *
+     * @return string
+     */
+    public function getCssInlineTags(string $path, array $attributes = []): string
+    {
+        return Template::raw(
+            Vite::$plugin->helper->getCssInlineTags($path, $attributes) ?? ''
+        );
+    }
+
+    /**
      * Return the hash value for the first CSS file bundled with the module specified via $path
      *
      * @param $path
