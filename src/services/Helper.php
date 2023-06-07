@@ -68,6 +68,9 @@ class Helper extends Component
     }
 
     /**
+     * Returns the passed in CSS file at the specified file system path or URL, wrapped in
+     * <style></style> tags
+     *
      * @param string $path
      * @param array $attributes additional HTML key/value pair attributes to add to the resulting tag
      *
