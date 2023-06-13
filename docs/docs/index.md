@@ -401,7 +401,6 @@ Then be sure to set `criticalUrl` to `http://localhost` as part of your rollup c
 
 Finally note that as of DDEV 1.19 you are able to specify Node (and Composer) versions directly via `/.ddev/config.yaml`.  See more at https://ddev.readthedocs.io/en/stable/users/cli-usage/#nodejs-npm-nvm-and-yarn
 
-
 ### Vite-Processed Assets
 
 This is cribbed from the [Laravel Vite integration](https://laravel-vite.netlify.app/guide/usage.html#static-assets)
