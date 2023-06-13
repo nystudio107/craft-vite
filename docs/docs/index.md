@@ -388,6 +388,15 @@ enable Puppeteer Headless Chrome support. Add the following line to your `/.ddev
 webimage_extra_packages: [ gconf-service, libasound2, libatk1.0-0, libcairo2, libgconf-2-4, libgdk-pixbuf2.0-0, libgtk-3-0, libnspr4, libpango-1.0-0, libpangocairo-1.0-0, libx11-xcb1, libxcomposite1, libxcursor1, libxdamage1, libxfixes3, libxi6, libxrandr2, libxrender1, libxss1, libxtst6, fonts-liberation, libappindicator1, libnss3, xdg-utils ]
 ```
 
+For Apple Silicon support, you will have to override that configuration by adding a config.m1.yaml file in your ddev folder along with the config.yaml one with the following content:
+```yaml
+webimage_extra_packages : [chromium]
+web_environment:
+- CPPFLAGS=-DPNG_ARM_NEON_OPT=0
+- PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
+- PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+```
+
 Then be sure to set `criticalUrl` to `http://localhost` as part of your rollup configuration.
 
 Finally note that as of DDEV 1.19 you are able to specify Node (and Composer) versions directly via `/.ddev/config.yaml`.  See more at https://ddev.readthedocs.io/en/stable/users/cli-usage/#nodejs-npm-nvm-and-yarn
