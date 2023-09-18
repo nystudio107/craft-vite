@@ -348,8 +348,8 @@ services:
     expose:
       - '3000'
     environment:
-      - HTTP_EXPOSE=${DDEV_ROUTER_HTTP_PORT}:80,${DDEV_MAILHOG_PORT}:8025,3001:3000
-      - HTTPS_EXPOSE=${DDEV_ROUTER_HTTPS_PORT}:80,${DDEV_MAILHOG_HTTPS_PORT}:8025,3000:3000
+      - HTTP_EXPOSE=${DDEV_ROUTER_HTTP_PORT}:80,${DDEV_MAILPIT_PORT}:8025,3001:3000
+      - HTTPS_EXPOSE=${DDEV_ROUTER_HTTPS_PORT}:80,${DDEV_MAILPIT_HTTPS_PORT}:8025,3000:3000
 ```
 
 In your `vite.config.js`, the `server.host` should to be set to `0.0.0.0`, and `server.port` set to `3000`:
