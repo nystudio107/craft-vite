@@ -43,10 +43,10 @@ class Settings extends Model
     public string $serverPublic = '';
 
     /**
-     * @var string The JavaScript entry from the manifest.json to inject on Twig error pages
+     * @var string|array The JavaScript entry from the manifest.json to inject on Twig error pages
      *              This can be a string or an array of strings
      */
-    public string $errorEntry = '';
+    public string|array $errorEntry = '';
 
     /**
      * @var string String to be appended to the cache key
