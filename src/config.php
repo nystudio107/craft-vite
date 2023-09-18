@@ -47,7 +47,7 @@ return [
     'serverPublic' => App::env('PRIMARY_SITE_URL') . '/dist/',
 
     /**
-     * @var string The JavaScript entry from the manifest.json to inject on Twig error pages
+     * @var string|array The JavaScript entry from the manifest.json to inject on Twig error pages
      *              This can be a string or an array of strings
      */
     'errorEntry' => '',
