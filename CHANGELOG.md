@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.32 - UNRELEASED
+### Fixed
+* Fixed a type error if you passed an array of entries into the `errorEntry` config ([#76](https://github.com/nystudio107/craft-vite/issues/76))
+
 ## 1.0.31 - 2023.06.07
 ### Added
 * Add the `getCssInlineTags()` function to the `ViteVariable` so it's accessible via Twig templates
