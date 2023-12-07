@@ -109,6 +109,8 @@ class Helper extends Component
                     $modulePath = pathinfo($tag['url']);
                     $moduleFilename = $modulePath['filename'];
                     $moduleHash = substr($moduleFilename, strpos($moduleFilename, ".") + 1);
+                    // Vite 5 now uses a `-` to separate the version hash, so account for that as well
+                    $moduleHash = substr($moduleHash, strpos($moduleHash, "-") + 1);
 
                     return $moduleHash;
                 }
