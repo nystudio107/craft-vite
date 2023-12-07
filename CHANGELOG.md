@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ## 1.0.32 - UNRELEASED
 ### Fixed
 * Fixed a type error if you passed an array of entries into the `errorEntry` config ([#76](https://github.com/nystudio107/craft-vite/issues/76))
+* Fixed an issue where the `craft.vite.getCssHash()` function didn't work with Vite 5, because it now uses a `-` to separate the version hash ([#21](https://github.com/nystudio107/craft-plugin-vite/issues/21))
 
 ## 1.0.31 - 2023.06.07
 ### Added
