@@ -108,7 +108,11 @@ class Helper extends Component
                     // Extract only the Hash Value
                     $modulePath = pathinfo($tag['url']);
                     $moduleFilename = $modulePath['filename'];
-                    $moduleHash = substr($moduleFilename, strpos($moduleFilename, ".") + 1);
+                    $moduleHash = substr($moduleFilename, strpos($moduleFilename, '.') + 1);
+                    // Vite 5 now uses a `-` to separate the version hash, so account for that as well
+                    if (str_contains($moduleHash, '-')) {
+                        $moduleHash = substr($moduleHash, strpos($moduleHash, '-') + 1);
+                    }
 
                     return $moduleHash;
                 }
