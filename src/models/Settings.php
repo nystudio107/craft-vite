@@ -108,11 +108,16 @@ class Settings extends Model
                     'manifestPath',
                     'devServerPublic',
                     'serverPublic',
-                    'errorEntry',
                     'cacheKeySuffix',
                     'devServerInternal',
                 ],
                 'string'
+            ],
+            [
+                [
+                    'errorEntry',
+                ],
+                'safe'
             ],
         ];
     }
