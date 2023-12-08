@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## 4.0.7 - 2023.12.08
+### Fixed
+* Fixed a type error if you passed an array of entries into the `errorEntry` config ([#76](https://github.com/nystudio107/craft-vite/issues/76))
+* Fixed an issue where the `craft.vite.getCssHash()` function didn't work with Vite 5, because it now uses a `-` to separate the version hash ([#21](https://github.com/nystudio107/craft-plugin-vite/issues/21))
+
 ## 4.0.6 - 2023.06.07
 ### Added
 * Add the `getCssInlineTags()` function to the `ViteVariable` so it's accessible via Twig templates
