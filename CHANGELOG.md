@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.33 - UNRELEASED
+### Changed
+* Updated docs to use node 20 & a new sitemap plugin
+
 ## 1.0.32 - 2023.12.08
 ### Fixed
 * Fixed a type error if you passed an array of entries into the `errorEntry` config ([#76](https://github.com/nystudio107/craft-vite/issues/76))
