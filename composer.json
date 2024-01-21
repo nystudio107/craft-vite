@@ -40,6 +40,7 @@
     }
   },
   "extra": {
+    "changelogUrl": "https://raw.githubusercontent.com/nystudio107/craft-vite/v5/CHANGELOG.md",
     "class": "nystudio107\\vite\\Vite",
     "handle": "vite",
     "name": "Vite"
