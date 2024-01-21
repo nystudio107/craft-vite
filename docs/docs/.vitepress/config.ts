@@ -35,7 +35,8 @@ export default defineConfig({
       {text: 'Issues', link: 'https://github.com/nystudio107/craft-vite/issues'},
       {
         text: 'v1', items: [
-          {text: 'v4', link: 'https://nystudio107.com/docs/vite/'},
+          {text: 'v5', link: 'https://nystudio107.com/docs/vite/'},
+          {text: 'v4', link: 'https://nystudio107.com/docs/vite/v4/'},
           {text: 'v1', link: '/'},
         ],
       },
