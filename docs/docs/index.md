@@ -31,6 +31,7 @@ To install the plugin, follow these instructions.
         composer require nystudio107/craft-vite
 
 3. In the Control Panel, go to Settings → Plugins and click the “Install” button for Vite.
+4. Install Vite. Vite's *[Getting Started Guide](https://vitejs.dev/guide/)* provides various installation options.
 
 ## Vite Overview
 
