@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 
 ## 1.0.33 - UNRELEASED
+### Added
+* If the `devServer` is running, the `ViteService::fetch()` method will try to use the `devServerInternal` URL first, falling back on the `devServerPublic` so that `craft.vite.inline()` can pull from the `devServer` if it is running ([#22](https://github.com/nystudio107/craft-plugin-vite/issues/22))
+
 ### Changed
 * Updated docs to use node 20 & a new sitemap plugin
 
