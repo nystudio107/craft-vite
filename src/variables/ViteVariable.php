@@ -39,7 +39,7 @@ class ViteVariable implements ViteVariableInterface
     public function includeCriticalCssTags($name = null, array $attributes = []): Markup
     {
         return Template::raw(
-            Vite::$plugin->helper->getCriticalCssTags($name, $attributes) ?? ''
+            Vite::$plugin->helper->getCriticalCssTags($name, $attributes)
         );
     }
 
@@ -55,7 +55,7 @@ class ViteVariable implements ViteVariableInterface
     public function getCssInlineTags(string $path, array $attributes = []): string
     {
         return Template::raw(
-            Vite::$plugin->helper->getCssInlineTags($path, $attributes) ?? ''
+            Vite::$plugin->helper->getCssInlineTags($path, $attributes)
         );
     }
 
@@ -68,7 +68,7 @@ class ViteVariable implements ViteVariableInterface
     public function getCssHash($path): Markup
     {
         return Template::raw(
-            Vite::$plugin->helper->getCssHash($path) ?? ''
+            Vite::$plugin->helper->getCssHash($path)
         );
     }
 }
