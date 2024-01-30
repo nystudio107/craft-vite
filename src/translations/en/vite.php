@@ -15,5 +15,5 @@
  */
 return [
     'Vite Cache' => 'Vite Cache',
-    '{name} plugin loaded' => '{name} plugin loaded'
+    '{name} plugin loaded' => '{name} plugin loaded',
 ];

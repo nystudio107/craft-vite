@@ -101,7 +101,7 @@ class Settings extends Model
                     'includeReactRefreshShim',
                     'includeModulePreloadShim',
                 ],
-                'boolean'
+                'boolean',
             ],
             [
                 [
@@ -111,13 +111,13 @@ class Settings extends Model
                     'cacheKeySuffix',
                     'devServerInternal',
                 ],
-                'string'
+                'string',
             ],
             [
                 [
                     'errorEntry',
                 ],
-                'safe'
+                'safe',
             ],
         ];
     }

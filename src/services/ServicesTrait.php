@@ -39,8 +39,8 @@ trait ServicesTrait
         $config = ArrayHelper::merge([
             'components' => [
                 'helper' => HelperService::class,
-                'vite' => PluginConfigHelper::serviceDefinitionFromConfig('vite', ViteService::class)
-            ]
+                'vite' => PluginConfigHelper::serviceDefinitionFromConfig('vite', ViteService::class),
+            ],
         ], $config);
 
         parent::__construct($id, $parent, $config);
