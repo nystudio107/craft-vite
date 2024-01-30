@@ -36,8 +36,8 @@ trait ServicesTrait
         return [
             'components' => [
                 'helper' => HelperService::class,
-                'vite' => PluginConfigHelper::serviceDefinitionFromConfig('vite', ViteService::class)
-            ]
+                'vite' => PluginConfigHelper::serviceDefinitionFromConfig('vite', ViteService::class),
+            ],
         ];
     }
 
