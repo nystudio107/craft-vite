@@ -3,7 +3,7 @@ import {defineConfig} from 'vitepress'
 export default defineConfig({
   title: 'Vite Plugin',
   description: 'Documentation for the Vite plugin',
-  base: '/docs/vite/',
+  base: '/docs/vite/v1/',
   lang: 'en-US',
   head: [
     ['meta', {content: 'https://github.com/nystudio107', property: 'og:see_also',}],
@@ -33,6 +33,13 @@ export default defineConfig({
       {text: 'Store', link: 'https://plugins.craftcms.com/vite'},
       {text: 'Changelog', link: 'https://nystudio107.com/plugins/vite/changelog'},
       {text: 'Issues', link: 'https://github.com/nystudio107/craft-vite/issues'},
+      {
+        text: 'v1', items: [
+          {text: 'v5', link: 'https://nystudio107.com/docs/vite/'},
+          {text: 'v4', link: 'https://nystudio107.com/docs/vite/v4/'},
+          {text: 'v1', link: '/'},
+        ],
+      },
     ]
   },
 });

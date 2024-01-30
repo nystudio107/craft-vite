@@ -39,7 +39,7 @@ class Helper extends Component
     public function getCriticalCssTags($name = null, array $attributes = []): string
     {
         // Resolve the template name
-        $template = Craft::$app->getView()->resolveTemplate($name ?? Vite::$templateName ?? '');
+        $template = Craft::$app->getView()->resolveTemplate($name ?? Vite::$templateName);
         if ($template) {
             /** @var Settings $settings */
             $settings = Vite::$plugin->getSettings();
