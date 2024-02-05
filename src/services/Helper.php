@@ -110,7 +110,7 @@ class Helper extends Component
                     $moduleFilename = $modulePath['filename'];
                     $moduleHash = substr($moduleFilename, strpos($moduleFilename, '.') + 1);
                     // Vite 5 now uses a `-` to separate the version hash, so account for that as well
-                    if (str_contains($moduleHash, '-')) {
+                    if (str_contains($moduleHash, '-') && substr_count($moduleFilename, '.') === 1) {
                         $moduleHash = substr($moduleHash, strpos($moduleHash, '-') + 1);
                     }
 
