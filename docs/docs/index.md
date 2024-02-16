@@ -913,34 +913,43 @@ So for example:
 
 ## Craft Cloud
 
-Craft Cloud deploys build artifacts to a CDN, so you'll need to configure the plugin to use the CDN URL:
+During a [build](https://craftcms.com/knowledge-base/cloud-builds), Craft Cloud deploys static assets to a CDN, so you’ll need to configure the plugin to use the appropriate URLs:
 
 ```php
 <?php
 // config/vite.php
+
+use craft\cloud\Helper as CloudHelper;
+
 return [
-    'manifestPath' => \craft\cloud\Helper::artifactUrl('dist/manifest.json'),
-    'serverPublic' => \craft\cloud\Helper::artifactUrl('dist/'),
+    'manifestPath' => CloudHelper::artifactUrl('dist/.vite/manifest.json'),
+    'serverPublic' => CloudHelper::artifactUrl('dist/'),
 ];
 ```
 
-The `\craft\cloud\Helper::artifactUrl()` function will return a URL like
-`https://cdn.craft.com/{uuid}/builds/{uuid}/artifacts/dist/` in a Craft Cloud environment, and `@web/dist/` otherwise.
+This helper function returns a CDN URL that includes your project and environment identifiers, like this:
 
-If you'd like to use a different path all together when working locally,
-you can use the `\craft\cloud\Helper::isCraftCloud()`:
+```
+https://cdn.craft.com/{project-uuid}/builds/{environment-uuid}/artifacts/dist/
+```
+
+Outside of Cloud, this behaves as though it were prepended with `@web`.
+
+If you’d prefer to use an on-disk `manifestPath` when working locally (instead of a URL), the `CloudHelper::isCraftCloud()` function lets you switch based on the environment:
 
 ```php
 <?php
 // config/vite.php
+
+use craft\cloud\Helper as CloudHelper;
+
 return [
-    'manifestPath' => \craft\cloud\Helper::isCraftCloud() ? \craft\cloud\Helper::artifactUrl('dist/manifest.json') : '@webroot/dist/manifest.json',
-    'publicPath' => \craft\cloud\Helper::artifactUrl('dist/'),
+    'manifestPath' => CloudHelper::isCraftCloud() ? CloudHelper::artifactUrl('dist/.vite/manifest.json') : '@webroot/dist/.vite/manifest.json',
+    'serverPublic' => CloudHelper::artifactUrl('dist/'),
 ];
 ```
 
-Additionally, your Vite config should have [`base`](https://vitejs.dev/config/shared-options.html#base) set to use the same CDN URL.
-In Craft Cloud's build pipeline, this is exposed as an `CRAFT_CLOUD_ARTIFACT_BASE_URL` environment variable.
+Additionally, your Vite config should have [public `base`](https://vitejs.dev/guide/build.html#public-base-path) set to use the same CDN URL. In Craft Cloud’s build pipeline, this is exposed as an [`CRAFT_CLOUD_ARTIFACT_BASE_URL` environment variable](https://craftcms.com/knowledge-base/cloud-builds#build-command):
 
 ```javascript
 // vite.config.js
