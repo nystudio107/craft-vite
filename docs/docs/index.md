@@ -911,6 +911,44 @@ So for example:
     ) }}
 ```
 
+## Craft Cloud
+
+Craft Cloud deploys build artifacts to a CDN, so you'll need to configure the plugin to use the CDN URL:
+
+```php
+<?php
+// config/vite.php
+return [
+    'manifestPath' => \craft\cloud\Helper::artifactUrl('dist/manifest.json'),
+    'serverPublic' => \craft\cloud\Helper::artifactUrl('dist/'),
+];
+```
+
+The `\craft\cloud\Helper::artifactUrl()` function will return a URL like
+`https://cdn.craft.com/{uuid}/builds/{uuid}/artifacts/dist/` in a Craft Cloud environment, and `@web/dist/` otherwise.
+
+If you'd like to use a different path all together when working locally,
+you can use the `\craft\cloud\Helper::isCraftCloud()`:
+
+```php
+<?php
+// config/vite.php
+return [
+    'manifestPath' => \craft\cloud\Helper::isCraftCloud() ? \craft\cloud\Helper::artifactUrl('dist/manifest.json') : '@webroot/dist/manifest.json',
+    'publicPath' => \craft\cloud\Helper::artifactUrl('dist/'),
+];
+```
+
+Additionally, your Vite config should have [`base`](https://vitejs.dev/config/shared-options.html#base) set to use the same CDN URL.
+In Craft Cloud's build pipeline, this is exposed as an `CRAFT_CLOUD_ARTIFACT_BASE_URL` environment variable.
+
+```javascript
+// vite.config.js
+export default ({ command }) => ({
+  base: command === 'serve' ? '' : `${process.env.CRAFT_CLOUD_ARTIFACT_BASE_URL || ''}/dist/`,
+})
+```
+
 ## Vite Roadmap
 
 Some things to do, and ideas for potential features:
