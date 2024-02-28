@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 
 ## 4.0.9 - UNRELEASED
+### Added
+* Add documentation for Craft Cloud usage with Vite ([#83](https://github.com/nystudio107/craft-vite/pull/83))
+* Add support for clearing Vite caches in response to Craft Cloud's `UpController::EVENT_AFTER_UP` event ([#83](https://github.com/nystudio107/craft-vite/pull/83))
+
 ### Fixed
 * Fixed an issue where the wrong CSS hash would be returned if you were using Vite 3 or earlier ([#80](https://github.com/nystudio107/craft-vite/issues/80))
 
