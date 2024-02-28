@@ -13,6 +13,8 @@ namespace nystudio107\vite;
 use Craft;
 use craft\base\Model;
 use craft\base\Plugin;
+use craft\cloud\cli\controllers\UpController;
+use craft\events\CancelableEvent;
 use craft\events\RegisterCacheOptionsEvent;
 use craft\events\TemplateEvent;
 use craft\utilities\ClearCaches;
@@ -146,6 +148,17 @@ class Vite extends Plugin
                 self::$templateName = $event->template;
             }
         );
+        // Clears cache after craft cloud/up is run, which Craft Cloud runs on deploy
+        // Handler: UpController::EVENT_AFTER_UP
+        if (class_exists(UpController::class)) {
+            Event::on(
+                UpController::class,
+                UpController::EVENT_AFTER_UP,
+                function (CancelableEvent $event) {
+                    $this->clearAllCaches();
+                }
+            );
+        }
     }
 
     /**
