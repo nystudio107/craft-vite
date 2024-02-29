@@ -194,7 +194,6 @@ export default ({command}) => ({
 });
 ```
 
-
 #### Modern + Legacy Config
 
 By default, Vite generates JavaScript bundles that work with modern browsers that
@@ -359,8 +358,8 @@ services:
     expose:
       - '3000'
     environment:
-      - HTTP_EXPOSE=${DDEV_ROUTER_HTTP_PORT}:80,${DDEV_MAILHOG_PORT}:8025,3001:3000
-      - HTTPS_EXPOSE=${DDEV_ROUTER_HTTPS_PORT}:80,${DDEV_MAILHOG_HTTPS_PORT}:8025,3000:3000
+      - HTTP_EXPOSE=${DDEV_ROUTER_HTTP_PORT}:80,${DDEV_MAILPIT_PORT}:8025,3001:3000
+      - HTTPS_EXPOSE=${DDEV_ROUTER_HTTPS_PORT}:80,${DDEV_MAILPIT_HTTPS_PORT}:8025,3000:3000
 ```
 
 In your `vite.config.js`, the `server.host` should to be set to `0.0.0.0`, and `server.port` set to `3000`:
@@ -501,8 +500,16 @@ JavaScript file via Twig in a `<script>` tag, you instead do:
     {{ craft.vite.script("src/js/app.ts") }}
 ```
 
-Note that Vite automatically also supports the direct linking to TypeScript (as in the above example), JSX, and other
-files via plugins. You just link directly to them, that’s it.
+Vite automatically supports the direct linking to TypeScript (as in the above example), JavaScript, JSX, and other
+files formats via plugins. You just link directly to them, that’s it.
+
+::: tip CSS is Asynchronous by default
+By default, the Vite plugin will load your [CSS asynchronously](https://www.filamentgroup.com/lab/load-css-simpler/). If you are **not** using Critical CSS, you'll want to change that to avoid Flash Of Unstyled Content (FOUC) by setting the setting the second argument to `false`:
+```twig
+    {{ craft.vite.script("src/js/app.ts", false) }}
+```
+See the **[Other Options](#other-options)** section below for details
+:::
 
 ##### Development
 
@@ -586,16 +593,7 @@ import '/src/css/app.pcss';
 The Vite plugin will take care of automatically generating the `<link rel="stylesheet">` tag for you in production.
 
 By default, it loads the [CSS asynchronously](https://www.filamentgroup.com/lab/load-css-simpler/), but you can
-configure this. See the **Other Options** section.
-
-#### Polyfills
-
-To work properly, you must also import the [Vite Polyfill](https://vitejs.dev/config/#build-polyfilldynamicimport) in
-your `build.input` JavaScript file entries listed in the `vite.config.js`, for example:
-
-```js
-import "vite/dynamic-import-polyfill";
-```
+configure this. See the **[Other Options](#other-options)** section.
 
 #### Legacy
 
