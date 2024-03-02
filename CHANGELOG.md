@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 * Fixed an issue where the wrong CSS hash would be returned if you were using Vite 3 or earlier ([#80](https://github.com/nystudio107/craft-vite/issues/80))
+* Fixed an issue where `craft.vite.entry()` would fail if you were using Vite 5 or later, due to the `ManifestHelper::fileNameWithoutHash()` function not working correctly ([#24](https://github.com/nystudio107/craft-plugin-vite/issues/24))
 
 ## 5.0.0-beta.2 - 2024.01.30
 ### Added
