@@ -24,7 +24,7 @@
   ],
   "require": {
     "craftcms/cms": "^4.0.0",
-    "nystudio107/craft-plugin-vite": "^4.0.9"
+    "nystudio107/craft-plugin-vite": "^4.0.10"
   },
   "require-dev": {
     "craftcms/cloud": "^1.41.0",
