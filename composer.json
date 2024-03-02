@@ -23,7 +23,7 @@
   ],
   "require": {
     "craftcms/cms": "^3.0.0",
-    "nystudio107/craft-plugin-vite": "^1.0.33"
+    "nystudio107/craft-plugin-vite": "^1.0.34"
   },
   "require-dev": {
     "craftcms/ecs": "dev-main",
