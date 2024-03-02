@@ -2,7 +2,7 @@
   "name": "nystudio107/craft-vite",
   "description": "Allows the use of the Vite.js next generation frontend tooling with Craft CMS",
   "type": "craft-plugin",
-  "version": "1.0.33",
+  "version": "1.0.34",
   "keywords": [
     "craft",
     "cms",
@@ -23,7 +23,7 @@
   ],
   "require": {
     "craftcms/cms": "^3.0.0",
-    "nystudio107/craft-plugin-vite": "^1.0.33"
+    "nystudio107/craft-plugin-vite": "^1.0.34"
   },
   "require-dev": {
     "craftcms/ecs": "dev-main",
@@ -31,7 +31,7 @@
     "craftcms/rector": "dev-main"
   },
   "scripts": {
-    "phpstan": "vendor/bin/phpstan --ansi --memory-limit=1G",
+    "phpstan": "phpstan --ansi --memory-limit=1G",
     "check-cs": "ecs check --ansi",
     "fix-cs": "ecs check --fix --ansi"
   },
