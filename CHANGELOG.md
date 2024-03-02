@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## 4.0.9 - UNRELEASED
+## 4.0.9 - 2024.03.02
 ### Added
 * Add documentation for Craft Cloud usage with Vite ([#83](https://github.com/nystudio107/craft-vite/pull/83))
 * Add support for clearing Vite caches in response to Craft Cloud's `UpController::EVENT_AFTER_UP` event ([#83](https://github.com/nystudio107/craft-vite/pull/83))
