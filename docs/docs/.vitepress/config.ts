@@ -24,7 +24,10 @@ export default defineConfig({
     algolia: {
       appId: 'AE3HRUJFEW',
       apiKey: 'c5dcc2be096fff3a4714c3a877a056fa',
-      indexName: 'vite'
+      indexName: 'vite',
+      searchParameters: {
+        facetFilters: ["version:v4"],
+      },
     },
     lastUpdatedText: 'Last Updated',
     sidebar: [],
