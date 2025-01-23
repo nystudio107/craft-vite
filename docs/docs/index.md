@@ -185,15 +185,24 @@ export default ({command}) => ({
     },
   },
   server: {
+    // Allow cross-origin requests -- https://github.com/vitejs/vite/security/advisories/GHSA-vg6x-rcgg-rjx6
+    allowedHosts: true,
+    cors: true,
     fs: {
       strict: false
     },
+    headers: {
+      "Access-Control-Allow-Private-Network": "true",
+    },
+    host: '0.0.0.0',
     origin: 'http://localhost:3000',
     port: 3000,
     strictPort: true,
   }
 });
 ```
+
+If you're using Chrome, are _not_ using `https` are _also_ using `localhost` for your Vite dev server, you may also need to disable the `chrome://flags/#block-insecure-private-network-requests` flag to allow HMR to work as expected.
 
 
 #### Modern + Legacy Config
