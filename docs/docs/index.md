@@ -188,7 +188,7 @@ export default ({command}) => ({
     // Allow cross-origin requests -- https://github.com/vitejs/vite/security/advisories/GHSA-vg6x-rcgg-rjx6
     allowedHosts: true,
     cors: {
-      origin: /(\.local|\.site|\.test|localhost)/
+      origin: /https?:\/\/([A-Za-z0-9\-\.]+)?(localhost|\.local|\.test|\.site)(?::\d+)?$/
     },
     fs: {
       strict: false
