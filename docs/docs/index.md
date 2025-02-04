@@ -353,37 +353,33 @@ available IPv4 addresses in your `vite.config.js` (see below):
 
 #### Using DDEV
 
-To run Vite inside a DDEV container, you’ll have
-to [define a custom service](https://ddev.readthedocs.io/en/latest/users/extend/custom-compose-files/) that proxies
-requests from the frontend to the vite server running inside the VM. This is done by creating
-a `/.ddev/docker-compose.*.yaml` file, and exposing an additional port to your project.
-
-Create a file named `docker-compose.vite.yaml` and save it in your project’s `/.ddev` folder, with the following
-contents:
+To run Vite inside a DDEV container, you’ll have to [expose the port](https://ddev.readthedocs.io/en/stable/users/extend/customization-extendibility/#exposing-extra-ports-via-ddev-router) via `.ddev/config.yaml` first: 
 
 ```yaml
-# Override the web container's standard HTTP_EXPOSE and HTTPS_EXPOSE services
-# to expose port `3000` of DDEV's web container.
-version: '3.6'
-services:
-  web:
-    expose:
-      - '3000'
-    environment:
-      - HTTP_EXPOSE=${DDEV_ROUTER_HTTP_PORT}:80,${DDEV_MAILPIT_PORT}:8025,3001:3000
-      - HTTPS_EXPOSE=${DDEV_ROUTER_HTTPS_PORT}:80,${DDEV_MAILPIT_HTTPS_PORT}:8025,3000:3000
+web_extra_exposed_ports:
+    - name: craft-vite
+      container_port: 3000
+      http_port: 3001
+      https_port: 3000
 ```
 
-In your `vite.config.js`, the `server.host` should to be set to `0.0.0.0`, and `server.port` set to `3000`:
+A `ddev restart` is necessary afterwards. 
 
-```
+In your `vite.config.js`, the `server.host`should to be set to `0.0.0.0` and `server.port` set to (strict) port `3000`. It is also important to set the correct origin URL for [Vite-processed assets](https://nystudio107.com/docs/vite/#vite-processed-assets):
+
+```js
 server: {
   host: '0.0.0.0',
-  port: 3000
+  port: 3000, 
+  strictPort: true,
+  origin: `${process.env.DDEV_PRIMARY_URL}:3000`,
+  cors: {
+    origin: /https?:\/\/([A-Za-z0-9\-\.]+)?(localhost|\.local|\.test|\.site)(?::\d+)?$/
+  }
 }
 ```
 
-With the above set up, Craft Vite will now have access to the `devServerInternal` via `http://localhost:3000`,
+With the above set up, Craft Vite will now have access to the `devServerInternal` via `http://localhost:3000` within the DDEV web container,
 and `devServerPublic` via `https://projectname.ddev.site:3000`. Note that `devServerPublic` can run over http or
 https, `devServerInternal` is always http. Your `config/vite.php` file might thus look like:
 
@@ -398,6 +394,13 @@ return [
 	'devServerPublic' => App::env('PRIMARY_SITE_URL') . ':3000',
 	'serverPublic' => App::env('PRIMARY_SITE_URL') . '/dist/',
 	'useDevServer' => App::env('ENVIRONMENT') === 'dev' || App::env('CRAFT_ENVIRONMENT') === 'dev',
+
+        // for Vite v4 and below
+	// 'manifestPath' => '@webroot/dist/manifest.json',
+
+	// for Vite >= v5
+	'manifestPath' => '@webroot/dist/.vite/manifest.json'
+
 	// other config settings...
 ];
 ```
@@ -422,6 +425,24 @@ web_environment:
 Then be sure to set `criticalUrl` to `http://localhost` as part of your rollup configuration.
 
 Finally note that as of DDEV 1.19 you are able to specify Node.js (and Composer) versions directly via `/.ddev/config.yaml`.  See more at https://ddev.readthedocs.io/en/stable/users/cli-usage/#nodejs-npm-nvm-and-yarn
+
+In earlier versions of DDEV (< v1.20.0), you had to use a docker-compose file to expose the port. This is not necessary anymore. We leave this guide here as legacy information:
+
+Create a file named `docker-compose.vite.yaml` and save it in your project’s `/.ddev` folder, with the following
+contents, use `ddev restart` afterwards:
+
+```yaml
+# Override the web container's standard HTTP_EXPOSE and HTTPS_EXPOSE services
+# to expose port `3000` of DDEV's web container.
+version: '3.6'
+services:
+  web:
+    expose:
+      - '3000'
+    environment:
+      - HTTP_EXPOSE=${DDEV_ROUTER_HTTP_PORT}:80,${DDEV_MAILPIT_PORT}:8025,3001:3000
+      - HTTPS_EXPOSE=${DDEV_ROUTER_HTTPS_PORT}:80,${DDEV_MAILPIT_HTTPS_PORT}:8025,3000:3000
+```
 
 ### Vite-Processed Assets
 
