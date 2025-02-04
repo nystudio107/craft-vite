@@ -373,9 +373,7 @@ server: {
   port: 3000, 
   strictPort: true,
   origin: `${process.env.DDEV_PRIMARY_URL}:3000`
-  server: {
-    cors: process.env.DDEV_PRIMARY_URL,
-  }
+  cors: process.env.DDEV_PRIMARY_URL,
 }
 ```
 
