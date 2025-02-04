@@ -367,14 +367,14 @@ A `ddev restart` is necessary afterwards.
 
 In your `vite.config.js`, the `server.host`should to be set to `0.0.0.0` and `server.port` set to (strict) port `3000`. It is also important to set the correct origin URL for [Vite-processed assets](https://nystudio107.com/docs/vite/#vite-processed-assets):
 
-```
+```js
 server: {
   host: '0.0.0.0',
   port: 3000, 
   strictPort: true,
   origin: `${process.env.DDEV_PRIMARY_URL}:3000`,
   cors: {
-    origin: process.env.DDEV_PRIMARY_URL
+    origin: /https?:\/\/([A-Za-z0-9\-\.]+)?(localhost|\.local|\.test|\.site)(?::\d+)?$/
   }
 }
 ```
