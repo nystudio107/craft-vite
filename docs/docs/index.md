@@ -373,10 +373,10 @@ server: {
   host: '0.0.0.0',
   port: 3000, 
   strictPort: true,
-  origin: `${process.env.DDEV_PRIMARY_URL}:3000`,
+  origin: `${process.env.DDEV_PRIMARY_URL.replace(/:\d+$/, "")}:3000`,
   cors: {
-    origin: /https?:\/\/([A-Za-z0-9\-\.]+)?(localhost|\.local|\.test|\.site)(?::\d+)?$/
-  }
+    origin: /https?:\/\/([A-Za-z0-9\-\.]+)?(\.ddev\.site)(?::\d+)?$/,
+  },
 }
 ```
 
@@ -392,13 +392,13 @@ use craft\helpers\App;
 return [
 	'checkDevServer' => true,
 	'devServerInternal' => 'http://localhost:3000',
-	'devServerPublic' => App::env('PRIMARY_SITE_URL') . ':3000',
+	'devServerPublic' => preg_replace('/:\d+$/', '', App::env('PRIMARY_SITE_URL')) . ':3000',
 	'serverPublic' => App::env('PRIMARY_SITE_URL') . '/dist/',
 	'useDevServer' => App::env('ENVIRONMENT') === 'dev' || App::env('CRAFT_ENVIRONMENT') === 'dev',
 
-        // for Vite v4 and below
+  // for Vite v4 and below
 	// 'manifestPath' => '@webroot/dist/manifest.json',
-
+	
 	// for Vite >= v5
 	'manifestPath' => '@webroot/dist/.vite/manifest.json'
 
@@ -424,6 +424,8 @@ web_environment:
 ```
 
 Then be sure to set `criticalUrl` to `http://localhost` as part of your rollup configuration.
+
+For more information about DDEV and Vite, see [Working with Vite in DDEV](https://ddev.com/blog/working-with-vite-in-ddev/).
 
 Finally note that as of DDEV 1.19 you are able to specify Node.js (and Composer) versions directly via `/.ddev/config.yaml`.  See more at https://ddev.readthedocs.io/en/stable/users/cli-usage/#nodejs-npm-nvm-and-yarn
 
