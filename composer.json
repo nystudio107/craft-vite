@@ -2,7 +2,7 @@
   "name": "nystudio107/craft-vite",
   "description": "Allows the use of the Vite.js next generation frontend tooling with Craft CMS",
   "type": "craft-plugin",
-  "version": "1.0.35",
+  "version": "1.0.36",
   "keywords": [
     "craft",
     "cms",
@@ -23,7 +23,7 @@
   ],
   "require": {
     "craftcms/cms": "^3.0.0",
-    "nystudio107/craft-plugin-vite": "^1.0.36"
+    "nystudio107/craft-plugin-vite": "^1.0.37"
   },
   "require-dev": {
     "craftcms/ecs": "dev-main",
@@ -40,7 +40,14 @@
       "craftcms/plugin-installer": true,
       "yiisoft/yii2-composer": true
     },
+    "audit": {
+      "block-insecure": false
+    },
     "optimize-autoloader": true,
+    "platform": {
+      "php": "7.2.5"
+    },
+    "platform-check": false,
     "sort-packages": true
   },
   "autoload": {

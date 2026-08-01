@@ -26,7 +26,7 @@ export default defineConfig({
       apiKey: 'c5dcc2be096fff3a4714c3a877a056fa',
       indexName: 'vite',
       searchParameters: {
-        facetFilters: ["version:v5"],
+        facetFilters: ["version:v1"],
       },
     },
     lastUpdatedText: 'Last Updated',
