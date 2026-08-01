@@ -2,7 +2,7 @@
   "name": "nystudio107/craft-vite",
   "description": "Allows the use of the Vite.js next generation frontend tooling with Craft CMS",
   "type": "craft-plugin",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "keywords": [
     "craft",
     "cms",
@@ -25,7 +25,7 @@
   "require": {
     "php": "^8.2",
     "craftcms/cms": "^5.0.0",
-    "nystudio107/craft-plugin-vite": "^5.0.2"
+    "nystudio107/craft-plugin-vite": "^5.0.3"
   },
   "require-dev": {
     "craftcms/cloud": "^2.0.0 || ^3.0.0",
