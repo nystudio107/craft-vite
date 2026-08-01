@@ -204,7 +204,7 @@ export default ({command}) => ({
 });
 ```
 
-If you're using Chrome, are _not_ using `https` are _also_ using `localhost` for your Vite dev server, you may also need to disable the `chrome://flags/#block-insecure-private-network-requests` flag to allow HMR to work as expected.
+If you’re using Chrome, are _not_ using `https` are _also_ using `localhost` for your Vite dev server, you may also need to disable the `chrome://flags/#block-insecure-private-network-requests` flag to allow HMR to work as expected.
 
 
 #### Modern + Legacy Config
@@ -797,7 +797,7 @@ This assumes your `vite.config.js` looks something like this:
 
 The Vite plugin includes an `.integrity()` function that will return the `integrity` hash if you’re using the [vite-plugin-manifest-sri](https://www.npmjs.com/package/vite-plugin-manifest-sri) plugin for [sub-resource integrity](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity).
 
-You may need the hash to build your [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP), if you're using a [hash with `script-src`](https://content-security-policy.com/hash/) to do so..
+You may need the hash to build your [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP), if you’re using a [hash with `script-src`](https://content-security-policy.com/hash/) to do so..
 
 You pass in a relative path to the entry, just as you do for JavaScript files in Vite. For example:
 
