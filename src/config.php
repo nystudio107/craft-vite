@@ -37,6 +37,11 @@ return [
     'manifestPath' => '@webroot/dist/manifest.json',
 
     /**
+     * @var string File system path to the Vite-built assets
+     */
+    'distPath' => '@webroot/dist/',
+
+    /**
      * @var string The public URL to the dev server (what appears in `<script src="">` tags
      */
     'devServerPublic' => 'http://localhost:3000/',

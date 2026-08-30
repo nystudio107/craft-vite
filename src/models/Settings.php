@@ -33,6 +33,11 @@ class Settings extends Model
     public $manifestPath;
 
     /**
+     * @var string File system path to the Vite-built assets
+     */
+    public $distPath;
+
+    /**
      * @var string The public URL to the dev server (what appears in `<script src="">` tags
      */
     public $devServerPublic;
